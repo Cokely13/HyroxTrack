@@ -3,7 +3,9 @@ import {connect} from 'react-redux'
 import {withRouter, Route, Switch, Redirect} from 'react-router-dom'
 import { Login, Signup } from './components/AuthForm';
 import Home from './components/Home';
+import Events from './components/Events';
 import {me} from './store'
+import EventDetail from './components/EventDetail';
 
 /**
  * COMPONENT
@@ -20,7 +22,9 @@ class Routes extends Component {
       <div>
         {isLoggedIn ? (
           <Switch>
-            <Route path="/home" component={Home} />
+            <Route exact path="/home" component={Home} />
+            <Route exact path="/events" component={Events} />
+            <Route exact path="/events/:eventId" component={EventDetail} />
             <Redirect to="/home" />
           </Switch>
         ) : (

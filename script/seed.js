@@ -1,6 +1,6 @@
 'use strict'
 
-const {db, models: {User} } = require('../server/db')
+const {db, models: {User, Event} } = require('../server/db')
 
 /**
  * seed - this function clears the database, updates tables to
@@ -12,8 +12,20 @@ async function seed() {
 
   // Creating Users
   const users = await Promise.all([
-    User.create({ username: 'cody', password: '123' }),
-    User.create({ username: 'murphy', password: '123' }),
+    User.create({ username: 'Ryan', password: '123', admin: true}),
+    User.create({ username: 'Jamal', password: '123' }),
+  ])
+
+  const events = await Promise.all([
+    Event.create({ name: 'SkiErg', description: "1000 meters", image:"https://www.mensjournal.com/wp-content/uploads/2018/10/nbvcxcvb.jpg?w=1152&h=630&crop=1&quality=86&strip=all"}),
+    Event.create({ name: 'SledPush', description: "50 meters", image:"https://image.boxrox.com/2022/06/Tiago-Lousa-01.jpg"}),
+    Event.create({ name: 'SledPull', description: "50 meters", image:"https://wp-test-dev.s3.amazonaws.com/public/uploads/2022/08/8106_20220226_095542_212535884_original.jpg"}),
+    Event.create({ name: 'Burpee Broad Jumps', description: "80 meters", image:"https://wharf-life.com/wp-content/uploads/2021/09/Broad-Jumps-Credit-HYROXWEB.png"}),
+    Event.create({ name: 'Rowing', description: "1000 meters", image:"https://wharf-life.com/wp-content/uploads/2021/09/Athletes-Rowing-Credit-HYROXWEB.png"}),
+    Event.create({ name: 'Farmers Carry', description: "200 meters", image:"https://obstacleman.com/img/posts/hyroxLondon2022_farmersCarry.jpg"}),
+    Event.create({ name: 'Sandbag Lunges', description: "100 meters", image:"https://daten.buffcoach.net/upload/foto/800/hyrox-lunges-essen-2019-jpg.jpg"}),
+    Event.create({ name: 'Wall Balls', description: "100", image:"https://www.cycfitness.co.uk/uploads/products/gallery/hold-strong-hyrox-wall-ball-1643822493-1280.jpg"}),
+    Event.create({ name: 'Run', description: "1 Km", image:"https://www.mudrunguide.com/wp-content/uploads/2020/04/92948460_2632588537062132_3604830334308319232_o.jpg"}),
   ])
 
   console.log(`seeded ${users.length} users`)
