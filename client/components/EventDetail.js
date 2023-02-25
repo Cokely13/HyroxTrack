@@ -29,7 +29,7 @@ function EventDetail() {
   const handleUpdate =(e) => {
     e.preventDefault()
     setAdding(eventId)
-    setAddResult({eventId: event.id, userId: user.id, eventName: event.name, userName: user.username, time: ""})
+    setAddResult({eventId: event.id, userId: user.id, eventName: event.name, userName: user.userName, time: ""})
   }
 
   const cancelAdd =(event) => {
@@ -66,7 +66,7 @@ function EventDetail() {
       <div className ="row text-center">
         <div>
         <label> <h2 htmlFor="username" style={{marginRight: "10px"}}>User Name: </h2></label>
-          <input name='name' onChange={handleChange}  type="text" value={user.username}/>
+          <input name='name' onChange={handleChange}  type="text" value={user.userName}/>
         </div>
         <div>
           <label><h2 htmlFor="time" style={{marginRight: "10px"}}>Time:  </h2></label>

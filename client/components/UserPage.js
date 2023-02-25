@@ -1,24 +1,27 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { useEffect, useState } from 'react'
-import { fetchSingleUser } from '../store/singleUserStore'
 
-function Profile() {
+import { fetchEvent } from '../store/singleEventStore'
+import {fetchSingleUser} from '../store/singleUserStore'
+import { createResult } from '../store/allResultsStore'
+
+function UserPage() {
   const dispatch = useDispatch()
-  const {id} = useSelector((state) => state.auth )
+  const {  userId } = useParams();
   const user = useSelector((state) => state.singleUser )
 
+  console.log("adadas", user)
+
   useEffect(() => {
-    dispatch(fetchSingleUser(id))
+    dispatch(fetchSingleUser(userId))
     // Safe to add dispatch to the dependencies array
   }, [])
 
-  console.log("user", user)
-
   return (
     <div>
-    <div>Profile</div>
+    <div>Userpage</div>
     <div>{user.userName}</div>
     {/* <img className="rounded-circle border border-5  border-dark" style={{width: "100rem"}}  src={user.image}/> */}
     <h1 className="text-center" style={{marginBottom: "15px",marginTop: "15px"}}><u>Results</u></h1>
@@ -52,4 +55,5 @@ function Profile() {
   )
 }
 
-export default Profile
+
+export default UserPage

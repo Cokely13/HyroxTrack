@@ -8,7 +8,7 @@ const { BOOLEAN } = require('sequelize');
 const SALT_ROUNDS = 5;
 
 const User = db.define('user', {
-  username: {
+  userName: {
     type: Sequelize.STRING,
     unique: true,
     allowNull: false
@@ -19,6 +19,10 @@ const User = db.define('user', {
   admin: {
     type: Sequelize.BOOLEAN,
     defaultValue: false
+  },
+  image : {
+    type: Sequelize.TEXT,
+    defaultValue: "client/Images/Finish Pic 2.JPG"
   }
 })
 
@@ -39,10 +43,10 @@ User.prototype.generateToken = function() {
 /**
  * classMethods
  */
-User.authenticate = async function({ username, password }){
-    const user = await this.findOne({where: { username }})
+User.authenticate = async function({ userName, password }){
+    const user = await this.findOne({where: { userName }})
     if (!user || !(await user.correctPassword(password))) {
-      const error = Error('Incorrect username/password');
+      const error = Error('Incorrect userName/password');
       error.status = 401;
       throw error;
     }
