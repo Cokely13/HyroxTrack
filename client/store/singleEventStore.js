@@ -45,7 +45,6 @@ export const updateSingleEvent = (event, history) => {
 // reducer
 const initialState = [];
 const singleEventReducer = (state = initialState, action) => {
-  console.log("axtion", action)
   switch (action.type) {
     case SET_SINGLE_EVENT:
       return action.eventdata;

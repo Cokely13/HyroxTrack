@@ -10,7 +10,7 @@ function Events() {
   useEffect(() => {
     dispatch(fetchEvents())
   }, [])
-  console.log(events)
+
   return (
     <div className="row text-center" style={{marginLeft: "auto",marginTop: "15px", marginRight:"auto"}}>
       {events.length ? events.map((event) => {

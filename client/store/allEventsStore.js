@@ -52,7 +52,6 @@ export const deleteEvent = (id, history) => {
 
 const initialState = [];
 export default function eventsReducer(state = initialState, action) {
-  console.log("TEST", action)
   switch (action.type) {
     case SET_EVENTS:
       return action.events;
