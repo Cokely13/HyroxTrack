@@ -15,8 +15,22 @@ const Navbar = ({handleClick, isLoggedIn}) => (
           <li className="nav-item active">
         <a className="nav-link" href="/home">Home</a>
       </li>
-          <li className="nav-item">
-        <a className="nav-link" href="/events">Events</a>
+      <li className="nav-item dropdown">
+        <a className="nav-link dropdown-toggle" href="/events" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Events
+        </a>
+        <div className="dropdown-menu" aria-labelledby="navbarDropdown">
+        <a className="dropdown-item" href="/events">All</a>
+        <a className="dropdown-item" href="/events/1">SkiErg</a>
+          <a className="dropdown-item" href="/events/2">SledPush</a>
+          <a className="dropdown-item" href="/events/3">SledPull</a>
+          <a className="dropdown-item" href="/events/4">Burpee Broad Jumps</a>
+          <a className="dropdown-item" href="/events/5">Rowing</a>
+          <a className="dropdown-item" href="/events/6">Farmers Carry</a>
+          <a className="dropdown-item" href="/events/7">Sandbag Lunges</a>
+          <a className="dropdown-item" href="/events/8">Wall Balls</a>
+          <a className="dropdown-item" href="/events/9">Run</a>
+        </div>
       </li>
       <li className="nav-item">
         <a className="nav-link" href="/results">Results</a>

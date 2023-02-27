@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useParams, useHistory  } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { useEffect, useState } from 'react'
 
@@ -10,6 +10,7 @@ import { createResult } from '../store/allResultsStore'
 function EventDetail() {
   const dispatch = useDispatch()
   const {id} = useSelector((state) => state.auth )
+  let history = useHistory();
   const {  eventId } = useParams();
   const [adding, setAdding] = useState()
   const [time, setTime] = useState()
@@ -46,15 +47,14 @@ function EventDetail() {
   const handleChange3 =(event) => {
     event.preventDefault()
     setTime(event.target.value)
-    console.log("chec", addResult)
   }
 
-  const handleClick =(event) => {
-    event.preventDefault()
+  const handleClick =(e) => {
+    e.preventDefault()
     addResult.time = time
 
     dispatch(createResult(addResult))
-    setAdding("")
+    history.push(`/events`)
   }
 
   return (
@@ -64,23 +64,15 @@ function EventDetail() {
       <div className ="row text-center">
         <div>
         <label> <h2 htmlFor="username" style={{marginRight: "10px"}}>User Name: </h2></label>
-          <input name='name' onChange={handleChange}  type="text" value={user.userName}/>
+          <input className='text-center' name='name' onChange={handleChange}  type="text" value={user.userName}/>
         </div>
         <div>
           <label><h2 htmlFor="time" style={{marginRight: "10px"}}>Time:  </h2></label>
-          <input name='time' onChange={handleChange3}  type="text"  />
-          {/* <select  onChange={handleChange2} name="time" >
-        <option selected value={show.channel}>{show.channel}</option>
-          <option value="HBO">HBO</option>
-          <option value="NETFLIX">NETFLIX</option>
-          <option value="DISNEY">DISNEY</option>
-          <option value="AMAZON">AMAZON</option>
-          <option value="OTHER">OTHER</option>
-          </select> */}
+          <input className='text-center' name='time' onChange={handleChange3}  type="text"  />
           </div>
         <div>
         <label><h2 htmlFor="username" style={{marginRight: "10px"}}>Event Name: </h2></label>
-          <input name='eventname' onChange={handleChange3}  type="text" value={event.name} />
+          <input className='text-center' name='eventname' onChange={handleChange3}  type="text" value={event.name} />
         </div>
       </div>
     </form>
@@ -95,6 +87,7 @@ function EventDetail() {
             <Link to={`/events/${event.id}`}><img className="card-img-top border border-dark rounded" src={event.image} style={{height:"20rem", marginLeft: "auto",marginTop: "15px", marginRight:"auto"}} alt="Card image cap"></img></Link>
           <h2 className="card-title" style={{marginTop: "15px"}}>{event.name}</h2>
           <h3 className="card-text">{event.description}</h3>
+          <h3 className="card-text">{event.targetTime}</h3>
           <button className="btn btn-primary" onClick={handleUpdate} style={{width:"50%", marginLeft: "auto", marginBottom: "15px", marginRight:"auto"}}>Add Result</button>
           </div>
           <h1 className="text-center" style={{marginBottom: "15px",marginTop: "15px"}}><u>Results</u></h1>
@@ -115,7 +108,7 @@ function EventDetail() {
                 <tr>
                   <th scope="row">{result.id}</th>
                   <td>{result.userName}</td>
-                  <td>{result.time}</td>
+                  {result.time > event.targetTime ? <td style={{color: "red"}}> {result.time}</td> : <td style={{color: "blue"}}> {result.time}</td>}
                 </tr>
               </tbody>
               )

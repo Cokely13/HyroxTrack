@@ -1,12 +1,13 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { useEffect, useState } from 'react'
 import { fetchSingleUser } from '../store/singleUserStore'
-import { updateSingleResult } from '../store/singleResultsStore'
+import { deleteResult } from '../store/allResultsStore'
 
 function Profile() {
   const dispatch = useDispatch()
+  let history = useHistory();
   const {id} = useSelector((state) => state.auth )
   const user = useSelector((state) => state.singleUser )
   const [selectedEvent, setSelectedEvent] = useState("All")
@@ -20,6 +21,12 @@ function Profile() {
     event.preventDefault()
     setSelectedEvent(event.target.value)
 
+  }
+
+  const handleDelete =(event, result) => {
+    event.preventDefault()
+    dispatch(deleteResult(result.id))
+    history.push("/results");
   }
 
   console.log("user", user)
@@ -47,6 +54,7 @@ function Profile() {
       <th scope="col">Event Name</th>
       <th scope="col">Time</th>
       <th scope="col"></th>
+      <th scope="col"></th>
       {/* <th scope="col">Handle</th> */}
     </tr>
   </thead>
@@ -57,6 +65,12 @@ function Profile() {
                   <th scope="row">{result.id}</th>
                   <td>{result.time}</td>
                   <td>{result.eventName}</td>
+                  <td>
+                  <Link className="btn btn-primary" to={`/results/edit/${result.id}`} style={{color:"white"}} >Edit Result</Link>
+                  </td>
+                  <td>
+                  <button className="btn btn-danger" onClick={(event) =>(handleDelete(event, result))} to={`/results/edit/${result.id}`} style={{color:"white"}} >Delete Result</button>
+                  </td>
                 </tr>
               </tbody>
               )
@@ -69,7 +83,12 @@ function Profile() {
                   <th scope="row">{result.id}</th>
                   <td>{result.time}</td>
                   <td>{result.eventName}</td>
-                  <Link className="btn btn-primary" to={`/results/edit/${result.id}`} style={{color:"blue"}} >Edit Result</Link>
+                  <td>
+                  <Link className="btn btn-primary" to={`/results/edit/${result.id}`} style={{color:"white"}} >Edit Result</Link>
+                  </td>
+                  <td>
+                  <button className="btn btn-danger" onClick={(event) =>(handleDelete(event, result))} to={`/results/edit/${result.id}`} style={{color:"white"}} >Delete Result</button>
+                  </td>
                 </tr>
               </tbody>
               )
