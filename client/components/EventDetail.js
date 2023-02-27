@@ -50,11 +50,8 @@ function EventDetail() {
 
   const handleClick =(event) => {
     event.preventDefault()
-    console.log("hey", addResult,)
-    console.log("time", time,)
     addResult.time = time
 
-    console.log("heyyyy", addResult,)
     dispatch(createResult(addResult))
     setAdding("")
   }

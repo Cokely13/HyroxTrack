@@ -8,13 +8,20 @@ function Profile() {
   const dispatch = useDispatch()
   const {id} = useSelector((state) => state.auth )
   const user = useSelector((state) => state.singleUser )
+  const [selectedEvent, setSelectedEvent] = useState("All")
 
   useEffect(() => {
     dispatch(fetchSingleUser(id))
     // Safe to add dispatch to the dependencies array
   }, [])
 
-  console.log("user", user)
+  const handleChange =(event) => {
+    event.preventDefault()
+    setSelectedEvent(event.target.value)
+
+  }
+
+
 
   return (
     <div>
@@ -22,6 +29,13 @@ function Profile() {
     <div>{user.userName}</div>
     {/* <img className="rounded-circle border border-5  border-dark" style={{width: "100rem"}}  src={user.image}/> */}
     <h1 className="text-center" style={{marginBottom: "15px",marginTop: "15px"}}><u>Results</u></h1>
+    {user.results ? <div style={{marginLeft: "35px", marginBottom: "35px"}}>
+      <select onChange={handleChange} name="filterEvents" className='custom-select'>
+              <option value="All">Filter by Event</option>
+              {user.results.map((({ eventName }) => eventName)).filter((item, i, ar) => ar.indexOf(item) === i).map((result) => <option key={result} value={result}>{result}</option>)}
+          <option value="All">ALL</option>
+              </select>
+              </div> : <div></div>}
           {user.results ?
           <div style={{paddingLeft: "15px",paddingRight: "15px"}}>
           <table className="table table-bordered  table-dark">
@@ -33,7 +47,7 @@ function Profile() {
       {/* <th scope="col">Handle</th> */}
     </tr>
   </thead>
-            {user.results.map((result) => {
+  {selectedEvent !== "All" ? user.results.filter(result=>result.eventName == selectedEvent).map((result) => {
               return (
                 <tbody key={result.id}>
                 <tr>
@@ -44,6 +58,17 @@ function Profile() {
               </tbody>
               )
 
+            }):
+            user.results.map((result) => {
+              return (
+                <tbody key={result.id}>
+                <tr>
+                  <th scope="row">{result.id}</th>
+                  <td>{result.time}</td>
+                  <td>{result.eventName}</td>
+                </tr>
+              </tbody>
+              )
             })}
                        </table>
 </div>: <div>NO Results</div>}
