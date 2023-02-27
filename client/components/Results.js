@@ -13,7 +13,6 @@ function Results() {
 
 
 
-  console.log("sorted", results)
 
   useEffect(() => {
     dispatch(fetchResults())

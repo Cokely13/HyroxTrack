@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { useEffect, useState } from 'react'
 import { fetchSingleUser } from '../store/singleUserStore'
+import { updateSingleResult } from '../store/singleResultsStore'
 
 function Profile() {
   const dispatch = useDispatch()
@@ -21,6 +22,7 @@ function Profile() {
 
   }
 
+  console.log("user", user)
 
 
   return (
@@ -44,13 +46,14 @@ function Profile() {
       <th scope="col">#</th>
       <th scope="col">Event Name</th>
       <th scope="col">Time</th>
+      <th scope="col"></th>
       {/* <th scope="col">Handle</th> */}
     </tr>
   </thead>
   {selectedEvent !== "All" ? user.results.filter(result=>result.eventName == selectedEvent).map((result) => {
               return (
                 <tbody key={result.id}>
-                <tr>
+                <tr className="text-center">
                   <th scope="row">{result.id}</th>
                   <td>{result.time}</td>
                   <td>{result.eventName}</td>
@@ -62,10 +65,11 @@ function Profile() {
             user.results.map((result) => {
               return (
                 <tbody key={result.id}>
-                <tr>
+                <tr className="text-center">
                   <th scope="row">{result.id}</th>
                   <td>{result.time}</td>
                   <td>{result.eventName}</td>
+                  <Link className="btn btn-primary" to={`/results/edit/${result.id}`} style={{color:"blue"}} >Edit Result</Link>
                 </tr>
               </tbody>
               )

@@ -16,6 +16,7 @@ function EventDetail() {
   const [addResult, setAddResult] = useState({})
   const event = useSelector((state) => state.singleEvent)
   const user = useSelector((state) => state.singleUser )
+  // const sort = event.sort((a, b) => (parseInt(a.time) - parseInt(b.time)))
 
   useEffect(() => {
     dispatch(fetchEvent(eventId))
@@ -108,7 +109,7 @@ function EventDetail() {
       {/* <th scope="col">Handle</th> */}
     </tr>
   </thead>
-            {event.results.map((result) => {
+            {(event.results.sort((a, b) => (parseInt(a.time) - parseInt(b.time))).map((result) => {
               return (
                 <tbody key={result.id}>
                 <tr>
@@ -119,7 +120,7 @@ function EventDetail() {
               </tbody>
               )
 
-            })}
+            }))}
                        </table>
 </div>: <div>NO Results</div>}
 </div>}

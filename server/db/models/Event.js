@@ -12,6 +12,9 @@ const Event = db.define('event', {
   },
   image: {
     type: Sequelize.TEXT,
+  },
+  targetTime: {
+      type: Sequelize.TIME,
   }
 
 })

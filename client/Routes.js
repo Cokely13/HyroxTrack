@@ -10,6 +10,7 @@ import Results from './components/Results';
 import Users from './components/Users';
 import Profile from './components/Profile';
 import UserPage from './components/UserPage';
+import EditResult from './components/EditResult';
 
 /**
  * COMPONENT
@@ -33,6 +34,7 @@ class Routes extends Component {
             <Route exact path="/users" component={Users} />
             <Route exact path="/users/:userId" component={UserPage} />
             <Route exact path="/results" component={Results} />
+            <Route exact path="/results/edit/:resultId" component={EditResult} />
             <Redirect to="/home" />
           </Switch>
         ) : (
