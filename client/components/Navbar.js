@@ -35,14 +35,18 @@ const Navbar = ({handleClick, isLoggedIn}) => (
       <li className="nav-item">
         <a className="nav-link" href="/results">Results</a>
       </li>
-      <li className="nav-item">
-        <a className="nav-link" href="/users">Users</a>
+      <li className="nav-item dropdown">
+        <a className="nav-link dropdown-toggle" href="/events" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Users
+        </a>
+        <div className="dropdown-menu" aria-labelledby="navbarDropdown">
+        <a className="dropdown-item" href="/users">All</a>
+        <a className="dropdown-item" href="/users/1">Jamal</a>
+        <a className="dropdown-item" href="/users/2">Ryan</a>
+        </div>
       </li>
       <li className="nav-item">
         <a className="nav-link" href="/profile">Profile</a>
-      </li>
-      <li className="nav-item">
-        <a className="nav-link" href="/users">Users</a>
       </li>
       <li className="nav-item">
       <a className="nav-link" href="#" onClick={handleClick}>

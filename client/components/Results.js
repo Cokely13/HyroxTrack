@@ -38,10 +38,11 @@ function Results() {
               </div>
     {results ?
     <div style={{paddingLeft: "15px",paddingRight: "15px"}}>
-    <table className="table table-bordered  table-dark">
+    <table className="table table-bordered  table-dark text-center">
 <thead>
 <tr>
 <th scope="col">#</th>
+<th scope="col">Date</th>
 <th scope="col">Event</th>
 <th scope="col">Name</th>
 <th scope="col">Time</th>
@@ -53,9 +54,10 @@ function Results() {
           <tbody key={result.id}>
           <tr>
             <th scope="row">{result.id}</th>
+            <th scope="row">{(result.updatedAt).slice(0,10)}</th>
             <td><Link to={`/events/${result.eventId}`} style={{color:"white"}}>{result.eventName}</Link></td>
             <td><Link to={`/users/${result.userId}`} style={{color:"white"}}>{result.userName}</Link></td>
-            <td>{result.time}</td>
+            <td>{(result.time).slice(0,5)}</td>
           </tr>
         </tbody>
         )
@@ -66,9 +68,10 @@ function Results() {
           <tbody key={result.id}>
           <tr>
             <th scope="row">{result.id}</th>
+            <th scope="row">{(result.updatedAt).slice(0,10)}</th>
             <td><Link to={`/events/${result.eventId}`} style={{color:"white"}}>{result.eventName}</Link></td>
             <td><Link to={`/users/${result.userId}`} style={{color:"white"}}>{result.userName}</Link></td>
-            <td>{result.time}</td>
+            <td>{(result.time).slice(0,5)}</td>
           </tr>
         </tbody>
         )

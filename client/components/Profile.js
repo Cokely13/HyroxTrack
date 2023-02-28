@@ -34,10 +34,7 @@ function Profile() {
 
   return (
     <div>
-    <div>Profile</div>
-    <div>{user.userName}</div>
-    {/* <img className="rounded-circle border border-5  border-dark" style={{width: "100rem"}}  src={user.image}/> */}
-    <h1 className="text-center" style={{marginBottom: "15px",marginTop: "15px"}}><u>Results</u></h1>
+    <h1 className="text-center" style={{marginBottom: "15px",marginTop: "15px"}}><u>{user.userName}'s Results</u></h1>
     {user.results ? <div style={{marginLeft: "35px", marginBottom: "35px"}}>
       <select onChange={handleChange} name="filterEvents" className='custom-select'>
               <option value="All">Filter by Event</option>
@@ -47,10 +44,11 @@ function Profile() {
               </div> : <div></div>}
           {user.results ?
           <div style={{paddingLeft: "15px",paddingRight: "15px"}}>
-          <table className="table table-bordered  table-dark">
+          <table className="table table-bordered  table-dark text-center">
   <thead>
     <tr>
       <th scope="col">#</th>
+      <th scope="col">Date</th>
       <th scope="col">Event Name</th>
       <th scope="col">Time</th>
       <th scope="col"></th>
@@ -63,8 +61,9 @@ function Profile() {
                 <tbody key={result.id}>
                 <tr className="text-center">
                   <th scope="row">{result.id}</th>
-                  <td>{result.time}</td>
+                  <th scope="row">{(result.updatedAt).slice(0,10)}</th>
                   <td>{result.eventName}</td>
+                  <td>{result.time.slice(0,5)}</td>
                   <td>
                   <Link className="btn btn-primary" to={`/results/edit/${result.id}`} style={{color:"white"}} >Edit Result</Link>
                   </td>
@@ -81,8 +80,9 @@ function Profile() {
                 <tbody key={result.id}>
                 <tr className="text-center">
                   <th scope="row">{result.id}</th>
-                  <td>{result.time}</td>
+                  <th scope="row">{(result.updatedAt).slice(0,10)}</th>
                   <td>{result.eventName}</td>
+                  <td>{result.time.slice(0,5)}</td>
                   <td>
                   <Link className="btn btn-primary" to={`/results/edit/${result.id}`} style={{color:"white"}} >Edit Result</Link>
                   </td>

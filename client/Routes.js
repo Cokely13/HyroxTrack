@@ -11,6 +11,7 @@ import Users from './components/Users';
 import Profile from './components/Profile';
 import UserPage from './components/UserPage';
 import EditResult from './components/EditResult';
+import EditProfile from './components/EditProfile';
 
 /**
  * COMPONENT
@@ -29,6 +30,7 @@ class Routes extends Component {
           <Switch>
             <Route exact path="/home" component={Home} />
             <Route exact path="/profile" component={Profile} />
+            <Route exact path="/profile/edit" component={EditProfile} />
             <Route exact path="/events" component={Events} />
             <Route exact path="/events/:eventId" component={EventDetail}/>
             <Route exact path="/users" component={Users} />

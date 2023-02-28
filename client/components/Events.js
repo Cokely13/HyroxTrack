@@ -84,7 +84,7 @@ function Events() {
             <Link to={`/events/${zone.id}`}><img className="card-img-top border border-dark rounded" src={zone.image} style={{height:"20rem", marginLeft: "auto",marginTop: "15px", marginRight:"auto"}} alt="Card image cap"></img></Link>
           <h2 className="card-title" style={{marginTop: "15px"}}>{zone.name}</h2>
           <h3 className="card-text">{zone.description}</h3>
-          <h3 className="card-text">Target Time: {zone.targetTime}</h3>
+          <h3 className="card-text">Target Time: {zone.targetTime.slice(0,5)}</h3>
           <button className="btn btn-primary" onClick={e => handleUpdate(e, zone)} style={{width:"50%", marginLeft: "auto", marginBottom: "15px", marginRight:"auto"}}>Add Result</button>
           </div>
       )}) : <div>HEYYYY</div> }

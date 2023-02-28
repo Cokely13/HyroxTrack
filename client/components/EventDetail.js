@@ -28,6 +28,15 @@ function EventDetail() {
     // Safe to add dispatch to the dependencies array
   }, [])
 
+//   function timeStringToDecimal(time) {
+//     const [hoursPart, minutesPart] = time.split(":");
+//     return Number(hoursPart) + Number(minutesPart) / 60;
+// }
+
+
+console.log("efe", event)
+
+
   const handleUpdate =(e) => {
     e.preventDefault()
     setAdding(eventId)
@@ -87,7 +96,9 @@ function EventDetail() {
             <Link to={`/events/${event.id}`}><img className="card-img-top border border-dark rounded" src={event.image} style={{height:"20rem", marginLeft: "auto",marginTop: "15px", marginRight:"auto"}} alt="Card image cap"></img></Link>
           <h2 className="card-title" style={{marginTop: "15px"}}>{event.name}</h2>
           <h3 className="card-text">{event.description}</h3>
-          <h3 className="card-text">{event.targetTime}</h3>
+         {event.targetTime ? <h3 className="card-text">Target Time: {(event.targetTime).slice(0,5)}</h3> : <div>No</div>}
+         {event.results ? <h3 className="card-text">Average Time: {(event.results).map(item => item.time).reduce((prev, next) => prev + next)}</h3> : <div>NADA</div>}
+         {/* {event.results ? <h3 className="card-text">Average Time: {(event.results[0].time).split(":") + (event.results[1].time).split(":") }</h3> : <div>NADA</div>} */}
           <button className="btn btn-primary" onClick={handleUpdate} style={{width:"50%", marginLeft: "auto", marginBottom: "15px", marginRight:"auto"}}>Add Result</button>
           </div>
           <h1 className="text-center" style={{marginBottom: "15px",marginTop: "15px"}}><u>Results</u></h1>
@@ -96,20 +107,29 @@ function EventDetail() {
           <table className="table table-bordered  table-dark">
   <thead>
     <tr>
-      <th scope="col">#</th>
+      <th scope="col">Date</th>
       <th scope="col">Time</th>
       <th scope="col">Name</th>
+      <th scope="col">Pass</th>
       {/* <th scope="col">Handle</th> */}
     </tr>
   </thead>
             {(event.results.sort((a, b) => (parseInt(a.time) - parseInt(b.time))).map((result) => {
               return (
                 <tbody key={result.id}>
-                <tr>
-                  <th scope="row">{result.id}</th>
+               {result.time > event.targetTime ?  <tr>
+                  <th scope="row">{(result.updatedAt).slice(0,10)}</th>
                   <td>{result.userName}</td>
-                  {result.time > event.targetTime ? <td style={{color: "red"}}> {result.time}</td> : <td style={{color: "blue"}}> {result.time}</td>}
-                </tr>
+                  <td style={{color: "red"}}> {(result.time).slice(0,5)}</td> <td style={{color: "red"}}> <span className="bi bi-x-octagon"></span></td>
+                </tr>:
+                <tr>
+                <th scope="row">{(result.updatedAt).slice(0,10)}</th>
+                <td>{result.userName}</td>
+                <td style={{color: "blue"}}> {(result.time).slice(0,5)}</td>
+                 <td style={{color: "blue"}}> <span className="bi bi-check-circle"></span></td>
+              </tr>
+
+                }
               </tbody>
               )
 
