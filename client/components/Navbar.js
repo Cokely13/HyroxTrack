@@ -35,6 +35,9 @@ const Navbar = ({handleClick, isLoggedIn}) => (
       <li className="nav-item">
         <a className="nav-link" href="/results">Results</a>
       </li>
+      <li className="nav-item">
+        <a className="nav-link" href="/date">Date</a>
+      </li>
       <li className="nav-item dropdown">
         <a className="nav-link dropdown-toggle" href="/events" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         Users

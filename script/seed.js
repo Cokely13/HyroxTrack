@@ -17,7 +17,7 @@ async function seed() {
   ])
 
   const events = await Promise.all([
-    Event.create({ name: 'SkiErg', description: "1000 meters", image:"https://www.mensjournal.com/wp-content/uploads/2018/10/nbvcxcvb.jpg?w=1152&h=630&crop=1&quality=86&strip=all", targetTime: "3:40"}),
+    Event.create({ name: 'SkiErg', description: "1000 meters", image:"https://tiagolousa.com/wp-content/uploads/2023/04/double-hyrox-skierg-wod-1-jpg.webp", targetTime: "3:40"}),
     Event.create({ name: 'SledPush', description: "50 meters", image:"https://image.boxrox.com/2022/06/Tiago-Lousa-01.jpg", targetTime: "1:25" }),
     Event.create({ name: 'SledPull', description: "50 meters", image:"https://wp-test-dev.s3.amazonaws.com/public/uploads/2022/08/8106_20220226_095542_212535884_original.jpg", targetTime: "2:30"}),
     Event.create({ name: 'Burpee Broad Jumps', description: "80 meters", image:"https://wharf-life.com/wp-content/uploads/2021/09/Broad-Jumps-Credit-HYROXWEB.png", targetTime: "2:30"}),

@@ -11,7 +11,7 @@ function EditProfile() {
 
   const fileUpload= () => {
     const fd = new FormData()
-    fd.append('image', selectedFile, selectedFile.name)
+    fd.append('image', selectedFile, selectedFile.name);
     axios.post("")
   }
 

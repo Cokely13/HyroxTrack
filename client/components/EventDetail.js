@@ -34,7 +34,6 @@ function EventDetail() {
 // }
 
 
-console.log("efe", event)
 
 
   const handleUpdate =(e) => {
