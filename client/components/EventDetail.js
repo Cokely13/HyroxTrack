@@ -96,7 +96,7 @@ function EventDetail() {
           <h2 className="card-title" style={{marginTop: "15px"}}>{event.name}</h2>
           <h3 className="card-text">{event.description}</h3>
          {event.targetTime ? <h3 className="card-text">Target Time: {(event.targetTime).slice(0,5)}</h3> : <div>No</div>}
-         {event.results ? <h3 className="card-text">Average Time: {(event.results).map(item => item.time).reduce((prev, next) => prev + next)}</h3> : <div>NADA</div>}
+         {event.results ? event.results.length ? <h3 className="card-text">Average Time: {(event.results).map(item => item.time).reduce((prev, next) => prev + next)}</h3> : <div>NADA</div> : <div>Nothing</div>}
          {/* {event.results ? <h3 className="card-text">Average Time: {(event.results[0].time).split(":") + (event.results[1].time).split(":") }</h3> : <div>NADA</div>} */}
           <button className="btn btn-primary" onClick={handleUpdate} style={{width:"50%", marginLeft: "auto", marginBottom: "15px", marginRight:"auto"}}>Add Result</button>
           </div>

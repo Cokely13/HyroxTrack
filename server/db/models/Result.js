@@ -7,8 +7,8 @@ const Result = db.define('result', {
     allowNull: false
   },
   time: {
-    type: Sequelize.TIME
-
+    type: Sequelize.STRING,
+    allowNull: false
   },
   userName: {
     type: Sequelize.STRING,
