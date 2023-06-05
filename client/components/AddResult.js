@@ -26,6 +26,10 @@ const AddResult = () => {
     // Safe to add dispatch to the dependencies array
   }, [])
 
+  function addLeadingZero(value) {
+    return value.toString().padStart(2, '0');
+  }
+
   useEffect(() => {
     dispatch(fetchEvents())
     // Safe to add dispatch to the dependencies array
@@ -40,17 +44,19 @@ const AddResult = () => {
   };
 
   const handleMinutesChange = (e) => {
-    setMinutes(e.target.value);
+    setMinutes(addLeadingZero(e.target.value));
   };
 
   const handleSecondsChange = (e) => {
-    setSeconds(e.target.value);
+    setSeconds(addLeadingZero(e.target.value));
   };
+
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!event) {
+    if (!eventName) {
       setErrorMessage('Please Select Event');
       return;
     }
@@ -64,6 +70,8 @@ const AddResult = () => {
       setErrorMessage('Please Select Duration');
       return;
     }
+
+
 
     // Create a new result object with the input values
     const newResult = {
@@ -118,7 +126,7 @@ const AddResult = () => {
           type="number"
           id="minutes"
           min="0"
-          max="59"
+          max="60"
           value={minutes}
           onChange={handleMinutesChange}
           style={{ marginRight: '5px' }}
