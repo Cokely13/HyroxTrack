@@ -25,7 +25,7 @@ async function seed() {
     Event.create({ name: 'Farmers Carry', description: "200 meters", image:"https://obstacleman.com/img/posts/hyroxLondon2022_farmersCarry.jpg", targetTime: "1:25"}),
     Event.create({ name: 'Sandbag Lunges', description: "100 meters", image:"https://daten.buffcoach.net/upload/foto/800/hyrox-lunges-essen-2019-jpg.jpg", targetTime: "3:00"}),
     Event.create({ name: 'Wall Balls', description: "100", image:"https://www.cycfitness.co.uk/uploads/products/gallery/hold-strong-hyrox-wall-ball-1643822493-1280.jpg", targetTime: "3:45"}),
-    Event.create({ name: 'Run', description: "1 Km", image:"https://www.mudrunguide.com/wp-content/uploads/2020/04/92948460_2632588537062132_3604830334308319232_o.jpg", targetTime: "5:35"}),
+    // Event.create({ name: 'Run', description: "1 Km", image:"https://www.mudrunguide.com/wp-content/uploads/2020/04/92948460_2632588537062132_3604830334308319232_o.jpg", targetTime: "5:35"}),
   ])
 
   console.log(`seeded ${users.length} users`)

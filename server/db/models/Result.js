@@ -6,12 +6,21 @@ const Result = db.define('result', {
     type: Sequelize.STRING,
     allowNull: false
   },
-  time: {
+  duration: {
     type: Sequelize.STRING,
     allowNull: false
   },
   userName: {
     type: Sequelize.STRING,
+    allowNull: false
+  },
+  userId: {
+    type: Sequelize.INTEGER,
+    allowNull: false
+  },
+  date: {
+    type: Sequelize.DATEONLY,
+    allowNull: false
   },
 })
 

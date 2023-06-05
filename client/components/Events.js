@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 import { fetchEvents } from '../store/allEventsStore'
 import {fetchSingleUser} from '../store/singleUserStore'
 import { createResult } from '../store/allResultsStore'
+import AddResult from './AddResult'
 
 function Events() {
   const dispatch = useDispatch()
@@ -55,28 +56,30 @@ function Events() {
   return (
     <div>
     {adding == "add"?
-    <div >
-      <form>
-        <div className ="row text-center">
-          <div>
-          <label> <h2 htmlFor="username" style={{marginRight: "10px"}}>User Name: </h2></label>
-            <input name='name'  type="text" value={user.userName}/>
-          </div>
-          <div>
-            <label><h2 htmlFor="time" style={{marginRight: "10px"}}>Time:  </h2></label>
-            <input name='time' onChange={handleChange3}  type="text"  />
-            </div>
-          <div>
-          <label><h2 htmlFor="username" style={{marginRight: "10px"}}>Event Name: </h2></label>
-            <input name='eventname'  type="text" value={eventName} />
-          </div>
-        </div>
-      </form>
-      <div className='text-center'>
-      <button className="btn btn-primary" style={{width: "15%", marginBottom: "10px", marginRight: "30px"}}  onClick={handleClick}>Submit</button>
-      <button className="btn btn-danger" style={{width: "15%", marginBottom: "10px", marginRight: "30px"}} onClick={cancelAdd} >Cancel</button>
-      </div>
-    </div> :
+    // <div >
+    //   <form>
+    //     <div className ="row text-center">
+    //       <div>
+    //       <label> <h2 htmlFor="username" style={{marginRight: "10px"}}>User Name: </h2></label>
+    //         <input name='name'  type="text" value={user.userName}/>
+    //       </div>
+    //       <div>
+    //         <label><h2 htmlFor="time" style={{marginRight: "10px"}}>Time:  </h2></label>
+    //         <input name='time' onChange={handleChange3}  type="text"  />
+    //         </div>
+    //       <div>
+    //       <label><h2 htmlFor="username" style={{marginRight: "10px"}}>Event Name: </h2></label>
+    //         <input name='eventname'  type="text" value={eventName} />
+    //       </div>
+    //     </div>
+    //   </form>
+    //   <div className='text-center'>
+    //   <button className="btn btn-primary" style={{width: "15%", marginBottom: "10px", marginRight: "30px"}}  onClick={handleClick}>Submit</button>
+    //   <button className="btn btn-danger" style={{width: "15%", marginBottom: "10px", marginRight: "30px"}} onClick={cancelAdd} >Cancel</button>
+    //   </div>
+    // </div>
+    <AddResult/>
+    :
     <div className="row text-center" style={{marginLeft: "auto",marginTop: "15px", marginRight:"auto"}}>
       {events.length ? events.map((zone) => {
         return (
