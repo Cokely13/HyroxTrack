@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 // import TimePicker from 'react-time-picker';
 import { createResult } from '../store/allResultsStore';
 import { fetchSingleUser } from '../store/singleUserStore';
+import { fetchEvents } from '../store/allEventsStore';
 
 const AddResult = () => {
   const { id } = useSelector((state) => state.auth);
@@ -14,12 +15,19 @@ const AddResult = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
   const user = useSelector((state) => state.singleUser )
+  const events = useSelector((state) => state.allEvents )
 
 
   console.log("user", user)
+  console.log("events", events)
 
   useEffect(() => {
     dispatch(fetchSingleUser(id))
+    // Safe to add dispatch to the dependencies array
+  }, [])
+
+  useEffect(() => {
+    dispatch(fetchEvents())
     // Safe to add dispatch to the dependencies array
   }, [])
 
@@ -62,6 +70,7 @@ const AddResult = () => {
       userId: id,
       userName: user.userName,
       eventName,
+      eventId: events.filter((event) => event.name == eventName)[0].id,
       date,
       duration: `${minutes}:${seconds}`,
     };

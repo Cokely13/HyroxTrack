@@ -20,10 +20,12 @@ const EventAverages = () => {
     dispatch(fetchSingleUser(id));
   }, [dispatch, id]);
 
+  console.log("events", events)
+
   const userResults = results.filter((result) => result.userId === id);
 
   const getAverageTime = (eventId) => {
-    const eventResults = userResults.filter((result) => result.eventId === eventId);
+    const eventResults = userResults.filter((result) => result.eventId == eventId);
     if (eventResults.length > 0) {
       const totalTimes = eventResults.reduce((sum, result) => sum + parseInt(result.time), 0);
       const average = totalTimes / eventResults.length;
@@ -57,7 +59,7 @@ const EventAverages = () => {
                     {userResults
                       .filter((result) => result.eventId === zone.id)
                       .map((result) => (
-                        <h1 key={result.id}>{result.time}</h1>
+                        <h1 key={result.id}>{result.duration}</h1>
                       ))}
                   </React.Fragment>
                 ) : (

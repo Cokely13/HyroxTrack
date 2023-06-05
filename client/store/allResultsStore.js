@@ -39,7 +39,6 @@ export const createResult = (result, history) => {
   return async (dispatch) => {
     const { data: created } = await Axios.post("/api/results", result);
     dispatch(_createResult(created));
-    history.push("/results");
   };
 };
 

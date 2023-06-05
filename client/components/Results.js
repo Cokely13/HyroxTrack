@@ -54,10 +54,10 @@ function Results() {
           <tbody key={result.id}>
           <tr>
             <th scope="row">{result.id}</th>
-            <th scope="row">{(result.updatedAt).slice(0,10)}</th>
+            <th scope="row">{result.date}</th>
             <td><Link to={`/events/${result.eventId}`} style={{color:"white"}}>{result.eventName}</Link></td>
             <td><Link to={`/users/${result.userId}`} style={{color:"white"}}>{result.userName}</Link></td>
-            <td>{(result.time).slice(0,5)}</td>
+            <td>{result.duration}</td>
           </tr>
         </tbody>
         )
@@ -68,10 +68,10 @@ function Results() {
           <tbody key={result.id}>
           <tr>
             <th scope="row">{result.id}</th>
-            <th scope="row">{(result.updatedAt).slice(0,10)}</th>
+            <th scope="row">{result.date}</th>
             <td><Link to={`/events/${result.eventId}`} style={{color:"white"}}>{result.eventName}</Link></td>
             <td><Link to={`/users/${result.userId}`} style={{color:"white"}}>{result.userName}</Link></td>
-            <td>{(result.time).slice(0,5)}</td>
+            <td>{result.duration}</td>
           </tr>
         </tbody>
         )
