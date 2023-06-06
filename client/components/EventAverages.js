@@ -55,7 +55,7 @@ const EventAverages = () => {
                 <h1>{zone.targetTime.slice(0, 5)}</h1>
                 {userResults.length ? (
                   <React.Fragment>
-                    <h1>Average: {getAverageTime(zone.id)}</h1>
+                    <h1>Average: {getAverageTime(1)}</h1>
                     {userResults
                       .filter((result) => result.eventId === zone.id)
                       .map((result) => (
