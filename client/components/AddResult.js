@@ -83,6 +83,7 @@ const AddResult = () => {
       duration: `${minutes}:${seconds}`,
     };
 
+    console.log("newResults", newResult)
     dispatch(createResult(newResult));
 
     // Set the success message and clear the input fields
@@ -122,7 +123,7 @@ const AddResult = () => {
       </div>
       <div>
         <label htmlFor="minutes" style={{ marginRight: "10px" }}>Duration:  </label>
-        <input
+        {/* <input
           type="number"
           id="minutes"
           min="0"
@@ -140,7 +141,22 @@ const AddResult = () => {
           value={seconds}
           onChange={handleSecondsChange}
           style={{ marginLeft: '5px' }}
-        />
+        /> */}
+         <select value={minutes} onChange={(e) => setMinutes(e.target.value)}>
+                      {Array.from(Array(60).keys()).map((num) => (
+                        <option key={num} value={num.toString().padStart(2, '0')}>
+                          {num.toString().padStart(2, '0')}
+                        </option>
+                      ))}
+                    </select>
+                    :
+                    <select value={seconds} onChange={(e) => setSeconds(e.target.value)}>
+                      {Array.from(Array(60).keys()).map((num) => (
+                        <option key={num} value={num.toString().padStart(2, '0')}>
+                          {num.toString().padStart(2, '0')}
+                        </option>
+                      ))}
+                    </select>
       </div>
       <button type="submit">Add Result</button>
     </form>
