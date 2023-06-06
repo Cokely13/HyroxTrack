@@ -53,8 +53,8 @@ function UserPage() {
                 <tbody key={result.id}>
                 <tr>
                   <th scope="row">{result.id}</th>
-                  <th scope="row">{(result.updatedAt).slice(0,10)}</th>
-                  <td>{result.time.slice(0,5)}</td>
+                  <th scope="row">{result.date}</th>
+                  <td>{result.duration}</td>
                   <td>{result.eventName}</td>
                 </tr>
               </tbody>
@@ -66,8 +66,8 @@ function UserPage() {
                 <tbody key={result.id}>
                 <tr>
                   <th scope="row">{result.id}</th>
-                  <th scope="row">{(result.updatedAt).slice(0,10)}</th>
-                  <td>{result.time.slice(0,5)}</td>
+                  <th scope="row">{result.date}</th>
+                  <td>{result.duration}</td>
                   <td>{result.eventName}</td>
                 </tr>
               </tbody>

@@ -44,8 +44,8 @@ const Navbar = ({handleClick, isLoggedIn}) => (
         </a>
         <div className="dropdown-menu" aria-labelledby="navbarDropdown">
         <a className="dropdown-item" href="/users">All</a>
-        <a className="dropdown-item" href="/users/1">Jamal</a>
-        <a className="dropdown-item" href="/users/2">Ryan</a>
+        <a className="dropdown-item" href="/users/2">Jamal</a>
+        <a className="dropdown-item" href="/users/1">Ryan</a>
         </div>
       </li>
       <li className="nav-item">

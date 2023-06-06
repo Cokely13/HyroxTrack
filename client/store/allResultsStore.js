@@ -46,7 +46,6 @@ export const deleteResult = (id, history) => {
   return async (dispatch) => {
     const { data: result } = await Axios.delete(`/api/results/${id}`);
     dispatch(_deleteResult(result));
-    history.push("/profile");
   };
 };
 
