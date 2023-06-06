@@ -29,6 +29,7 @@
     "morgan": "^1.9.1",
     "pg": "^8.5.1",
     "react-calendar": "^4.0.0",
+    "react-vis": "^1.11.12",
     "sequelize": "^6.3.5",
     "victory": "^36.6.10"
   },
