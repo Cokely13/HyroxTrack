@@ -5,6 +5,7 @@ import { fetchEvent } from '../store/singleEventStore';
 import { fetchSingleUser } from '../store/singleUserStore';
 import { createResult } from '../store/allResultsStore';
 import AddResult from './AddResult';
+import Graph from './Graph';
 
 function EventDetail() {
   const dispatch = useDispatch();
@@ -130,6 +131,7 @@ function EventDetail() {
               Add Result
             </button>
           </div>
+          <Graph event={event} />
           <h1 className="text-center" style={{ marginBottom: '15px', marginTop: '15px' }}>
             <u>Results</u>
           </h1>
