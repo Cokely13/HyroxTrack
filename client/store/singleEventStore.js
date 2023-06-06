@@ -28,13 +28,13 @@ export const fetchEvent = (id) => {
   };
 };
 
-export const updateSingleEvent = (event, history) => {
+export const updateSingleEvent = (event) => {
   return async (dispatch) => {
     try {
         await axios.put(`/api/events/${event.id}`, event);
         const { data: eventData } = await axios.get(`/api/events/${event.id}`);
         dispatch(_updateSingleEvent(eventData));
-        history.push(`/events/${event.id}`)
+        // history.push(`/events/${event.id}`)
       }
      catch (error) {
       console.log("EVENT", event)
