@@ -43,13 +43,21 @@ function EventDetail() {
       : 0
     : 0;
 
+    const eventsUser = event.results
+    ? event.results.length
+      ? event.results
+          .filter((item) => item.userId == id )
+      : 0
+    : 0;
+
+    console.log("user", eventsUser)
+
   const formatTime = (timeInSeconds) => {
     const minutes = Math.floor(timeInSeconds / 60);
     const seconds = Math.floor(timeInSeconds % 60);
     return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
   };
 
-  console.log('results', event);
 
   const handleUpdate = (e) => {
     e.preventDefault();
@@ -86,7 +94,7 @@ function EventDetail() {
           comparison = timeA - timeB;
         }
         return sortDirection === 'ascending' ? comparison : -comparison;
-      })
+      }).filter((result) => result.userId == id)
     : [];
 
   return (
