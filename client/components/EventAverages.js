@@ -2,6 +2,7 @@
 
 
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchEvents } from '../store/allEventsStore';
 import { fetchSingleUser } from '../store/singleUserStore';
@@ -34,8 +35,52 @@ const EventAverages = () => {
     return null;
   };
 
+  const timeStringToSeconds = (time) => {
+    const [minutesPart, secondsPart] = time.split(':');
+    const minutes = parseInt(minutesPart, 10);
+    const seconds = parseInt(secondsPart, 10);
+    return minutes * 60 + seconds;
+  };
+
+  const formatTime = (timeInSeconds) => {
+    if (timeInSeconds == null) {
+      return null
+    }
+    else {
+    const minutes = Math.floor(timeInSeconds / 60);
+    const seconds = Math.floor(timeInSeconds % 60);
+    return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`};
+  };
+
+  const averageTimeInSeconds =(eventId) => {
+  const eventResults = userResults.filter((result) => result.eventId == eventId);
+  if (eventResults.length > 0) {
+    const average = eventResults
+        .map((item) => timeStringToSeconds(item.duration))
+        .reduce((prev, next) => prev + next) / eventResults.length
+    return average}
+    return null;
+  }
+
+  const recentAverage = (eventId) => {
+    const eventResults = userResults
+      .filter((result) => result.eventId === eventId)
+      .sort((a, b) => new Date(b.date) - new Date(a.date))
+      .slice(0, 3);
+
+    if (eventResults.length > 0) {
+      const average =
+        eventResults
+          .map((item) => timeStringToSeconds(item.duration))
+          .reduce((prev, next) => prev + next) / eventResults.length;
+      return average;
+    }
+
+    return null;
+  };
+
   const getDivStyle = (average, targetTime) => {
-    if (average === null) {
+    if (average == null) {
       return { backgroundColor: 'yellow' };
     } else if (average < targetTime) {
       return { backgroundColor: 'green' };
@@ -50,17 +95,18 @@ const EventAverages = () => {
         {events.length ? (
           events.map((zone) => (
             <div className="col-sm-3 mx-auto mb-4 d-flex" key={zone.id}>
-              <div className="col" style={getDivStyle(getAverageTime(zone.id), zone.targetTime)}>
-                <h1>{zone.name}</h1>
+              <div className="col" style={getDivStyle(formatTime(averageTimeInSeconds(zone.id)), zone.targetTime)}>
+              <h1><Link to={`/events/${zone.id}`}>{zone.name}</Link></h1>
                 <h1>{zone.targetTime.slice(0, 5)}</h1>
                 {userResults.length ? (
                   <React.Fragment>
-                    <h1>Average: {getAverageTime(1)}</h1>
-                    {userResults
+                    <h1>Average: {formatTime(averageTimeInSeconds(zone.id))} </h1>
+                    <h1>Recent Average: {formatTime(recentAverage(zone.id))} </h1>
+                    {/* {userResults
                       .filter((result) => result.eventId === zone.id)
                       .map((result) => (
                         <h1 key={result.id}>{result.duration}</h1>
-                      ))}
+                      ))} */}
                   </React.Fragment>
                 ) : (
                   <div></div>

@@ -103,7 +103,7 @@ const AddResult = () => {
       {successMessage && <p>{successMessage}</p>}
       <div>
         <label htmlFor="event" style={{ marginRight: "10px" }}>Event:</label>
-        <select id="event" value={event} onChange={handleEventChange}>
+        <select id="event" value={eventName} onChange={handleEventChange}>
           <option value=""> -- Select Event --</option>
           <option value="Rowing">Rowing</option>
           <option value="SkiErg">SkiErg</option>
