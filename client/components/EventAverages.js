@@ -35,6 +35,16 @@ const EventAverages = () => {
     return null;
   };
 
+  const getRecord = (eventId) => {
+    const eventResults = userResults.filter((result) => result.eventId == eventId);
+    if (eventResults.length > 0) {
+      const sortedResults = [...eventResults].sort((a, b) => timeStringToSeconds(a.duration) - timeStringToSeconds(b.duration));
+      return sortedResults[0].duration; // Return the duration of the lowest value
+    }
+    return null; // Return null if no event results are found
+  };
+
+
   const timeStringToSeconds = (time) => {
     const [minutesPart, secondsPart] = time.split(':');
     const minutes = parseInt(minutesPart, 10);
@@ -79,6 +89,16 @@ const EventAverages = () => {
     return null;
   };
 
+  const trending = (average, recent) => {
+    if (average === recent) {
+      return "="; // Equal sign
+    } else if (average > recent) {
+      return "↓"; // Down arrow
+    } else {
+      return "↑"; // Up arrow
+    }
+  };
+
   const getDivStyle = (average, targetTime) => {
     if (average == null) {
       return { backgroundColor: 'yellow' };
@@ -97,16 +117,15 @@ const EventAverages = () => {
             <div className="col-sm-3 mx-auto mb-4 d-flex" key={zone.id}>
               <div className="col" style={getDivStyle(formatTime(averageTimeInSeconds(zone.id)), zone.targetTime)}>
               <h1><Link to={`/events/${zone.id}`}>{zone.name}</Link></h1>
-                <h1>{zone.targetTime.slice(0, 5)}</h1>
+                <h1>Target TIme: {zone.targetTime.slice(0, 5)}</h1>
                 {userResults.length ? (
                   <React.Fragment>
-                    <h1>Average: {formatTime(averageTimeInSeconds(zone.id))} </h1>
-                    <h1>Recent Average: {formatTime(recentAverage(zone.id))} </h1>
-                    {/* {userResults
-                      .filter((result) => result.eventId === zone.id)
-                      .map((result) => (
-                        <h1 key={result.id}>{result.duration}</h1>
-                      ))} */}
+                  {formatTime(averageTimeInSeconds(zone.id)) ? <div>
+                    <h1>Record: {getRecord(zone.id)}</h1>
+                  <h1>Average: {formatTime(averageTimeInSeconds(zone.id))}  </h1>
+                  <h1>Recent Average: {formatTime(recentAverage(zone.id))} </h1>
+                  <h1>{trending((recentAverage(zone.id)),averageTimeInSeconds(zone.id))} </h1>
+                    </div>: <h1> BETTER GET ON IT! </h1>}
                   </React.Fragment>
                 ) : (
                   <div></div>

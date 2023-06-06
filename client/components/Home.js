@@ -1,6 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import TargetDate from './TargetDate'
+import EventAverages from './EventAverages'
 
 /**
  * COMPONENT
@@ -12,6 +13,7 @@ export const Home = props => {
     <div>
       <h3>Welcome, {userName}</h3>
       <TargetDate/>
+      <EventAverages/>
     </div>
   )
 }
