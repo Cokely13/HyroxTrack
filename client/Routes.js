@@ -15,7 +15,7 @@ import EditProfile from './components/EditProfile';
 import EventAverages from './components/EventAverages';
 import Date from './components/Date';
 import TargetTimes from './components/TargetTimes';
-
+import Check from './components/Check';
 import Test from './components/Test';
 
 /**
@@ -45,6 +45,7 @@ class Routes extends Component {
             <Route exact path="/date" component={Date} />
             <Route exact path="/target" component={TargetTimes} />
             <Route exact path="/test" component={Test} />
+            <Route exact path="/check" component={Check} />
             <Route exact path="/results/edit/:resultId" component={EditResult} />
             <Redirect to="/home" />
           </Switch>

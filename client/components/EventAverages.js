@@ -108,11 +108,11 @@ const EventAverages = () => {
 
   const getDivStyle = (average, targetTime) => {
     if (average == null) {
-      return { backgroundColor: 'yellow', borderRadius: '10px', border: '2px solid #8B8000' };
+      return "col yellow" ;
     } else if (average < targetTime) {
-      return { backgroundColor: 'green', borderRadius: '10px', border: '2px solid darkgreen' };
+      return "col green";
     } else {
-      return { backgroundColor: 'red', borderRadius: '10px', animation: 'flash 1s infinite', border: '2px solid darkred' };
+      return "col testing";
     }
   };
 
@@ -126,7 +126,7 @@ const EventAverages = () => {
         {events.length ? (
           events.map((zone) => (
             <div className="col-sm-3 mx-auto mb-4 d-flex" key={zone.id}>
-              <div className="col" style={getDivStyle(formatTime(averageTimeInSeconds(zone.id)), zone.targetTime)}>
+              <div className={getDivStyle(formatTime(averageTimeInSeconds(zone.id)), zone.targetTime)}>
               <h1><Link to={`/events/${zone.id}`}>{zone.name}</Link></h1>
                 <h1>Target Time: {zone.targetTime.slice(0, 5)}</h1>
                 {userResults.length ? (

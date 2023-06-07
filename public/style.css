@@ -138,3 +138,33 @@ form div {
 .Sample__container__content .react-calendar {
   margin: 0 auto;
 }
+
+.testing {
+  background-color: red;
+  animation-name: example;
+  animation-duration: 4s;
+}
+
+@keyframes example {
+  0%   {background-color: red;}
+  25%  {background-color: yellow;}
+  50%  {background-color: blue;}
+  100% {background-color: green;}
+}
+
+.yellow {
+  background-color: yellow;
+  border-radius: 10px;
+  border: '2px solid #8B8000';
+}
+
+.green {
+  background-color: green;
+  border-radius: 10px;
+  border: '2px solid darkgreen';
+}
+
+
+
+
+backgroundColor: 'green', borderRadius: '10px', border: '2px solid darkgreen'
