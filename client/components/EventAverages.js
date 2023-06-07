@@ -108,11 +108,25 @@ const EventAverages = () => {
 
   const getDivStyle = (average, targetTime) => {
     if (average == null) {
+      console.log("TESSSY!!!")
       return "col yellow" ;
     } else if (average < targetTime) {
       return "col green";
     } else {
       return "col testing";
+    }
+  };
+
+  const getWorkouts = (average, targetTime) => {
+    if (average == null) {
+      console.log("TES!!!")
+      return "WORKOUTS" ;
+    } else if (average < targetTime) {
+      console.log("NES!!!")
+      return "col green";
+    } else {
+      console.log("BES!!!")
+      return "WORKOUTS";
     }
   };
 
@@ -129,6 +143,7 @@ const EventAverages = () => {
               <div className={getDivStyle(formatTime(averageTimeInSeconds(zone.id)), zone.targetTime)}>
               <h1><Link to={`/events/${zone.id}`}>{zone.name}</Link></h1>
                 <h1>Target Time: {zone.targetTime.slice(0, 5)}</h1>
+                <div> {getWorkouts(formatTime(averageTimeInSeconds(zone.id)), zone.targetTime)}</div>
                 {userResults.length ? (
                   <React.Fragment>
                   {formatTime(averageTimeInSeconds(zone.id)) ? <div>

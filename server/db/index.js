@@ -6,6 +6,7 @@ const User = require('./models/User')
 const Event = require('./models/Event')
 const Result = require('./models/Result')
 const Workout= require('./models/Workout')
+const UserWorkout= require('./models/UserWorkout')
 
 //associations could go here!
 Event.hasMany(Result)
@@ -14,6 +15,10 @@ User.hasMany(Result)
 Result.belongsTo(User)
 Event.hasMany(Workout)
 Workout.belongsTo(Event)
+User.hasMany(UserWorkout)
+Workout.hasMany(UserWorkout)
+UserWorkout.belongsTo(User)
+UserWorkout.belongsTo(Workout)
 
 module.exports = {
   db,
@@ -21,6 +26,7 @@ module.exports = {
     User,
     Event,
     Result,
-    Workout
+    Workout,
+    UserWorkout
   },
 }
