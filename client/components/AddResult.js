@@ -123,25 +123,6 @@ const AddResult = () => {
       </div>
       <div>
         <label htmlFor="minutes" style={{ marginRight: "10px" }}>Duration:  </label>
-        {/* <input
-          type="number"
-          id="minutes"
-          min="0"
-          max="60"
-          value={minutes}
-          onChange={handleMinutesChange}
-          style={{ marginRight: '5px' }}
-        />
-        :
-        <input
-          type="number"
-          id="seconds"
-          min="0"
-          max="59"
-          value={seconds}
-          onChange={handleSecondsChange}
-          style={{ marginLeft: '5px' }}
-        /> */}
          <select value={minutes} onChange={(e) => setMinutes(e.target.value)}>
                       {Array.from(Array(60).keys()).map((num) => (
                         <option key={num} value={num.toString().padStart(2, '0')}>

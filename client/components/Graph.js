@@ -128,8 +128,8 @@ function Graph({ event }) {
 
   return (
     <div>
-      <h1 className="text-center">Graph</h1>
-      <select value={selectedUser} onChange={(e) => setSelectedUser(e.target.value)}>
+      {/* <h1 className="text-center">Graph</h1> */}
+      <select style={{ marginLeft: "20%", fontSize: "25px", marginTop: "50px", marginBottom: "0px"}} value={selectedUser} onChange={(e) => setSelectedUser(e.target.value)}>
         {userNames.map((userName) => (
           <option key={userName} value={userName}>
             {userName}
@@ -140,7 +140,7 @@ function Graph({ event }) {
         <VictoryAxis
           label="Date"
           tickFormat={(date) => new Date(date).toLocaleDateString(undefined, { day: 'numeric', month: 'short' })}
-          style={{ tickLabels: { fontSize: 8, padding: 5, angle: -45 } }}
+          style={{ tickLabels: { fontSize: 8, padding: 10, angle: -45 } }}
           tickValues={xDates}
         />
         <VictoryAxis
@@ -152,13 +152,6 @@ function Graph({ event }) {
         />
         {userLines}
         {userPlots}
-        {/* <VictoryScatter
-          data={chartData}
-          x="x"
-          y="y"
-          style={{ data: { fill: scatterColor } }}
-          size={4}
-        /> */}
         <VictoryLine
           data={[
             { x: xDates[0], y: targetTimeInSeconds },
@@ -167,10 +160,11 @@ function Graph({ event }) {
           style={{ data: { stroke: 'red', strokeWidth: 2 } }}
         />
         <VictoryLegend
-          x={10}
-          y={20}
+          x={125} y={50}
+          centerTitle
           orientation="horizontal"
-          gutter={10}
+          gutter={11}
+          style={{ border: { stroke: "black" },  labels: { fontSize: 6 } }}
           data={[
             ...filteredUserNames.map((userName) => ({
               name: userName,

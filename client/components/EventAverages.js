@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { fetchEvents } from '../store/allEventsStore';
 import { fetchSingleUser } from '../store/singleUserStore';
 import { fetchResults } from '../store/allResultsStore';
+import AddResult from './AddResult';
 
 const EventAverages = () => {
   const dispatch = useDispatch();
@@ -14,6 +15,7 @@ const EventAverages = () => {
   const results = useSelector((state) => state.allResults);
   const { id } = useSelector((state) => state.auth);
   const user = useSelector((state) => state.singleUser);
+  const [adding, setAdding] = useState();
 
   useEffect(() => {
     dispatch(fetchEvents());
@@ -21,7 +23,6 @@ const EventAverages = () => {
     dispatch(fetchSingleUser(id));
   }, [dispatch, id]);
 
-  console.log("events", events)
 
   const userResults = results.filter((result) => result.userId === id);
 
@@ -99,17 +100,27 @@ const EventAverages = () => {
     }
   };
 
+  const handleUpdate = (e) => {
+    e.preventDefault();
+    setAdding(true);
+    // setAddResult({ eventId: event.id, userId: user.id, eventName: event.name, userName: user.userName, time: '' });
+  };
+
   const getDivStyle = (average, targetTime) => {
     if (average == null) {
-      return { backgroundColor: 'yellow' };
+      return { backgroundColor: 'yellow', borderRadius: '10px', border: '2px solid #8B8000' };
     } else if (average < targetTime) {
-      return { backgroundColor: 'green' };
+      return { backgroundColor: 'green', borderRadius: '10px', border: '2px solid darkgreen' };
     } else {
-      return { backgroundColor: 'red', animation: 'flash 1s infinite' };
+      return { backgroundColor: 'red', borderRadius: '10px', animation: 'flash 1s infinite', border: '2px solid darkred' };
     }
   };
 
   return (
+    <div>
+    {adding == true ? (
+      <AddResult />
+    ) : (
     <div className="container-fluid bg-3 text-center">
       <div className="row align-items-stretch">
         {events.length ? (
@@ -117,7 +128,7 @@ const EventAverages = () => {
             <div className="col-sm-3 mx-auto mb-4 d-flex" key={zone.id}>
               <div className="col" style={getDivStyle(formatTime(averageTimeInSeconds(zone.id)), zone.targetTime)}>
               <h1><Link to={`/events/${zone.id}`}>{zone.name}</Link></h1>
-                <h1>Target TIme: {zone.targetTime.slice(0, 5)}</h1>
+                <h1>Target Time: {zone.targetTime.slice(0, 5)}</h1>
                 {userResults.length ? (
                   <React.Fragment>
                   {formatTime(averageTimeInSeconds(zone.id)) ? <div>
@@ -130,13 +141,24 @@ const EventAverages = () => {
                 ) : (
                   <div></div>
                 )}
+                 <button
+              className="btn btn-primary"
+              onClick={handleUpdate}
+              style={{ width: '50%', marginLeft: 'auto', marginBottom: '15px', marginRight: 'auto' }}
+            >
+              Add Result
+            </button>
               </div>
+              <div>
+
+            </div>
             </div>
           ))
         ) : (
           <div></div>
         )}
       </div>
+    </div>)}
     </div>
   );
 };

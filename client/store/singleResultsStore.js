@@ -30,7 +30,7 @@ export const fetchResult = (id) => {
   };
 };
 
-export const updateSingleResult = (result, history) => {
+export const updateSingleResult = (result) => {
   // console.log("IT MADE IT!")
   return async (dispatch) => {
     try {

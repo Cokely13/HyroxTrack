@@ -50,7 +50,6 @@ function EventDetail() {
       : 0
     : 0;
 
-    console.log("user", eventsUser)
 
   const formatTime = (timeInSeconds) => {
     const minutes = Math.floor(timeInSeconds / 60);
@@ -139,11 +138,13 @@ function EventDetail() {
               Add Result
             </button>
           </div>
+          <div style= {{width: "75%", marginLeft: "auto", marginRight: "auto" }}>
           <Graph event={event} />
+          </div>
           <h1 className="text-center" style={{ marginBottom: '15px', marginTop: '15px' }}>
             <u>Results</u>
           </h1>
-          <div style={{ paddingLeft: '15px', paddingRight: '15px' }}>
+          <div  style={{ paddingLeft: '15px', paddingRight: '15px' }}>
             <div className="mb-3">
               <label htmlFor="sortOrder" className="form-label">
                 Sort By:
@@ -175,7 +176,7 @@ function EventDetail() {
               </select>
             </div>
             {sortedResults.length > 0 ? (
-              <table className="table table-bordered table-dark">
+              <table className="table table-bordered table-dark text-center">
                 <thead>
                   <tr>
                     <th scope="col">Date</th>
