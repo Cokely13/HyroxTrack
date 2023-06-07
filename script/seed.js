@@ -32,6 +32,12 @@ async function seed() {
    Workout.create({ name: 'SkiErg', description: "5 rounds 30 Seconds/30 Seconds Off", eventId: 1 }),
    Workout.create({ name: 'SkiErg', description: "2000m row", eventId: 1 }),
    Workout.create({ name: 'SkiErg', description: "3 rounds 500m row, 1 min rest", eventId: 1}),
+   Workout.create({ name: 'Row', description: "5 rounds 30 Seconds/30 Seconds Off", eventId: 5 }),
+   Workout.create({ name: 'Row', description: "2000m row", eventId: 5 }),
+   Workout.create({ name: 'Row', description: "3 rounds 500m row, 1 min rest", eventId: 5}),
+   Workout.create({ name: 'Wall Balls', description: "5 rounds 30 Seconds/30 Seconds Off", eventId: 8 }),
+   Workout.create({ name: 'Wall Balls', description: "2000m row", eventId: 8 }),
+   Workout.create({ name: 'Wall Balls', description: "3 rounds 500m row, 1 min rest", eventId: 8}),
 
   ])
 

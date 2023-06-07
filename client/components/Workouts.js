@@ -1,29 +1,45 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
+import { Link, useParams } from 'react-router-dom'
 import { fetchWorkouts } from '../store/allWorkoutsStore';
-import { updateSingleWorkout } from '../store/singleWorkoutStore';
+import { fetchSingleUser } from '../store/singleUserStore';
+import { createUserWorkout } from '../store/allUserWorkoutsStore';
 
 function Workouts() {
   const dispatch = useDispatch();
   const { id } = useSelector((state) => state.auth);
   const workouts = useSelector((state) => state.allWorkouts);
+  const user = useSelector((state) => state.singleUser);
+  const [reload, setReload] = useState(false);
+  const {  workoutId } = useParams();
 
   useEffect(() => {
-    dispatch(fetchWorkouts());
-  }, [dispatch]);
+    dispatch(fetchSingleUser(id));
+  }, [dispatch, id]);
 
-  const handleCheckboxChange = (workout) => {
-    const updatedWorkout = { ...workout, done: !workout.done };
-    dispatch(updateSingleWorkout(updatedWorkout));
+  const handleButtonClick = (workout) => {
+    const userWorkout = {
+      userId: id,
+      workoutId: workout.id,
+      count: 1,
+    };
+    dispatch(createUserWorkout(userWorkout));
+    setReload(!reload);
   };
 
   useEffect(() => {
     dispatch(fetchWorkouts());
-  }, [dispatch, workouts]);
+  }, [reload, dispatch,]);
+
+  useEffect(() => {
+    if (reload) {
+      dispatch(fetchSingleUser(id)); // Fetch updated user data
+      setReload(false); // Reset reload to false
+    }
+  }, [reload, dispatch, id]);
 
   // Sort the workouts based on their ID
-  const sortedWorkouts = workouts.slice().sort((a, b) => a.id - b.id);
+  const sortedWorkouts = workouts.filter((workout)=> workout.eventId == workoutId ).slice().sort((a, b) => a.id - b.id);
 
   return (
     <div>
@@ -39,7 +55,7 @@ function Workouts() {
                   <div>Event</div>
                 </th>
                 <th scope="col">Description</th>
-                <th scope="col">Done</th>
+                <th scope="col">#</th>
               </tr>
             </thead>
             <tbody>
@@ -48,11 +64,8 @@ function Workouts() {
                   <td>{workout.name}</td>
                   <td>{workout.description}</td>
                   <td>
-                    <input
-                      type="checkbox"
-                      checked={workout.done}
-                      onChange={() => handleCheckboxChange(workout)}
-                    />
+                    {user.userworkouts ? user.userworkouts.filter((userWorkout) => userWorkout.workoutId == workout.id).length : 0}
+                    <button onClick={() => handleButtonClick(workout)}>+</button>
                   </td>
                 </tr>
               ))}
@@ -67,3 +80,4 @@ function Workouts() {
 }
 
 export default Workouts;
+
