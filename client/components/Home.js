@@ -10,10 +10,12 @@ export const Home = props => {
   const {userName} = props
 
   return (
-    <div>
+    <div style={{padding : "50px"}}>
       <h3>Welcome, {userName}</h3>
       <TargetDate/>
-      <EventAverages/>
+      <div>
+      <EventAverages />
+      </div>
     </div>
   )
 }

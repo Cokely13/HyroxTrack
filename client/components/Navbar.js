@@ -29,7 +29,6 @@ const Navbar = ({handleClick, isLoggedIn}) => (
           <a className="dropdown-item" href="/events/6">Farmers Carry</a>
           <a className="dropdown-item" href="/events/7">Sandbag Lunges</a>
           <a className="dropdown-item" href="/events/8">Wall Balls</a>
-          <a className="dropdown-item" href="/events/9">Run</a>
         </div>
       </li>
       <li className="nav-item">

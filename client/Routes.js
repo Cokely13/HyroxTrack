@@ -17,6 +17,7 @@ import Date from './components/Date';
 import TargetTimes from './components/TargetTimes';
 import Check from './components/Check';
 import Test from './components/Test';
+import Workouts from './components/Workouts'
 
 /**
  * COMPONENT
@@ -46,6 +47,7 @@ class Routes extends Component {
             <Route exact path="/target" component={TargetTimes} />
             <Route exact path="/test" component={Test} />
             <Route exact path="/check" component={Check} />
+            <Route exact path="/workouts" component={Workouts} />
             <Route exact path="/results/edit/:resultId" component={EditResult} />
             <Redirect to="/home" />
           </Switch>

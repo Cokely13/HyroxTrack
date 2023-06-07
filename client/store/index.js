@@ -9,6 +9,8 @@ import usersReducer from './allUsersStore'
 import singleUserReducer from './singleUserStore'
 import singleResultReducer from './singleResultsStore'
 import resultsReducer from './allResultsStore'
+import workoutsReducer from './allWorkoutsStore'
+import singleWorkoutReducer from './singleWorkoutStore'
 
 const reducer = combineReducers({ auth,
   allEvents: eventsReducer,
@@ -16,7 +18,9 @@ const reducer = combineReducers({ auth,
   allUsers: usersReducer,
   singleUser: singleUserReducer,
   allResults: resultsReducer,
-  singleResult: singleResultReducer
+  singleResult: singleResultReducer,
+  singleWorkout: singleWorkoutReducer,
+  allWorkouts: workoutsReducer
 })
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))

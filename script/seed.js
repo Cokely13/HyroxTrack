@@ -1,6 +1,6 @@
 'use strict'
 
-const {db, models: {User, Event} } = require('../server/db')
+const {db, models: {User, Event, Workout} } = require('../server/db')
 
 /**
  * seed - this function clears the database, updates tables to
@@ -26,6 +26,13 @@ async function seed() {
     Event.create({ name: 'Sandbag Lunges', description: "100 meters", image:"https://daten.buffcoach.net/upload/foto/800/hyrox-lunges-essen-2019-jpg.jpg", targetTime: "3:00"}),
     Event.create({ name: 'Wall Balls', description: "100", image:"https://www.cycfitness.co.uk/uploads/products/gallery/hold-strong-hyrox-wall-ball-1643822493-1280.jpg", targetTime: "3:45"}),
     // Event.create({ name: 'Run', description: "1 Km", image:"https://www.mudrunguide.com/wp-content/uploads/2020/04/92948460_2632588537062132_3604830334308319232_o.jpg", targetTime: "5:35"}),
+  ])
+
+  const workouts = await Promise.all([
+   Workout.create({ name: 'SkiErg', description: "5 rounds 30 Seconds/30 Seconds Off", eventId: 1 }),
+   Workout.create({ name: 'SkiErg', description: "2000m row", eventId: 1 }),
+   Workout.create({ name: 'SkiErg', description: "3 rounds 500m row, 1 min rest", eventId: 1}),
+
   ])
 
   console.log(`seeded ${users.length} users`)
