@@ -93,6 +93,36 @@ const EventAverages = () => {
     return null;
   };
 
+  const recentResultDate = (eventId) => {
+    const recent = userResults
+      .filter((result) => result.eventId === eventId)
+      .sort((a, b) => new Date(b.date) - new Date(a.date))
+      .slice(0, 1);
+
+    if (recent.length > 0) {
+
+      return recent[0].date
+    }
+
+    return null;
+  };
+
+  const recentResult = (eventId) => {
+    const recent = userResults
+      .filter((result) => result.eventId === eventId)
+      .sort((a, b) => new Date(b.date) - new Date(a.date))
+      .slice(0, 1);
+
+    if (recent.length > 0) {
+      console.log("reaaa", recent[0].duration)
+      return recent[0].duration
+    }
+
+    return null;
+  };
+
+  // console.log("recent", recentResult)
+
   const trending = (average, recent) => {
     if (average === recent) {
       return <i className="bi bi-arrow-left-right"></i>; // Equal sign
@@ -149,14 +179,16 @@ const EventAverages = () => {
               <div><Link to={`/events/${zone.id}`}>{zone.name}</Link></div>
                 <div>Target Time: {zone.targetTime.slice(0, 5)}</div>
                 <div> { getWorkouts(formatTime(averageTimeInSeconds(zone.id)), zone.targetTime) == 1 ? <div className='flash'><Link to={`/workouts/${zone.id}`}>DO THESE WORKOUTS!</Link></div> : <div></div> } </div>
-                <div>Workouts:{events? getNumWorkouts(zone.id) : <div></div>} </div>
+                <div>Workouts Completed: {events? getNumWorkouts(zone.id) : <div></div>} </div>
                 {userResults.length ? (
                   <React.Fragment>
                   {formatTime(averageTimeInSeconds(zone.id)) ? <div>
                     <div>Record: {getRecord(zone.id)}</div>
                   <div>Average: {formatTime(averageTimeInSeconds(zone.id))}  </div>
                   <div>Recent Average: {formatTime(recentAverage(zone.id))} </div>
-                  <div>{trending((recentAverage(zone.id)),averageTimeInSeconds(zone.id))} </div>
+                  <div>Most Recent Result Date: {recentResultDate(zone.id)} </div>
+                  <div>Most Recent Result: {recentResult(zone.id)} </div>
+                  <h1>{trending((recentAverage(zone.id)),averageTimeInSeconds(zone.id))} </h1>
                     </div>: <h1></h1>}
                   </React.Fragment>
                 ) : (

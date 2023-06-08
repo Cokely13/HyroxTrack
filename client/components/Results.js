@@ -84,7 +84,7 @@ function Results() {
       </div>
       {results ? (
         <div style={{ paddingLeft: '15px', paddingRight: '15px' }}>
-          <table className="table table-bordered  table-dark text-center">
+          <table className="table table-bordered text-center" style= {{backgroundColor:"rgb(211, 211, 211)"}}>
             <thead>
               <tr>
                 <th scope="col">#</th>
@@ -102,12 +102,12 @@ function Results() {
                   <td>{index + 1}</td>
                   <td>{result.date}</td>
                   <td>
-                    <Link to={`/events/${result.eventId}`} style={{ color: 'white' }}>
+                    <Link to={`/events/${result.eventId}`} style={{ color: 'blue' }}>
                       {result.eventName}
                     </Link>
                   </td>
                   <td>
-                    <Link to={`/users/${result.userId}`} style={{ color: 'white' }}>
+                    <Link to={`/users/${result.userId}`} style={{ color: 'blue' }}>
                       {result.userName}
                     </Link>
                   </td>

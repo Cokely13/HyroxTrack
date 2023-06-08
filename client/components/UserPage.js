@@ -38,7 +38,7 @@ function UserPage() {
               </div> : <div></div>}
           {user.results ?
           <div style={{paddingLeft: "15px",paddingRight: "15px"}}>
-          <table className="table table-bordered  table-dark text-center">
+          <table className="table table-bordered text-center" style= {{backgroundColor:"rgb(211, 211, 211)"}}>
   <thead>
     <tr>
       <th scope="col">#</th>
@@ -52,8 +52,8 @@ function UserPage() {
               return (
                 <tbody key={result.id}>
                 <tr>
-                  <th scope="row">{result.id}</th>
-                  <th scope="row">{result.date}</th>
+                  <td >{result.id}</td>
+                  <td >{result.date}</td>
                   <td>{result.duration}</td>
                   <td>{result.eventName}</td>
                 </tr>
@@ -65,8 +65,8 @@ function UserPage() {
               return (
                 <tbody key={result.id}>
                 <tr>
-                  <th scope="row">{result.id}</th>
-                  <th scope="row">{result.date}</th>
+                  <td >{result.id}</td>
+                  <td >{result.date}</td>
                   <td>{result.duration}</td>
                   <td>{result.eventName}</td>
                 </tr>

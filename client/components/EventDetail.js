@@ -105,7 +105,7 @@ function EventDetail() {
           <h1 className="text-center">{event.name}</h1>
         <button onClick={handleToggleShowGraph} className="btn btn-info" style={{ position: 'absolute', left: '50px' }} >{showGraph ? 'Show Results' : 'Show Graph'}</button>
           {showGraph ? (
-          <div style= {{width: "75%", marginLeft: "auto", marginRight: "auto" }}>
+          <div style= {{width: "90%", marginLeft: "auto", marginRight: "auto" }}>
           <Graph event={event} />
           </div>
             ) :  (
@@ -145,7 +145,7 @@ function EventDetail() {
               </select>
             </div>
             {sortedResults.length > 0 ? (
-              <table className="table table-bordered table-dark text-center">
+              <table className="table table-bordered  text-center" style= {{backgroundColor:"rgb(211, 211, 211)"}}>
                 <thead>
                   <tr>
                     <th scope="col">Date</th>

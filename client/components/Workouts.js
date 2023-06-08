@@ -4,18 +4,25 @@ import { Link, useParams } from 'react-router-dom'
 import { fetchWorkouts } from '../store/allWorkoutsStore';
 import { fetchSingleUser } from '../store/singleUserStore';
 import { createUserWorkout } from '../store/allUserWorkoutsStore';
+import { fetchEvent } from '../store/singleEventStore';
 
 function Workouts() {
   const dispatch = useDispatch();
   const { id } = useSelector((state) => state.auth);
   const workouts = useSelector((state) => state.allWorkouts);
   const user = useSelector((state) => state.singleUser);
+  const event = useSelector((state) => state.singleEvent);
   const [reload, setReload] = useState(false);
   const {  workoutId } = useParams();
 
   useEffect(() => {
     dispatch(fetchSingleUser(id));
   }, [dispatch, id]);
+
+
+  useEffect(() => {
+    dispatch(fetchEvent(workoutId));
+  }, [dispatch, workoutId]);
 
   const handleButtonClick = (workout) => {
     const userWorkout = {
@@ -45,27 +52,26 @@ function Workouts() {
   return (
     <div>
       <h1 className="text-center" style={{ marginBottom: '15px', marginTop: '15px' }}>
-        <u>Workouts</u>
+        <u>{event.name} Workouts</u>
       </h1>
       {sortedWorkouts.length > 0 ? (
         <div style={{ paddingLeft: '15px', paddingRight: '15px' }}>
-          <table className="table table-bordered table-dark text-center">
+          <table className="table table-bordered text-center" style= {{backgroundColor:"rgb(211, 211, 211)"}}>
             <thead>
               <tr>
-                <th>
-                  <div>Event</div>
-                </th>
                 <th scope="col">Description</th>
                 <th scope="col">#</th>
+                <th scope="col">Workout Done</th>
               </tr>
             </thead>
             <tbody>
               {sortedWorkouts.map((workout) => (
                 <tr key={workout.id}>
-                  <td>{workout.name}</td>
                   <td>{workout.description}</td>
                   <td>
                     {user.userworkouts ? user.userworkouts.filter((userWorkout) => userWorkout.workoutId == workout.id).length : 0}
+                    </td>
+                    <td>
                     <button onClick={() => handleButtonClick(workout)}>+</button>
                   </td>
                 </tr>
