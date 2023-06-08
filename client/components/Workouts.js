@@ -99,8 +99,8 @@ function Workouts() {
 
   return (
     <div>
-      <h1 className="text-center" style={{ marginBottom: '15px', marginTop: '15px' }}>
-        <u>{event.name} Workouts</u>
+      <h1 className="profile border rounded border-5  text-center " style={{ marginBottom: "15px", marginTop: "15px",  marginLeft: "auto", marginRight: "auto", width: "35%" }}>
+        {event.name} Workouts
       </h1>
       {adding == true ? <div className='text-center'><h1>New Workout</h1>
        <div>
@@ -114,7 +114,7 @@ function Workouts() {
         <div className='text-center' style={{ paddingLeft: '15px', paddingRight: '15px' }}>
           <table className="table table-bordered text-center" style= {{backgroundColor:"rgb(211, 211, 211)"}}>
             <thead>
-              <tr>
+              <tr style= {{fontSize:"30px"}}>
                 <th scope="col">Description</th>
                 <th scope="col">#</th>
                 <th scope="col">Workout Done</th>
@@ -122,7 +122,7 @@ function Workouts() {
             </thead>
             <tbody>
               {sortedWorkouts.map((workout) => (
-                <tr key={workout.id}>
+                <tr key={workout.id} style= {{fontSize:"20px"}}>
                   <td>{workout.description}</td>
                   <td>
                     {user.userworkouts ? user.userworkouts.filter((userWorkout) => userWorkout.workoutId == workout.id).length : 0}
