@@ -10,7 +10,7 @@ export const Home = props => {
   const {userName} = props
 
   return (
-    <div style={{padding : "50px"}}>
+    <div style={{padding : "20px"}}>
       <TargetDate/>
       <div>
       <EventAverages />

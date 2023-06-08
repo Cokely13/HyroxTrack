@@ -16,6 +16,7 @@ import EditProfile from './components/EditProfile';
 import EventAverages from './components/EventAverages';
 import TargetTimes from './components/TargetTimes';
 import Workouts from './components/Workouts'
+import Profile from './components/Profile';
 
 /**
  * COMPONENT
@@ -33,6 +34,7 @@ class Routes extends Component {
         {isLoggedIn ? (
           <Switch>
             <Route exact path="/home" component={Home} />
+            <Route exact path="/profile" component={Profile} />
             <Route exact path="/average" component={EventAverages} />
             <Route exact path="/myresults" component={MyResults} />
             <Route exact path="/profile/edit" component={EditProfile} />

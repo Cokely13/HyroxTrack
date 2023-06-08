@@ -18,7 +18,7 @@ const CountdownTimer = ({ targetDate }) => {
 
   const ShowCounter = ({ days, hours, minutes, seconds }) => {
     return (
-      <div className="show-counter">
+      <div className="show-counter" >
         <a
           href="https://tapasadhikary.com"
           target="_blank"
