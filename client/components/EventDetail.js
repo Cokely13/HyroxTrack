@@ -102,8 +102,8 @@ function EventDetail() {
   return (
     <div>
         <div>
-          <h1 className="text-center">{event.name}</h1>
-        <button onClick={handleToggleShowGraph} className="btn btn-info" style={{ position: 'absolute', left: '50px' }} >{showGraph ? 'Show Results' : 'Show Graph'}</button>
+          <h1 className="profile border rounded border-5  text-center " style={{ marginBottom: "15px", marginTop: "15px",  marginLeft: "auto", marginRight: "auto", width: "35%" }}>{event.name}</h1>
+        <button onClick={handleToggleShowGraph} className="btn btn-secondary" style={{ position: 'absolute', left: '50px' }} >{showGraph ? 'Show Results' : 'Show Graph'}</button>
         <Link className="btn btn-info" to={`/workouts/${event.id}`} style={{ position: 'absolute', right: '50px' }} >Go to Workouts</Link>
           {showGraph ? (
           <div style= {{width: "90%", marginLeft: "auto", marginRight: "auto" }}>
@@ -111,14 +111,12 @@ function EventDetail() {
           </div>
             ) :  (
               <div>
-          <h1 className="text-center" style={{ marginBottom: '15px', marginTop: '15px' }}>
-            <u>Results</u>
-          </h1>
-          <div  style={{ paddingLeft: '15px', paddingRight: '15px' }}>
-            <div className="mb-3">
-              <label htmlFor="sortOrder" className="form-label">
+          <div  style={{ paddingLeft: '15px', paddingRight: '15px', marginTop: "75px" }}>
+          <div className="row">
+    <div className="col-md-6 mb-3">
+              {/* <label htmlFor="sortOrder" className="form-label">
                 Sort By:
-              </label>
+              </label> */}
               <select
                 id="sortOrder"
                 className="form-select"
@@ -130,10 +128,7 @@ function EventDetail() {
                 <option value="time">Time</option>
               </select>
             </div>
-            <div className="mb-3">
-              <label htmlFor="sortDirection" className="form-label">
-                Sort Direction:
-              </label>
+            <div className="col-md-6 mb-3">
               <select
                 id="sortDirection"
                 className="form-select"
@@ -144,18 +139,19 @@ function EventDetail() {
                 <option value="ascending">Ascending</option>
                 <option value="descending">Descending</option>
               </select>
+              </div>
             </div>
             {sortedResults.length > 0 ? (
               <table className="table table-bordered  text-center" style= {{backgroundColor:"rgb(211, 211, 211)"}}>
                 <thead>
-                  <tr>
+                  <tr style= {{fontSize:"30px"}}>
                     <th scope="col">Date</th>
                     <th scope="col">Name</th>
                     <th scope="col">Time</th>
                     <th scope="col">Pass</th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody style= {{fontSize:"20px"}}>
                   {sortedResults.map((result) => (
                     <tr key={result.id}>
                       <td>{result.date}</td>

@@ -121,7 +121,6 @@ const EventAverages = () => {
     return null;
   };
 
-  // console.log("recent", recentResult)
 
   const trending = (average, recent) => {
     if (average === recent) {
@@ -136,7 +135,6 @@ const EventAverages = () => {
   const handleUpdate = (e) => {
     e.preventDefault();
     setAdding(true);
-    // setAddResult({ eventId: event.id, userId: user.id, eventName: event.name, userName: user.userName, time: '' });
   };
 
   const getDivStyle = (average, targetTime) => {
@@ -176,7 +174,7 @@ const EventAverages = () => {
           events.map((zone) => (
             <div className="col-sm-3 mx-auto mb-4 d-flex" key={zone.id}>
               <div className={getDivStyle(formatTime(averageTimeInSeconds(zone.id)), zone.targetTime)}>
-              <div><Link to={`/events/${zone.id}`}>{zone.name}</Link></div>
+              <h1><Link to={`/events/${zone.id}`} style={{ color: 'black' }}>{zone.name}</Link></h1>
                 <div>Target Time: {zone.targetTime.slice(0, 5)}</div>
                 <div> { getWorkouts(formatTime(averageTimeInSeconds(zone.id)), zone.targetTime) == 1 ? <div className='flash'><Link to={`/workouts/${zone.id}`}>DO THESE WORKOUTS!</Link></div> : <div></div> } </div>
                 <div>Workouts Completed: {events? getNumWorkouts(zone.id) : <div></div>} </div>

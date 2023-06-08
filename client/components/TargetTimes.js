@@ -41,16 +41,16 @@ function TargetTimes() {
 
   return (
     <div>
-      <h1 className="text-center">Target Times</h1>
-      <table className="table table-bordered">
+      <h1 className="profile border rounded border-5  text-center " style={{ marginBottom: "15px", marginTop: "15px",  marginLeft: "auto", marginRight: "auto", width: "35%" }}>Target Times</h1>
+      <table className="table table-bordered text-center" style= {{backgroundColor:"rgb(211, 211, 211)"}}>
         <thead>
-          <tr>
+          <tr style= {{fontSize:"30px"}}>
             <th>Event Name</th>
             <th>Target Time</th>
             <th>Actions</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody style= {{fontSize:"20px"}}>
           {events.map((event) => (
             <tr key={event.id}>
               <td>{event.name}</td>

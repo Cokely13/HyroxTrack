@@ -13,11 +13,12 @@ function Users() {
   }, [])
 
   return (
-    <div>
+    <div className="text-center">
+      <h1 className="profile border rounded border-5  text-center " style={{ marginBottom: "15px", marginTop: "15px",  marginLeft: "auto", marginRight: "auto", width: "35%" }}>Users</h1>
       {users ? users.map((user) => {
         return(
           <div key={(user.id)}>
-            <h1>{user.userName}  {user.id}</h1>
+           <Link to={`/users/${user.id}`}> <h1>{user.userName}  </h1></Link>
 
           </div>
         )

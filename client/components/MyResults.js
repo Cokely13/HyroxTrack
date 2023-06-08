@@ -72,7 +72,7 @@ function MyResults() {
 
   return (
     <div>
-    <h1 className="text-center" style={{marginBottom: "15px",marginTop: "15px"}}><u>{user.userName}'s Results</u></h1>
+    <h1 className="profile border rounded border-5  text-center " style={{ marginBottom: "15px", marginTop: "15px",  marginLeft: "auto", marginRight: "auto", width: "35%" }}>{user.userName}'s Results</h1>
     {selectedEventId !== null? (
                   <div className='text-center'>
                     <h1>Event Name:</h1>
@@ -118,7 +118,7 @@ function MyResults() {
           <div style={{paddingLeft: "15px",paddingRight: "15px"}}>
           <table className="table table-bordered  text-center" style= {{backgroundColor:"rgb(211, 211, 211)"}}>
   <thead>
-    <tr>
+    <tr style= {{fontSize:"30px"}}>
       <th scope="col">#</th>
       <th scope="col">Date</th>
       <th scope="col">Event Name</th>
@@ -130,7 +130,7 @@ function MyResults() {
   </thead>
   {selectedEventFilter !== "All" ? user.results.filter(result=>result.eventName == selectedEventFilter).map((result) => {
               return (
-                <tbody key={result.id}>
+                <tbody key={result.id} style= {{fontSize:"20px"}}>
                 <tr className="text-center">
                   <th scope="row">{result.id}</th>
                   <th scope="row">{result.date}</th>
@@ -149,7 +149,7 @@ function MyResults() {
             }):
             user.results.map((result) => {
               return (
-                <tbody key={result.id}>
+                <tbody key={result.id} style= {{fontSize:"20px"}}>
                 <tr className="text-center">
                   <th scope="row">{result.id}</th>
                   <th scope="row">{result.date}</th>
@@ -174,4 +174,5 @@ function MyResults() {
 }
 
 export default MyResults
+
 

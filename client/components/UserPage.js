@@ -28,7 +28,7 @@ function UserPage() {
   return (
     <div>
     {/* <img className="rounded-circle border border-5  border-dark" style={{width: "100rem"}}  src={user.image}/> */}
-    <h1 className="text-center" style={{marginBottom: "15px",marginTop: "15px"}}><u>{user.userName}'s Results</u></h1>
+    <h1 className="profile border rounded border-5  text-center " style={{ marginBottom: "15px", marginTop: "15px",  marginLeft: "auto", marginRight: "auto", width: "35%" }}>{user.userName}'s Results</h1>
     {user.results ? <div style={{marginLeft: "35px", marginBottom: "35px"}}>
       <select onChange={handleChange} name="filterEvents" className='custom-select'>
               <option value="All">Filter by Event</option>
@@ -40,7 +40,7 @@ function UserPage() {
           <div style={{paddingLeft: "15px",paddingRight: "15px"}}>
           <table className="table table-bordered text-center" style= {{backgroundColor:"rgb(211, 211, 211)"}}>
   <thead>
-    <tr>
+    <tr style= {{fontSize:"30px"}}>
       <th scope="col">#</th>
       <th scope="col">Date</th>
       <th scope="col">Event Name</th>
@@ -50,7 +50,7 @@ function UserPage() {
   </thead>
   {selectedEvent !== "All"  ? user.results.filter(result=>result.eventName == selectedEvent).map((result) => {
               return (
-                <tbody key={result.id}>
+                <tbody key={result.id} style= {{fontSize:"20px"}}>
                 <tr>
                   <td >{result.id}</td>
                   <td >{result.date}</td>
@@ -63,7 +63,7 @@ function UserPage() {
             }):
             user.results.map((result) => {
               return (
-                <tbody key={result.id}>
+                <tbody key={result.id} style= {{fontSize:"20px"}}>
                 <tr>
                   <td >{result.id}</td>
                   <td >{result.date}</td>

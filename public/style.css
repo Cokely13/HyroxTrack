@@ -144,6 +144,9 @@ form div {
   border-radius: 10px;
   animation-name: flash;
   animation: flash 2s infinite;
+  border-color: darkred;
+  border-style: solid;
+  border-width: 5px;
   /* animation-duration: 4s; */
 }
 
@@ -197,13 +200,19 @@ form div {
 .yellow {
   background-color: rgb(211, 211, 211);
   border-radius: 10px;
-  border: '2px solid #8B8000';
+  /* border: '2px solid #8B8000'; */
+  border-color: darkgray;
+  border-style: solid;
+  border-width: 5px;
 }
 
 .green {
-  background-color: lightgreen;
+  background-color: green;
   border-radius: 10px;
-  border: '2px solid darkgreen';
+  /* border: '2px solid darkgreen'; */
+  border-color: darkgreen;
+  border-style: solid;
+  border-width: 5px;
 }
 
 

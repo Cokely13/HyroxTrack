@@ -127,9 +127,9 @@ function Graph({ event }) {
   const scatterColor = filteredUserNames.length > 0 ? 'yellow' : 'none'; // Hide scatter plots when no filtered users
 
   return (
-    <div>
+    <div className="border rounded border-5" style={{ backgroundColor: 'white', margin: '50px 150px 150px', textAlign: 'center', padding: '50px', border: '1px solid black', borderRadius: "10px", fontSize: "25px"  }}>
       {/* <h1 className="text-center">Graph</h1> */}
-      <select style={{ marginLeft: "20%", fontSize: "25px", marginTop: "50px", marginBottom: "0px"}} value={selectedUser} onChange={(e) => setSelectedUser(e.target.value)}>
+      <select style={{ fontSize: "25px",  marginBottom: "0px",  marginRight: "75%", marginTop: "25px"}} value={selectedUser} onChange={(e) => setSelectedUser(e.target.value)}>
         {userNames.map((userName) => (
           <option key={userName} value={userName}>
             {userName}

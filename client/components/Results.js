@@ -54,8 +54,8 @@ function Results() {
 
   return (
     <div>
-      <h1 className="text-center" style={{ marginBottom: '15px', marginTop: '15px' }}>
-        <u>Results</u>
+      <h1 className="profile border rounded border-5  text-center " style={{ marginBottom: "15px", marginTop: "15px",  marginLeft: "auto", marginRight: "auto", width: "35%" }}>
+        Results
       </h1>
       <div style={{ marginLeft: '35px', marginBottom: '35px' }}>
         <select onChange={handleChange} name="filterEvents" className="custom-select">
@@ -69,7 +69,7 @@ function Results() {
         </select>
       </div>
       <div style={{ marginLeft: '35px', marginBottom: '35px' }}>
-        <select onChange={handleSortColumnChange} value={sortColumn}>
+        <select onChange={handleSortColumnChange} value={sortColumn} style= {{marginRight: "10px"}}>
           <option disabled value="SortBy">
             Sort By
           </option>
@@ -86,7 +86,7 @@ function Results() {
         <div style={{ paddingLeft: '15px', paddingRight: '15px' }}>
           <table className="table table-bordered text-center" style= {{backgroundColor:"rgb(211, 211, 211)"}}>
             <thead>
-              <tr>
+              <tr style= {{fontSize:"30px"}}>
                 <th scope="col">#</th>
                 <th scope="col">Date</th>
                 <th scope="col">
@@ -96,7 +96,7 @@ function Results() {
                 <th scope="col">Time</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody style= {{fontSize:"20px"}}>
               {renderResults.map((result, index) => (
                 <tr key={result.id}>
                   <td>{index + 1}</td>
