@@ -104,6 +104,7 @@ function EventDetail() {
         <div>
           <h1 className="text-center">{event.name}</h1>
         <button onClick={handleToggleShowGraph} className="btn btn-info" style={{ position: 'absolute', left: '50px' }} >{showGraph ? 'Show Results' : 'Show Graph'}</button>
+        <Link className="btn btn-info" to={`/workouts/${event.id}`} style={{ position: 'absolute', right: '50px' }} >Go to Workouts</Link>
           {showGraph ? (
           <div style= {{width: "90%", marginLeft: "auto", marginRight: "auto" }}>
           <Graph event={event} />

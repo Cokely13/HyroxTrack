@@ -37,7 +37,7 @@ export const createWorkout = (workout, history) => {
   return async (dispatch) => {
     const { data: created } = await Axios.post("/api/workouts", workout);
     dispatch(_createWorkout(created));
-    history.push("/workouts");
+    // history.push("/workouts");
   };
 };
 
@@ -45,7 +45,7 @@ export const deleteWorkout = (id, history) => {
   return async (dispatch) => {
     const { data: workout } = await Axios.delete(`/api/workouts/${id}`);
     dispatch(_deleteWorkout(workout));
-    history.push("/workouts");
+    // history.push("/workouts");
   };
 };
 

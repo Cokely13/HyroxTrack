@@ -18,8 +18,6 @@ const AddResult = () => {
   const events = useSelector((state) => state.allEvents )
 
 
-  console.log("user", user)
-  console.log("events", events)
 
   useEffect(() => {
     dispatch(fetchSingleUser(id))
@@ -83,7 +81,6 @@ const AddResult = () => {
       duration: `${minutes}:${seconds}`,
     };
 
-    console.log("newResults", newResult)
     dispatch(createResult(newResult));
 
     // Set the success message and clear the input fields
