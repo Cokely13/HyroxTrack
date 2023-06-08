@@ -3,8 +3,6 @@ import { Link, useParams, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchEvent } from '../store/singleEventStore';
 import { fetchSingleUser } from '../store/singleUserStore';
-import { createResult } from '../store/allResultsStore';
-import AddResult from './AddResult';
 import Graph from './Graph';
 
 function EventDetail() {
@@ -19,6 +17,7 @@ function EventDetail() {
   const [sortDirection, setSortDirection] = useState('ascending'); // Default sort direction is ascending
   const event = useSelector((state) => state.singleEvent);
   const user = useSelector((state) => state.singleUser);
+  const [showGraph, setShowGraph] = useState(true); // State to control showing/hiding the graph
 
   useEffect(() => {
     dispatch(fetchEvent(eventId));
@@ -96,51 +95,21 @@ function EventDetail() {
       }).filter((result) => result.userId == id)
     : [];
 
+    const handleToggleShowGraph = () => {
+      setShowGraph(!showGraph);
+    };
+
   return (
     <div>
-      {adding == eventId ? (
-        <AddResult />
-      ) : (
         <div>
           <h1 className="text-center">{event.name}</h1>
-          <div className="card border border-5  border-warning rounded mx-auto text-center" key={event.id} style={{ width: '28rem' }}>
-            <Link to={`/events/${event.id}`}>
-              <img
-                className="card-img-top border border-dark rounded"
-                src={event.image}
-                style={{ height: '20rem', marginLeft: 'auto', marginTop: '15px', marginRight: 'auto' }}
-                alt="Card image cap"
-              />
-            </Link>
-            <h2 className="card-title" style={{ marginTop: '15px' }}>
-              {event.name}
-            </h2>
-            <h3 className="card-text">{event.description}</h3>
-            {event.targetTime ? (
-              <h3 className="card-text">Target Time: {event.targetTime.slice(0, 5)}</h3>
-            ) : (
-              <div>No</div>
-            )}
-            {event.results ? (
-              event.results.length ? (
-                <h3 className="card-text">Average Time: {formatTime(averageTimeInSeconds)}</h3>
-              ) : (
-                <div>NADA</div>
-              )
-            ) : (
-              <div>Nothing</div>
-            )}
-            <button
-              className="btn btn-primary"
-              onClick={handleUpdate}
-              style={{ width: '50%', marginLeft: 'auto', marginBottom: '15px', marginRight: 'auto' }}
-            >
-              Add Result
-            </button>
-          </div>
+        <button onClick={handleToggleShowGraph} className="btn btn-info" style={{ position: 'absolute', left: '50px' }} >{showGraph ? 'Show Results' : 'Show Graph'}</button>
+          {showGraph ? (
           <div style= {{width: "75%", marginLeft: "auto", marginRight: "auto" }}>
           <Graph event={event} />
           </div>
+            ) :  (
+              <div>
           <h1 className="text-center" style={{ marginBottom: '15px', marginTop: '15px' }}>
             <u>Results</u>
           </h1>
@@ -206,8 +175,9 @@ function EventDetail() {
               <div>No Results</div>
             )}
           </div>
+          </div>
+        )}
         </div>
-      )}
     </div>
   );
 }
