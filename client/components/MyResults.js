@@ -6,7 +6,7 @@ import { fetchSingleUser } from '../store/singleUserStore'
 import { deleteResult } from '../store/allResultsStore'
 import { updateSingleResult } from '../store/singleResultsStore'
 
-function Profile() {
+function MyResults() {
   const dispatch = useDispatch()
   let history = useHistory();
   const {id} = useSelector((state) => state.auth )
@@ -116,7 +116,7 @@ function Profile() {
               </div> : <div></div>}
           {user.results ?
           <div style={{paddingLeft: "15px",paddingRight: "15px"}}>
-          <table className="table table-bordered  table-dark text-center">
+          <table className="table table-bordered  text-center" style= {{backgroundColor:"rgb(211, 211, 211)"}}>
   <thead>
     <tr>
       <th scope="col">#</th>
@@ -173,5 +173,5 @@ function Profile() {
   )
 }
 
-export default Profile
+export default MyResults
 

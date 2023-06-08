@@ -8,15 +8,13 @@ import {me} from './store'
 import EventDetail from './components/EventDetail';
 import Results from './components/Results';
 import Users from './components/Users';
-import Profile from './components/Profile';
+import MyResults from './components/MyResults';
+
 import UserPage from './components/UserPage';
 import EditResult from './components/EditResult';
 import EditProfile from './components/EditProfile';
 import EventAverages from './components/EventAverages';
-import Date from './components/Date';
 import TargetTimes from './components/TargetTimes';
-import Check from './components/Check';
-import Test from './components/Test';
 import Workouts from './components/Workouts'
 
 /**
@@ -36,17 +34,14 @@ class Routes extends Component {
           <Switch>
             <Route exact path="/home" component={Home} />
             <Route exact path="/average" component={EventAverages} />
-            <Route exact path="/profile" component={Profile} />
+            <Route exact path="/myresults" component={MyResults} />
             <Route exact path="/profile/edit" component={EditProfile} />
             <Route exact path="/events" component={Events} />
             <Route exact path="/events/:eventId" component={EventDetail}/>
             <Route exact path="/users" component={Users} />
             <Route exact path="/users/:userId" component={UserPage} />
             <Route exact path="/results" component={Results} />
-            <Route exact path="/date" component={Date} />
             <Route exact path="/target" component={TargetTimes} />
-            <Route exact path="/test" component={Test} />
-            <Route exact path="/check" component={Check} />
             <Route exact path="/workouts/:workoutId" component={Workouts} />
             <Route exact path="/results/edit/:resultId" component={EditResult} />
             <Redirect to="/home" />
