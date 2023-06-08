@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchEvents } from '../store/allEventsStore';
+import { fetchWorkouts } from '../store/allWorkoutsStore';
 import { fetchSingleUser } from '../store/singleUserStore';
 import { fetchResults } from '../store/allResultsStore';
 import AddResult from './AddResult';
@@ -12,6 +13,7 @@ import AddResult from './AddResult';
 const EventAverages = () => {
   const dispatch = useDispatch();
   const events = useSelector((state) => state.allEvents);
+  const workouts = useSelector((state) => state.allWorkouts);
   const results = useSelector((state) => state.allResults);
   const { id } = useSelector((state) => state.auth);
   const user = useSelector((state) => state.singleUser);
@@ -20,9 +22,11 @@ const EventAverages = () => {
   useEffect(() => {
     dispatch(fetchEvents());
     dispatch(fetchResults());
+    dispatch(fetchWorkouts())
     dispatch(fetchSingleUser(id));
   }, [dispatch, id]);
 
+  console.log('user', user)
 
   const userResults = results.filter((result) => result.userId === id);
 
@@ -108,7 +112,6 @@ const EventAverages = () => {
 
   const getDivStyle = (average, targetTime) => {
     if (average == null) {
-      console.log("TESSSY!!!")
       return "col yellow" ;
     } else if (average < targetTime) {
       return "col green";
@@ -119,15 +122,19 @@ const EventAverages = () => {
 
   const getWorkouts = (average, targetTime) => {
     if (average == null) {
-      console.log("TES!!!")
-      return "WORKOUTS" ;
+      return 1;
     } else if (average < targetTime) {
-      console.log("NES!!!")
       return "col green";
     } else {
-      console.log("BES!!!")
-      return "WORKOUTS";
+      return "1";
     }
+  };
+
+  const getNumWorkouts = (id) => {
+    console.log('id', id)
+    console.log("user!", workouts)
+   const num = workouts? workouts.filter((workout)=> workout.eventId == id) : null
+   console.log('num', num)
   };
 
   return (
@@ -143,7 +150,7 @@ const EventAverages = () => {
               <div className={getDivStyle(formatTime(averageTimeInSeconds(zone.id)), zone.targetTime)}>
               <h1><Link to={`/events/${zone.id}`}>{zone.name}</Link></h1>
                 <h1>Target Time: {zone.targetTime.slice(0, 5)}</h1>
-                <div> {getWorkouts(formatTime(averageTimeInSeconds(zone.id)), zone.targetTime)}</div>
+                <div> { getWorkouts(formatTime(averageTimeInSeconds(zone.id)), zone.targetTime) == 1 ? <h1><Link to={`/workouts/${zone.id}`}>DO THESE WORKOUTS!</Link></h1> : <div></div> } </div>
                 {userResults.length ? (
                   <React.Fragment>
                   {formatTime(averageTimeInSeconds(zone.id)) ? <div>
@@ -151,7 +158,8 @@ const EventAverages = () => {
                   <h1>Average: {formatTime(averageTimeInSeconds(zone.id))}  </h1>
                   <h1>Recent Average: {formatTime(recentAverage(zone.id))} </h1>
                   <h1>{trending((recentAverage(zone.id)),averageTimeInSeconds(zone.id))} </h1>
-                    </div>: <h1> BETTER GET ON IT! </h1>}
+                    </div>: <h1></h1>}
+                    <h1>Workouts:{user.userworkouts? getNumWorkouts(zone.id) : <div></div>} </h1>
                   </React.Fragment>
                 ) : (
                   <div></div>

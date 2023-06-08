@@ -1,10 +1,10 @@
 const router = require('express').Router()
-const { models: { Event, Result, Workout}} = require('../db')
+const { models: { Event, Result, Workout, UserWorkout}} = require('../db')
 module.exports = router
 
 router.get('/', async (req, res, next) => {
   try {
-    const events = await Event.findAll({include: [Result, Workout]})
+    const events = await Event.findAll({include: [Result, Workout, UserWorkout]})
     res.json(events)
   } catch (err) {
     next(err)
@@ -14,7 +14,7 @@ router.get('/', async (req, res, next) => {
 router.get('/:id', async (req, res, next) => {
   try {
     const eventId = req.params.id
-    const event = await Event.findByPk(req.params.id, {include: [Result, Workout]});
+    const event = await Event.findByPk(req.params.id, {include: [Result, Workout, UserWorkout]});
     res.json(event);
   } catch (err) {
     next(err);

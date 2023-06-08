@@ -21,6 +21,7 @@ function Workouts() {
     const userWorkout = {
       userId: id,
       workoutId: workout.id,
+      eventId: workoutId,
       count: 1,
     };
     dispatch(createUserWorkout(userWorkout));

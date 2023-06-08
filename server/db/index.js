@@ -19,6 +19,7 @@ User.hasMany(UserWorkout)
 Workout.hasMany(UserWorkout)
 UserWorkout.belongsTo(User)
 UserWorkout.belongsTo(Workout)
+UserWorkout.belongsTo(Event)
 
 module.exports = {
   db,

@@ -10,6 +10,10 @@ const UserWorkout = db.define('userworkout', {
     type: Sequelize.INTEGER,
     allowNull: false
   },
+  eventId: {
+    type: Sequelize.INTEGER,
+    allowNull: false
+  },
   count: {
     type: Sequelize.INTEGER,
     defaultValue: 0
