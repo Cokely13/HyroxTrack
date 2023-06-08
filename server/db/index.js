@@ -18,6 +18,7 @@ Workout.belongsTo(Event)
 User.hasMany(UserWorkout)
 Workout.hasMany(UserWorkout)
 UserWorkout.belongsTo(User)
+Event.hasMany(UserWorkout)
 UserWorkout.belongsTo(Workout)
 UserWorkout.belongsTo(Event)
 

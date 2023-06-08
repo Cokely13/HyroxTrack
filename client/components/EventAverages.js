@@ -130,11 +130,10 @@ const EventAverages = () => {
     }
   };
 
-  const getNumWorkouts = (id) => {
-    console.log('id', id)
-    console.log("user!", workouts)
-   const num = workouts? workouts.filter((workout)=> workout.eventId == id) : null
-   console.log('num', num)
+  const getNumWorkouts = (eventId) => {
+   const num = events ? events.filter((event)=> event.id == eventId) : null
+   const test = num[0].userworkouts ? num[0].userworkouts.filter((workout) => workout.userId == id) : null
+   return test ? test.length : null
   };
 
   return (
@@ -151,6 +150,7 @@ const EventAverages = () => {
               <h1><Link to={`/events/${zone.id}`}>{zone.name}</Link></h1>
                 <h1>Target Time: {zone.targetTime.slice(0, 5)}</h1>
                 <div> { getWorkouts(formatTime(averageTimeInSeconds(zone.id)), zone.targetTime) == 1 ? <h1><Link to={`/workouts/${zone.id}`}>DO THESE WORKOUTS!</Link></h1> : <div></div> } </div>
+                <h1>Workouts:{events? getNumWorkouts(zone.id) : <div></div>} </h1>
                 {userResults.length ? (
                   <React.Fragment>
                   {formatTime(averageTimeInSeconds(zone.id)) ? <div>
@@ -159,7 +159,6 @@ const EventAverages = () => {
                   <h1>Recent Average: {formatTime(recentAverage(zone.id))} </h1>
                   <h1>{trending((recentAverage(zone.id)),averageTimeInSeconds(zone.id))} </h1>
                     </div>: <h1></h1>}
-                    <h1>Workouts:{user.userworkouts? getNumWorkouts(zone.id) : <div></div>} </h1>
                   </React.Fragment>
                 ) : (
                   <div></div>
