@@ -10,7 +10,7 @@ export default function TargetDate() {
 
   return (
     <div>
-      <h1>Countdown To Hyrox!</h1>
+      <h1 className='text-center'>Countdown To Hyrox!</h1>
       <CountdownTimer targetDate={THREE_DAYS_IN_MS} />
     </div>
   );

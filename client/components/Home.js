@@ -11,7 +11,6 @@ export const Home = props => {
 
   return (
     <div style={{padding : "50px"}}>
-      <h3>Welcome, {userName}</h3>
       <TargetDate/>
       <div>
       <EventAverages />

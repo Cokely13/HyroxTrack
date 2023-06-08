@@ -154,17 +154,38 @@ form div {
   100% {background-color: green;}
 }
 
-@keyframes flash {
+.flash {
+  animation-name: bright;
+  animation: bright 2s infinite;
+  /* animation-duration: 4s; */
+}
+
+@keyframes bright {
   0% {
-    filter: brightness(100%);
+    font-weight: normal;
     transform: scale(1);
   }
   50% {
-    filter: brightness(250%);
+    font-weight: bold;
     transform: scale(1.1);
   }
   100% {
-    filter: brightness(100%);
+    font-weight: normal;
+    transform: scale(1);
+  }
+}
+
+@keyframes flash {
+  0% {
+    /* filter: brightness(100%); */
+    transform: scale(1);
+  }
+  50% {
+    /* filter: brightness(250%); */
+    transform: scale(1.1);
+  }
+  100% {
+    /* filter: brightness(100%); */
     transform: scale(1);
   }
 }
@@ -180,12 +201,18 @@ form div {
 }
 
 .green {
-  background-color: green;
+  background-color: lightgreen;
   border-radius: 10px;
   border: '2px solid darkgreen';
 }
 
 
+/* a:link {
+  color: #ebebeb;
+} */
 
+a:hover {
+  color:white;
+}
 
 

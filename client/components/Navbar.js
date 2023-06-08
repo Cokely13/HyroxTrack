@@ -8,7 +8,7 @@ const Navbar = ({handleClick, isLoggedIn}) => (
     {/* <div classNameName='test'></div> */}
     {/* <img src={Logo}/> */}
 
-    <nav className="navbar navbar-expand-lg navbar-dark  bg-dark"  >
+    <nav className="navbar navbar-expand-lg navbar-dark  bg-primary"  >
       {isLoggedIn ? (
         <div className="navbar-brand" >
           <ul className="navbar-nav">
@@ -35,7 +35,7 @@ const Navbar = ({handleClick, isLoggedIn}) => (
         <a className="nav-link" href="/results">Results</a>
       </li>
       <li className="nav-item">
-        <a className="nav-link" href="/date">Date</a>
+       <a className="nav-link" href="/date">Date</a>
       </li>
       <li className="nav-item dropdown">
         <a className="nav-link dropdown-toggle" href="/events" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

@@ -96,9 +96,9 @@ const AddResult = () => {
   };
 
   return (
-    <div className="border rounded border-5" style={{ backgroundColor: 'white', margin: '15px 50px 50px', textAlign: 'center', padding: '20px', border: '1px solid black', borderRadius: "10px",  }}>
+    <div className="border rounded border-5" style={{ backgroundColor: 'white', margin: '15px 50px 50px', textAlign: 'center', padding: '20px', border: '1px solid black', borderRadius: "10px", fontSize: "25px"  }}>
 
-      <h1 className="profile border rounded border-5   text-white-50  text-center " style={{ marginBottom: "15px", marginTop: "15px", marginLeft: "40%", marginRight: "40%"  }}>Add Result</h1>
+      <h1 className="profile border rounded border-5  text-center " style={{ marginBottom: "15px", marginTop: "15px", marginLeft: "40%", marginRight: "40%"  }}>Add Result</h1>
     <form onSubmit={handleSubmit}>
       {errorMessage && <p>{errorMessage}</p>}
       {successMessage && <p>{successMessage}</p>}
@@ -122,8 +122,8 @@ const AddResult = () => {
         <input type="date" id="date" value={date} onChange={handleDateChange} />
       </div>
       <div>
-        <label htmlFor="minutes" style={{ marginRight: "10px" }}>Duration:  </label>
-         <select value={minutes} onChange={(e) => setMinutes(e.target.value)}>
+      <label htmlFor="minutes" style={{ marginRight: "10px" }}>Duration:  </label>
+         <select style={{marginRight: "5px"}} value={minutes} onChange={(e) => setMinutes(e.target.value)}>
                       {Array.from(Array(60).keys()).map((num) => (
                         <option key={num} value={num.toString().padStart(2, '0')}>
                           {num.toString().padStart(2, '0')}
@@ -131,7 +131,7 @@ const AddResult = () => {
                       ))}
                     </select>
                     :
-                    <select value={seconds} onChange={(e) => setSeconds(e.target.value)}>
+                    <select style={{marginLeft: "5px"}} value={seconds} onChange={(e) => setSeconds(e.target.value)}>
                       {Array.from(Array(60).keys()).map((num) => (
                         <option key={num} value={num.toString().padStart(2, '0')}>
                           {num.toString().padStart(2, '0')}
@@ -139,7 +139,7 @@ const AddResult = () => {
                       ))}
                     </select>
       </div>
-      <button type="submit">Add Result</button>
+      <button className="btn btn-primary"  type="submit">Add Result</button>
     </form>
     </div>
   );
