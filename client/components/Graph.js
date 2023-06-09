@@ -147,7 +147,7 @@ function Graph({ event }) {
           dependentAxis
           label="Time"
           tickFormat={(time) => `${Math.floor(time / 60)}:${(time % 60).toString().padStart(2, '0')}`}
-          style={{ tickLabels: { fontSize: 8, padding: 5 } }}
+          style={{ tickLabels: { fontSize: 8, padding: 5  } }}
           tickValues={yLabels.map((_, index) => index * 30)}
         />
         {userLines}

@@ -13,6 +13,7 @@ function UserPage() {
   const user = useSelector((state) => state.singleUser )
   const [selectedEvent, setSelectedEvent] = useState("All")
 
+  console.log("restults", user)
 
   useEffect(() => {
     dispatch(fetchSingleUser(userId))
@@ -54,8 +55,8 @@ function UserPage() {
                 <tr>
                   <td >{result.id}</td>
                   <td >{result.date}</td>
-                  <td>{result.duration}</td>
                   <td>{result.eventName}</td>
+                  <td>{result.duration}</td>
                 </tr>
               </tbody>
               )
@@ -67,8 +68,8 @@ function UserPage() {
                 <tr>
                   <td >{result.id}</td>
                   <td >{result.date}</td>
+                  <td><Link to={`/events/${result.eventId}`}>{result.eventName}</Link></td>
                   <td>{result.duration}</td>
-                  <td>{result.eventName}</td>
                 </tr>
               </tbody>
               )

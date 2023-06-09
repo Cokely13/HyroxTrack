@@ -89,7 +89,7 @@ function TargetTimes() {
                   </div>
                 ) : (
                   <button className="btn btn-primary" onClick={() => handleEdit(event)}>
-                    Edit Event
+                    Edit Time
                   </button>
                 )}
               </td>
