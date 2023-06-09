@@ -5,8 +5,8 @@ import DateTimeDisplay from './DateTimeDisplay';
 const ExpiredNotice = () => {
   return (
     <div className="expired-notice">
-      <span>Expired!!!</span>
-      <p>Please select a future date and time.</p>
+      <span>GOOD LUCK!!!</span>
+      <p>Select a date for your next event</p>
     </div>
   );
 };
