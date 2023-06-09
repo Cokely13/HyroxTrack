@@ -29,19 +29,35 @@ async function seed() {
   ])
 
   const workouts = await Promise.all([
-   Workout.create({ name: 'SkiErg', description: "5 rounds 30 Seconds/30 Seconds Off", eventId: 1 }),
-   Workout.create({ name: 'SkiErg', description: "2000m row", eventId: 1 }),
-   Workout.create({ name: 'SkiErg', description: "3 rounds 500m row, 1 min rest", eventId: 1}),
-   Workout.create({ name: 'Row', description: "5 rounds 30 Seconds/30 Seconds Off", eventId: 5 }),
-   Workout.create({ name: 'Row', description: "2000m row", eventId: 5 }),
-   Workout.create({ name: 'Row', description: "3 rounds 500m row, 1 min rest", eventId: 5}),
-   Workout.create({ name: 'Wall Balls', description: "5 rounds 30 Seconds/30 Seconds Off", eventId: 8 }),
-   Workout.create({ name: 'Wall Balls', description: "2000m row", eventId: 8 }),
-   Workout.create({ name: 'Wall Balls', description: "3 rounds 500m row, 1 min rest", eventId: 8}),
+   Workout.create({ name: 'SkiErg', description: "5 rounds Ski 30 Seconds/30 Seconds Off", eventId: 1 }),
+   Workout.create({ name: 'SkiErg', description: "2000m Ski", eventId: 1 }),
+   Workout.create({ name: 'SkiErg', description: "3 rounds 500m Ski, 1 min rest", eventId: 1}),
+   Workout.create({ name: 'Row', description: "5 rounds Row 30 Seconds/30 Seconds Off", eventId: 5 }),
+   Workout.create({ name: 'Row', description: "2000m Row", eventId: 5 }),
+   Workout.create({ name: 'Row', description: "3 rounds 500m Row, 1 min rest", eventId: 5}),
+   Workout.create({ name: 'Wall Balls', description: "5 rounds Wall Balls 30 Seconds/30 Seconds Off", eventId: 7 }),
+   Workout.create({ name: 'Wall Balls', description: "10 Rounds 20 Wall Balls, 1 minute rest", eventId: 7 }),
+   Workout.create({ name: 'Wall Balls', description: "150 Wall Balls", eventId: 7}),
+   Workout.create({ name: 'SledPush', description: "5 Minute max push", eventId: 2 }),
+   Workout.create({ name: 'SledPush', description: "5 Rounds Push 30 seconds/30 seconds", eventId: 2}),
+   Workout.create({ name: 'SledPush', description: "100 Meter max weight push", eventId: 2}),
+   Workout.create({ name: 'SledPull', description: "5 Minute max pull", eventId: 3 }),
+   Workout.create({ name: 'SledPull', description: "5 Rounds Pull 30 seconds/30 seconds", eventId: 3}),
+   Workout.create({ name: 'SledPull', description: "100 Meter max weight pull", eventId: 3}),
+   Workout.create({ name: 'Sandbag Lunges', description: "5 Rounds Lunges 30 seconds/30 seconds", eventId: 8 }),
+   Workout.create({ name: 'Sandbag Lunges', description: "200 Meter Lunges", eventId: 8}),
+   Workout.create({ name: 'Sandbag Lunges', description: "5 Minute max lunges", eventId: 8}),
+   Workout.create({ name: 'Farmers Carry', description: "5 Rounds Farmers 30 seconds/30 seconds", eventId: 6}),
+   Workout.create({ name: 'Farmers Carry', description: "300 Meter Farmers", eventId: 6}),
+   Workout.create({ name: 'Farmers Carry', description: "5 Minute max hold", eventId: 6}),
+   Workout.create({ name: 'Burpee Broad Jumps', description: "5 Rounds BBJ 30 seconds/30 seconds", eventId: 4}),
+   Workout.create({ name: 'Burpee Broad Jumps', description: "150 Meter BBJ", eventId: 4}),
+   Workout.create({ name: 'Burpee Broad Jumps', description: "5 Minute max BBJ", eventId: 4}),
 
   ])
 
   console.log(`seeded ${users.length} users`)
+  console.log(`seeded ${workouts.length} users`)
   console.log(`seeded successfully`)
   return {
     users: {
