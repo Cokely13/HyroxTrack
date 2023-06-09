@@ -72,7 +72,7 @@ function MyResults() {
 
   return (
     <div>
-    <h1 className="profile border rounded border-5  text-center " style={{ marginBottom: "15px", marginTop: "15px",  marginLeft: "auto", marginRight: "auto", width: "35%" }}>{user.userName}'s Results</h1>
+    <h1 className="profile rounded text-center add" style={{ marginBottom: "15px", marginTop: "15px",  marginLeft: "auto", marginRight: "auto", width: "35%" }}>{user.userName}'s Results</h1>
     {selectedEventId !== null? (
                   <div className='text-center'>
                     <h1>Event Name:</h1>
@@ -116,7 +116,7 @@ function MyResults() {
               </div> : <div></div>}
           {user.results ?
           <div style={{paddingLeft: "15px",paddingRight: "15px"}}>
-          <table className="table table-bordered  text-center" style= {{backgroundColor:"rgb(211, 211, 211)"}}>
+          <table className="table table-bordered  text-center profile rounded text-center add" style= {{backgroundColor:"rgb(211, 211, 211)"}}>
   <thead>
     <tr style= {{fontSize:"30px"}}>
       <th scope="col">#</th>

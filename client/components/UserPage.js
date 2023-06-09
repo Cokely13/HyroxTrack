@@ -28,7 +28,7 @@ function UserPage() {
   return (
     <div>
     {/* <img className="rounded-circle border border-5  border-dark" style={{width: "100rem"}}  src={user.image}/> */}
-    <h1 className="profile border rounded border-5  text-center " style={{ marginBottom: "15px", marginTop: "15px",  marginLeft: "auto", marginRight: "auto", width: "35%" }}>{user.userName}'s Results</h1>
+    <h1 className="profile rounded text-center add" style={{ marginBottom: "15px", marginTop: "15px",  marginLeft: "auto", marginRight: "auto", width: "35%" }}>{user.userName}'s Results</h1>
     {user.results ? <div style={{marginLeft: "35px", marginBottom: "35px"}}>
       <select onChange={handleChange} name="filterEvents" className='custom-select'>
               <option value="All">Filter by Event</option>

@@ -54,7 +54,7 @@ function Results() {
 
   return (
     <div>
-      <h1 className="profile border rounded border-5  text-center " style={{ marginBottom: "15px", marginTop: "15px",  marginLeft: "auto", marginRight: "auto", width: "35%" }}>
+      <h1 className="profile rounded text-center add" style={{ marginBottom: "15px", marginTop: "15px",  marginLeft: "auto", marginRight: "auto", width: "35%" }}>
         Results
       </h1>
       <div style={{ marginLeft: '35px', marginBottom: '35px' }}>
@@ -84,7 +84,7 @@ function Results() {
       </div>
       {results ? (
         <div style={{ paddingLeft: '15px', paddingRight: '15px' }}>
-          <table className="table table-bordered text-center" style= {{backgroundColor:"rgb(211, 211, 211)"}}>
+          <table className="table table-bordered text-center profile rounded text-center add" style= {{backgroundColor:"rgb(211, 211, 211)"}}>
             <thead>
               <tr style= {{fontSize:"30px"}}>
                 <th scope="col">#</th>

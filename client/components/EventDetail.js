@@ -102,7 +102,7 @@ function EventDetail() {
   return (
     <div>
         <div>
-          <h1 className="profile border rounded border-5  text-center " style={{ marginBottom: "15px", marginTop: "15px",  marginLeft: "auto", marginRight: "auto", width: "35%" }}>{event.name}</h1>
+          <h1 className="profile rounded text-center add" style={{ marginBottom: "15px", marginTop: "15px",  marginLeft: "auto", marginRight: "auto", width: "35%" }}>{event.name}</h1>
         <button onClick={handleToggleShowGraph} className="btn btn-secondary" style={{ position: 'absolute', left: '50px' }} >{showGraph ? 'Show Results' : 'Show Graph'}</button>
         <Link className="btn btn-info" to={`/workouts/${event.id}`} style={{ position: 'absolute', right: '50px' }} >Go to Workouts</Link>
           {showGraph ? (

@@ -15,8 +15,9 @@ import EditResult from './components/EditResult';
 import EditProfile from './components/EditProfile';
 import EventAverages from './components/EventAverages';
 import TargetTimes from './components/TargetTimes';
-import Workouts from './components/Workouts'
+import WorkoutDetail from './components/WorkoutDetail';
 import Profile from './components/Profile';
+import Workouts from './components/Workouts';
 
 /**
  * COMPONENT
@@ -41,10 +42,11 @@ class Routes extends Component {
             <Route exact path="/events" component={Events} />
             <Route exact path="/events/:eventId" component={EventDetail}/>
             <Route exact path="/users" component={Users} />
+            <Route exact path="/workouts" component={Workouts} />
             <Route exact path="/users/:userId" component={UserPage} />
             <Route exact path="/results" component={Results} />
             <Route exact path="/target" component={TargetTimes} />
-            <Route exact path="/workouts/:workoutId" component={Workouts} />
+            <Route exact path="/workouts/:workoutId" component={WorkoutDetail} />
             <Route exact path="/results/edit/:resultId" component={EditResult} />
             <Redirect to="/home" />
           </Switch>

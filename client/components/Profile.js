@@ -47,7 +47,7 @@ const recentWorkout = () => {
 
   return (
     <div className="text-center">
-    <h1 className="profile border rounded border-5  text-center " style={{ marginBottom: "15px", marginTop: "15px",  marginLeft: "auto", marginRight: "auto", width: "35%" }}>{user.userName}'s Profile</h1>
+    <h1 className="profile rounded text-center add" style={{ marginBottom: "15px", marginTop: "15px",  marginLeft: "auto", marginRight: "auto", width: "35%" }}>{user.userName}'s Profile</h1>
     <div>Total Workouts: {user.userworkouts ? user.userworkouts.length : 0}</div>
     <div>Total Results: {user.results ? user.results.length : 0}</div>
     <div>Most Recent Result: {recentResult()} </div>

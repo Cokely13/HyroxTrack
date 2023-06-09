@@ -40,9 +40,9 @@ function TargetTimes() {
   };
 
   return (
-    <div>
-      <h1 className="profile border rounded border-5  text-center " style={{ marginBottom: "15px", marginTop: "15px",  marginLeft: "auto", marginRight: "auto", width: "35%" }}>Target Times</h1>
-      <table className="table table-bordered text-center" style= {{backgroundColor:"rgb(211, 211, 211)"}}>
+    <div style={{ paddingLeft: '15px', paddingRight: '15px' }}>
+      <h1 className="profile rounded text-center add" style={{ marginBottom: "15px", marginTop: "15px",  marginLeft: "auto", marginRight: "auto", width: "35%" }}>Target Times</h1>
+      <table className="table table-bordered text-center profile rounded text-center add" style= {{backgroundColor:"rgb(211, 211, 211)"}}>
         <thead>
           <tr style= {{fontSize:"30px"}}>
             <th>Event Name</th>

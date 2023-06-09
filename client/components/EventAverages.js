@@ -168,7 +168,7 @@ const EventAverages = () => {
     {adding == true ? (
       <AddResult />
     ) : (
-    <div className="container-fluid bg-3 text-center">
+    <div className="container-fluid bg-3 text-center" style={{fontSize:"25px"}}>
       <div className="row align-items-stretch">
         {events.length ? (
           events.map((zone) => (
