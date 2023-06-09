@@ -126,10 +126,10 @@ const Navbar = ({handleClick, isLoggedIn}) => {
       </ul>
         </div>
       ) : (
-        <div>
+        <div className=" fw-bolder" style={{fontSize:"25px", textAlign:"right"}}>
           {/* The navbar will show these links before you log in */}
           <Link to="/login">Login</Link>
-          <Link to="/signup">Sign Up</Link>
+          <Link to="/signup" style={{marginLeft:"50px", textAlign:"right"}}>Sign Up</Link>
         </div>
       )}
     </nav>

@@ -92,23 +92,23 @@ function WorkoutDetail() {
   return (
     <div>
       <h1 className="profile rounded text-center add" style={{ marginBottom: '15px', marginTop: '15px', marginLeft: 'auto', marginRight: 'auto', width: '35%' }}>
-        {event.name} Workouts
+        <b>{event.name} Workouts</b>
       </h1>
       {adding ? (
-        <div className="text-center">
-          <h1>New Workout</h1>
+        <div className="profile rounded text-center add" style={{ marginBottom: '15px', marginTop: '15px', marginLeft: 'auto', marginRight: 'auto', width: '35%' }}>
+          <h1><b>New Workout</b></h1>
           <div>
             <h1>
               <label htmlFor="text" style={{ marginRight: '10px' }}>
                 Description:
               </label>
             </h1>
-            <input type="text" id="description" style={{ marginTop: '40px' }} value={description} onChange={handleDateChange} />
+            <input type="text" id="description" style={{ marginTop: '40px', width: "75%" }} value={description} onChange={handleDateChange} />
           </div>
-          <button className="btn btn-primary" style={{ marginRight: '10px', marginTop: '40px' }} onClick={handleSubmit} type="submit">
+          <button className="btn btn-primary" style={{ marginRight: '10px', marginTop: '40px', marginBottom: "10px" }} onClick={handleSubmit} type="submit">
             Add Workout
           </button>
-          <button className="btn btn-warning" style={{ marginTop: '40px' }} onClick={handleCancel} type="submit">
+          <button className="btn btn-warning" style={{ marginTop: '40px', marginBottom: "10px" }} onClick={handleCancel} type="submit">
             Cancel
           </button>
         </div>

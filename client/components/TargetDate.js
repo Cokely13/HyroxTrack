@@ -18,7 +18,7 @@ export default function TargetDate() {
 
   return (
     <div>
-      <h1 className="profile rounded text-center add" style={{ marginBottom: "15px", marginLeft: "auto", marginRight: "auto", width: "35%" }}>Countdown To Hyrox!</h1>
+      <h1 className="profile rounded text-center add" style={{ marginBottom: "15px", marginLeft: "auto", marginRight: "auto", width: "35%" }}><b>Countdown To Hyrox!</b></h1>
       <div className="text-center mb-3">
         {showDateSelection ? (
           <>

@@ -14,7 +14,7 @@ function Users() {
 
   return (
     <div className="text-center">
-      <h1 className="profile rounded text-center add" style={{ marginBottom: "15px", marginTop: "15px",  marginLeft: "auto", marginRight: "auto", width: "35%" }}>Users</h1>
+      <h1 className="profile rounded text-center add" style={{ marginBottom: "15px", marginTop: "15px",  marginLeft: "auto", marginRight: "auto", width: "35%" }}><b>Users</b></h1>
       {users ? users.map((user) => {
         return(
           <div key={(user.id)}>

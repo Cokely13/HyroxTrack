@@ -174,18 +174,18 @@ const EventAverages = () => {
           events.map((zone) => (
             <div className="col-sm-3 mx-auto mb-4 d-flex" key={zone.id}>
               <div className={getDivStyle(formatTime(averageTimeInSeconds(zone.id)), zone.targetTime)}>
-              <h1><Link to={`/events/${zone.id}`} style={{ color: 'black' }}>{zone.name}</Link></h1>
-                <div>Target Time: {zone.targetTime.slice(0, 5)}</div>
+              <h1><b><Link to={`/events/${zone.id}`} style={{ color: 'black' }}>{zone.name}</Link></b></h1>
+                <div><b>Target Time: </b>{zone.targetTime.slice(0, 5)}</div>
                 <div> { getWorkouts(formatTime(averageTimeInSeconds(zone.id)), zone.targetTime) == 1 ? <div className='flash'><Link to={`/workouts/${zone.id}`}>DO THESE WORKOUTS!</Link></div> : <div></div> } </div>
-                <div>Workouts Completed: {events? getNumWorkouts(zone.id) : <div></div>} </div>
+                <div><b>Workouts Completed: </b> {events? getNumWorkouts(zone.id) : <div></div>} </div>
                 {userResults.length ? (
                   <React.Fragment>
                   {formatTime(averageTimeInSeconds(zone.id)) ? <div>
-                    <div>Record: {getRecord(zone.id)}</div>
-                  <div>Average: {formatTime(averageTimeInSeconds(zone.id))}  </div>
-                  <div>Recent Average: {formatTime(recentAverage(zone.id))} </div>
-                  <div>Most Recent Result Date: {recentResultDate(zone.id)} </div>
-                  <div>Most Recent Result: {recentResult(zone.id)} </div>
+                    <div><b>Record:</b> {getRecord(zone.id)}</div>
+                  <div><b>Average:</b> {formatTime(averageTimeInSeconds(zone.id))}  </div>
+                  <div><b>Recent Average:</b> {formatTime(recentAverage(zone.id))} </div>
+                  <div><b>Most Recent Result Date:</b> {recentResultDate(zone.id)} </div>
+                  <div><b>Most Recent Result:</b> {recentResult(zone.id)} </div>
                   <h1>{trending((recentAverage(zone.id)),averageTimeInSeconds(zone.id))} </h1>
                     </div>: <h1></h1>}
                   </React.Fragment>

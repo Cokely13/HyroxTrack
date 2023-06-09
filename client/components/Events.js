@@ -61,7 +61,7 @@ function Events() {
     <AddResult/>
     :
     <div>
-    <h1 className="profile rounded text-center add" style={{ marginBottom: "15px", marginTop: "15px",  marginLeft: "auto", marginRight: "auto", width: "35%" }}>Events</h1>
+    <h1 className="profile rounded text-center add" style={{ marginBottom: "15px", marginTop: "15px",  marginLeft: "auto", marginRight: "auto", width: "35%" }}><b>Events</b></h1>
     <div className="row text-center" style={{marginLeft: "auto",marginTop: "15px", marginRight:"auto"}}>
       {events.length ? events.map((zone) => {
         return (

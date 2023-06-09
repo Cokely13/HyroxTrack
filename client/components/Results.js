@@ -55,7 +55,7 @@ function Results() {
   return (
     <div>
       <h1 className="profile rounded text-center add" style={{ marginBottom: "15px", marginTop: "15px",  marginLeft: "auto", marginRight: "auto", width: "35%" }}>
-        Results
+        <b>Results</b>
       </h1>
       <div style={{ marginLeft: '35px', marginBottom: '35px' }}>
         <select onChange={handleChange} name="filterEvents" className="custom-select">

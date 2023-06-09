@@ -95,7 +95,7 @@ const AddResult = () => {
   return (
     <div className="profile rounded text-center add" style={{ backgroundColor: 'white', margin: '15px 50px 50px', textAlign: 'center', padding: '20px', fontSize: "25px"  }}>
 
-      <h1 className="profile rounded text-center add" style={{ marginBottom: "15px", marginTop: "15px", marginLeft: "40%", marginRight: "40%"  }}>Add Result</h1>
+      <h1 className="profile rounded text-center add" style={{ marginBottom: "15px", marginTop: "15px", marginLeft: "40%", marginRight: "40%"  }}><b>Add Result</b></h1>
     <form onSubmit={handleSubmit}>
       {errorMessage && <p>{errorMessage}</p>}
       {successMessage && <p>{successMessage}</p>}

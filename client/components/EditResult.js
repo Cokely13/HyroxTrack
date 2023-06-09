@@ -38,7 +38,7 @@ function EditResult() {
 
   return (
     <div >
-    <div>EditResult</div>
+    <div><b>EditResult</b></div>
     <form className ="row text-center">
       <div className ="row text-center">
         <div>
