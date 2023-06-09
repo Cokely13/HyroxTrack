@@ -107,7 +107,7 @@ function WorkoutDetail() {
        <h1><label htmlFor="text" style={{ marginRight: "10px" }}>Description:  </label></h1>
        <input type="text" id="description" style={{marginTop: "40px" }} value={description} onChange={handleDateChange} />
      </div>
-     <button className="btn btn-primary" style={{ marginRight: "10px", marginTop: "40px" }} onClick={handleSubmit} type="submit">Add Result</button>
+     <button className="btn btn-primary" style={{ marginRight: "10px", marginTop: "40px" }} onClick={handleSubmit} type="submit">Add Workout</button>
      <button className="btn btn-warning" style={{  marginTop: "40px" }} onClick={handleCancel}  type="submit">Cancel</button> </div>:
       <div>
       {sortedWorkouts.length > 0 ? (

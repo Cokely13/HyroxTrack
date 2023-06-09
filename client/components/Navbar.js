@@ -14,6 +14,8 @@ const Navbar = ({handleClick, isLoggedIn}) => {
   const { id } = useSelector((state) => state.auth);
   const users = useSelector((state) => state.allUsers);
 
+  const uniqueWorkouts = [...new Map(workouts.map((workout) => [workout.name, workout])).values()];
+
   useEffect(() => {
     dispatch(fetchEvents());
     dispatch(fetchWorkouts())
@@ -85,7 +87,7 @@ const Navbar = ({handleClick, isLoggedIn}) => {
         <a className="nav-link" href="/target">Target Times</a>
       </li>
       <li className="nav-item">
-        <a className="nav-link" href="/workouts">Workouts</a>
+        <a className="nav-link" href="/averages">Averages</a>
       </li>
       <li className="nav-item dropdown">
                 <a
@@ -103,7 +105,7 @@ const Navbar = ({handleClick, isLoggedIn}) => {
                   <a className="dropdown-item fw-bolder" href="/workouts">
                     All
                   </a>
-                  {workouts.map((workout) => (
+                  {uniqueWorkouts.map((workout) => (
                     <a className="dropdown-item fw-bolder" href={`/workouts/${workout.eventId}`} key={workout.id}>
                       {workout.name}
                     </a>

@@ -36,7 +36,7 @@ class Routes extends Component {
           <Switch>
             <Route exact path="/home" component={Home} />
             <Route exact path="/profile" component={Profile} />
-            <Route exact path="/average" component={EventAverages} />
+            <Route exact path="/averages" component={EventAverages} />
             <Route exact path="/myresults" component={MyResults} />
             <Route exact path="/profile/edit" component={EditProfile} />
             <Route exact path="/events" component={Events} />

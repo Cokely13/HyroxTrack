@@ -164,7 +164,7 @@ const EventAverages = () => {
   };
 
   return (
-    <div>
+    <div style={{ marginTop: "15px" }} >
     {adding == true ? (
       <AddResult />
     ) : (
