@@ -7,6 +7,7 @@ import { createUserWorkout } from '../store/allUserWorkoutsStore';
 import { createWorkout } from '../store/allWorkoutsStore';
 import { fetchEvent } from '../store/singleEventStore';
 import { deleteWorkout } from '../store/allWorkoutsStore';
+import {updateSingleWorkout} from '../store/singleWorkoutStore'
 
 function WorkoutDetail() {
   const dispatch = useDispatch();
@@ -19,6 +20,9 @@ function WorkoutDetail() {
   const [date, setDate] = useState('');
   const { workoutId } = useParams();
   const [adding, setAdding] = useState(false);
+  const [editingWorkoutId, setEditingWorkoutId] = useState(null);
+  const [editingDescription, setEditingDescription] = useState('');
+
 
   useEffect(() => {
     dispatch(fetchSingleUser(id));
@@ -78,6 +82,27 @@ function WorkoutDetail() {
     setAdding(false);
   };
 
+    const handleEditWorkout = (workoutId) => {
+    const workout = workouts.find((workout) => workout.id === workoutId);
+    setEditingWorkoutId(workoutId);
+    setEditingDescription(workout.description);
+  };
+
+    const handleSaveWorkout = () => {
+    const updatedWorkout = {
+      id: editingWorkoutId,
+      description: editingDescription,
+    };
+    dispatch(updateSingleWorkout(updatedWorkout));
+    setEditingWorkoutId(null);
+    setReload(!reload);
+  };
+
+    const handleCancelEdit = () => {
+    setEditingWorkoutId(null);
+    setEditingDescription('');
+  };
+
   const handleCancel = (e) => {
     setAdding(false);
   };
@@ -127,16 +152,43 @@ function WorkoutDetail() {
                 <tbody>
                   {sortedWorkouts.map((workout, index) => (
                     <tr key={workout.id} style={{ fontSize: '20px' }}>
-                      <td>{workout.description}</td>
+                      <td>
+                         {editingWorkoutId === workout.id ? (
+                          <input
+                            type="text"
+                            value={editingDescription}
+                            onChange={(e) => setEditingDescription(e.target.value)}
+                            style={{ width: '100%' }}
+                          />
+                        ) : (
+                          workout.description
+                        )}
+                      </td>
                       <td>{user.userworkouts ? user.userworkouts.filter((userWorkout) => userWorkout.workoutId === workout.id).length : 0}</td>
                       <td>
                     <button onClick={() => handleButtonClick(workout)}>+</button>
                    </td>
                       {user.admin && (
                         <td>
-                          <button onClick={() => handleDeleteWorkout(workout.id)} className="btn btn-danger">
-                            Delete Workout
-                          </button>
+                          {editingWorkoutId === workout.id ? (
+                            <>
+                              <button className="btn btn-primary" onClick={handleSaveWorkout} style={{ marginRight: '5px' }}>
+                                Save
+                              </button>
+                              <button className="btn btn-secondary" onClick={handleCancelEdit} style={{ marginRight: '5px' }}>
+                                Cancel
+                              </button>
+                            </>
+                          ) : (
+                            <>
+                              <button className="btn btn-warning" onClick={() => handleEditWorkout(workout.id)} style={{ marginRight: '5px' }}>
+                                Edit Workout
+                              </button>
+                              <button className="btn btn-danger" onClick={() => handleDeleteWorkout(workout.id)}>
+                                Delete Workout
+                              </button>
+                            </>
+                          )}
                         </td>
                       )}
                     </tr>
