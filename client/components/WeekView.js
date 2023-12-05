@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useEffect } from 'react';
-import { fetchPrograms } from '../store/allProgramsStore';
 import { fetchProgram } from '../store/singleProgramStore';
+import ActivityCell from './ActivityCell';
 
 function WeekView() {
   const dispatch = useDispatch();
@@ -11,13 +10,10 @@ function WeekView() {
   const [workoutCompleted, setWorkoutCompleted] = useState([]);
 
   useEffect(() => {
-    dispatch(fetchProgram(1));
+    dispatch(fetchProgram(1)); // Replace with the appropriate program ID
   }, []);
 
   const program = useSelector((state) => state.singleProgram);
-  const schedule = program.schedule ? program.schedule[0] : 0
-
-  console.log("program", schedule)
 
   // Function to handle the date selection
   const handleStartDateChange = (event) => {
@@ -61,7 +57,7 @@ function WeekView() {
   };
 
   // Days of the week labels
-  const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+  const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday','Thursday', 'Friday', 'Saturday', 'Sunday'];
 
   return (
     <div className="week-view">
@@ -86,10 +82,10 @@ function WeekView() {
             <th>Start Date</th>
             {daysOfWeek.map((day, index) => (
               <React.Fragment key={index}>
-                <th></th>
-                <th>{day}</th>
-                <th>Workout Completed</th>
-              </React.Fragment>
+                <th>{day}
+              </th>
+              <th>Workout Done</th> {/* Add this line */}
+      </React.Fragment>
             ))}
           </tr>
         </thead>
@@ -100,8 +96,7 @@ function WeekView() {
               <td>{calculateWeekStartDate(weekNumber)}</td>
               {daysOfWeek.map((day, dayIndex) => (
                 <React.Fragment key={dayIndex}>
-                  <td></td>
-                  <td></td>
+                  <ActivityCell weekNumber={weekNumber} day={day} program={program} />
                   <td>
                     <input
                       type="checkbox"
@@ -120,5 +115,3 @@ function WeekView() {
 }
 
 export default WeekView;
-
-
