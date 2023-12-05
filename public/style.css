@@ -242,3 +242,52 @@ a:hover {
   color: red;
   margin-top: 10px;
 }
+
+.week-view {
+  margin: 20px;
+}
+
+h2 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid #ddd;
+}
+
+th,
+td {
+  padding: 10px;
+  text-align: center;
+  border: 1px solid #ddd;
+}
+
+th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+/* Style the first column (exercise names) differently */
+td:first-child {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+/* Style header cells for days of the week */
+th:not(:first-child) {
+  background-color: #4CAF50;
+  color: #fff;
+}
+
+/* Apply alternating row colors for better readability */
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+/* Add hover effect for rows */
+tr:hover {
+  background-color: #ddd;
+}

@@ -9,7 +9,7 @@ import EventDetail from './components/EventDetail';
 import Results from './components/Results';
 import Users from './components/Users';
 import MyResults from './components/MyResults';
-
+import WeekView from './components/WeekView';
 import UserPage from './components/UserPage';
 import EditResult from './components/EditResult';
 import EditProfile from './components/EditProfile';
@@ -36,6 +36,7 @@ class Routes extends Component {
           <Switch>
             <Route exact path="/home" component={Home} />
             <Route exact path="/profile" component={Profile} />
+            <Route exact path="/grid" component={WeekView} />
             <Route exact path="/averages" component={EventAverages} />
             <Route exact path="/myresults" component={MyResults} />
             <Route exact path="/profile/edit" component={EditProfile} />
