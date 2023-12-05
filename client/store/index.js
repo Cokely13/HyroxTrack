@@ -13,6 +13,7 @@ import workoutsReducer from './allWorkoutsStore'
 import singleWorkoutReducer from './singleWorkoutStore'
 import singleUserWorkoutReducer from './singleUserWorkoutStore'
 import userworkoutsReducer from './allUserWorkoutsStore'
+import programsReducer from './allProgramsStore'
 
 const reducer = combineReducers({ auth,
   allEvents: eventsReducer,
@@ -23,6 +24,7 @@ const reducer = combineReducers({ auth,
   singleResult: singleResultReducer,
   singleWorkout: singleWorkoutReducer,
   allWorkouts: workoutsReducer,
+  allPrograms: programsReducer,
   allUserWorkouts: userworkoutsReducer,
   singleUserWorkout: singleUserWorkoutReducer
 })
