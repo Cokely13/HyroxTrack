@@ -1,58 +1,58 @@
 import axios from "axios";
 
 // Action Types
-const SET_SINGLE_PROGRAM = "SET_SINGLE_PROGRAM";
-const UPDATE_SINGLE_PROGRAM = "UPDATE_SINGLE_PROGRAM";
+const SET_SINGLE_EVENT = "SET_SINGLE_EVENT";
+const UPDATE_SINGLE_EVENT = "UPDATE_SINGLE_EVENT";
 const TOKEN = "token";
 
 // Action creators
-export const _setSingleProgram= (programdata) => {
+export const _setSingleEvent= (eventdata) => {
   return {
-    type: SET_SINGLE_PROGRAM,
-    programdata,
+    type: SET_SINGLE_EVENT,
+    eventdata,
   };
 };
 
-const _updateSingleProgram = (programdata) => {
+const _updateSingleEvent = (eventdata) => {
   return {
-    type: UPDATE_SINGLE_PROGRAM,
-    programdata,
+    type: UPDATE_SINGLE_EVENT,
+    eventdata,
   };
 };
 
 //Thunks
-export const fetchProgram = (id) => {
+export const fetchEvent = (id) => {
   return async (dispatch) => {
-    const { data } = await axios.get(`/api/programs/${id}`);
-    dispatch(_setSingleProgram(data));
+    const { data } = await axios.get(`/api/events/${id}`);
+    dispatch(_setSingleEvent(data));
   };
 };
 
-export const updateSingleProgram = (program) => {
+export const updateSingleEvent = (event) => {
   return async (dispatch) => {
     try {
-        await axios.put(`/api/programs/${program.id}`, program);
-        const { data: programData } = await axios.get(`/api/programs/${program.id}`);
-        dispatch(_updateSingleProgram(programData));
-        // history.push(`/programs/${program.id}`)
+        await axios.put(`/api/events/${event.id}`, event);
+        const { data: eventData } = await axios.get(`/api/events/${event.id}`);
+        dispatch(_updateSingleEvent(eventData));
+        // history.push(`/events/${event.id}`)
       }
      catch (error) {
-      console.log("PROGRAM", program)
+      console.log("EVENT", event)
     }
   };
 };
 
 // reducer
 const initialState = [];
-const singleProgramReducer = (state = initialState, action) => {
+const singleEventReducer = (state = initialState, action) => {
   switch (action.type) {
-    case SET_SINGLE_PROGRAM:
-      return action.programdata;
-    case UPDATE_SINGLE_PROGRAM:
-      return action.programdata;
+    case SET_SINGLE_EVENT:
+      return action.eventdata;
+    case UPDATE_SINGLE_EVENT:
+      return action.eventdata;
     default:
       return state;
   }
 };
 
-export default singleProgramReducer;
+export default singleEventReducer;

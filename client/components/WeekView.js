@@ -1,9 +1,23 @@
 import React, { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import { fetchPrograms } from '../store/allProgramsStore';
+import { fetchProgram } from '../store/singleProgramStore';
 
 function WeekView() {
+  const dispatch = useDispatch();
   const [startDate, setStartDate] = useState(null);
   const [isDateSelected, setIsDateSelected] = useState(false);
   const [workoutCompleted, setWorkoutCompleted] = useState([]);
+
+  useEffect(() => {
+    dispatch(fetchProgram(1));
+  }, []);
+
+  const program = useSelector((state) => state.singleProgram);
+  const schedule = program.schedule ? program.schedule[0] : 0
+
+  console.log("program", schedule)
 
   // Function to handle the date selection
   const handleStartDateChange = (event) => {
@@ -106,3 +120,5 @@ function WeekView() {
 }
 
 export default WeekView;
+
+
