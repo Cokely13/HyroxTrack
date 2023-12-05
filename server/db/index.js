@@ -5,6 +5,7 @@ const db = require('./db')
 const User = require('./models/User')
 const Event = require('./models/Event')
 const Result = require('./models/Result')
+const Program= require('./models/Program')
 const Workout= require('./models/Workout')
 const UserWorkout= require('./models/UserWorkout')
 
@@ -29,6 +30,7 @@ module.exports = {
     Event,
     Result,
     Workout,
-    UserWorkout
+    UserWorkout,
+    Program
   },
 }

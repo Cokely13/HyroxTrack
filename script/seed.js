@@ -1,6 +1,6 @@
 'use strict'
 
-const {db, models: {User, Event, Workout} } = require('../server/db')
+const {db, models: {User, Event, Workout, Program} } = require('../server/db')
 
 /**
  * seed - this function clears the database, updates tables to
@@ -15,6 +15,111 @@ async function seed() {
     User.create({ userName: 'Ryan', password: '123', admin: true}),
     User.create({ userName: 'Jamal', password: '123' }),
   ])
+
+  const programs = await Promise.all([
+    Program.create({
+      name: 'Beginner',
+      description: 'A beginner fitness program',
+      schedule: [
+        {
+          week: 1,
+          activities: [
+            { day: 'Monday', activity: 'Run' },
+            { day: 'Tuesday', activity: 'Lift' },
+            { day: 'Wednesday', activity: 'Rest' },
+            { day: 'Thursday', activity: 'Run' },
+            { day: 'Friday', activity: 'Lift' },
+            { day: 'Saturday', activity: 'Test Day' },
+            { day: 'Sunday', activity: 'Rest' },
+          ],
+        },
+        {
+          week: 2,
+          activities: [
+            { day: 'Monday', activity: 'Run' },
+            { day: 'Tuesday', activity: 'Lift' },
+            { day: 'Wednesday', activity: 'Rest' },
+            { day: 'Thursday', activity: 'Run' },
+            { day: 'Friday', activity: 'Lift' },
+            { day: 'Saturday', activity: 'Test Day' },
+            { day: 'Sunday', activity: 'Rest' },
+          ],
+        },
+        {
+          week: 3,
+          activities: [
+            { day: 'Monday', activity: 'Run' },
+            { day: 'Tuesday', activity: 'Lift' },
+            { day: 'Wednesday', activity: 'Rest' },
+            { day: 'Thursday', activity: 'Run' },
+            { day: 'Friday', activity: 'Lift' },
+            { day: 'Saturday', activity: 'Test Day' },
+            { day: 'Sunday', activity: 'Rest' },
+          ],
+        },
+        {
+          week: 4,
+          activities: [
+            { day: 'Monday', activity: 'Run' },
+            { day: 'Tuesday', activity: 'Run' },
+            { day: 'Wednesday', activity: 'Rest' },
+            { day: 'Thursday', activity: 'Run' },
+            { day: 'Friday', activity: 'Lift' },
+            { day: 'Saturday', activity: 'Test Day' },
+            { day: 'Sunday', activity: 'Rest' },
+          ],
+        },
+        {
+          week: 5,
+          activities: [
+            { day: 'Monday', activity: 'Run' },
+            { day: 'Tuesday', activity: 'Lift' },
+            { day: 'Wednesday', activity: 'Rest' },
+            { day: 'Thursday', activity: 'Lift' },
+            { day: 'Friday', activity: 'Lift' },
+            { day: 'Saturday', activity: 'Test Day' },
+            { day: 'Sunday', activity: 'Rest' },
+          ],
+        },
+        {
+          week: 6,
+          activities: [
+            { day: 'Monday', activity: 'Run' },
+            { day: 'Tuesday', activity: 'Run' },
+            { day: 'Wednesday', activity: 'Rest' },
+            { day: 'Thursday', activity: 'Lift' },
+            { day: 'Friday', activity: 'Lift' },
+            { day: 'Saturday', activity: 'Test Day' },
+            { day: 'Sunday', activity: 'Rest' },
+          ],
+        },
+        {
+          week: 7,
+          activities: [
+            { day: 'Monday', activity: 'Run' },
+            { day: 'Tuesday', activity: 'Lift' },
+            { day: 'Wednesday', activity: 'Rest' },
+            { day: 'Thursday', activity: 'Run' },
+            { day: 'Friday', activity: 'Lift' },
+            { day: 'Saturday', activity: 'Test Day' },
+            { day: 'Sunday', activity: 'Rest' },
+          ],
+        },
+        {
+          week: 8,
+          activities: [
+            { day: 'Monday', activity: 'Run' },
+            { day: 'Tuesday', activity: 'Rest' },
+            { day: 'Wednesday', activity: 'Rest' },
+            { day: 'Thursday', activity: 'Lift' },
+            { day: 'Friday', activity: 'Rest' },
+            { day: 'Saturday', activity: 'Test Day' },
+            { day: 'Sunday', activity: 'Rest' },
+          ],
+        },
+      ],
+    }),
+  ]);
 
   const events = await Promise.all([
     Event.create({ name: 'SkiErg', description: "1000 meters", image:"https://tiagolousa.com/wp-content/uploads/2023/04/double-hyrox-skierg-wod-1-jpg.webp", targetTime: "3:40"}),
