@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchProgram } from '../store/singleProgramStore';
+import { Link } from 'react-router-dom';
 import ActivityCell from './ActivityCell';
 
 function WeekView() {
@@ -36,6 +37,17 @@ function WeekView() {
     const updatedWorkoutCompleted = [...workoutCompleted];
     updatedWorkoutCompleted[index] = !updatedWorkoutCompleted[index];
     setWorkoutCompleted(updatedWorkoutCompleted);
+  };
+
+  const renderActivityLink = (activity, weekNumber) => {
+    if (activity.plan) {
+      return (
+        <Link to={`/plan/${activity.plan}`}>
+          {activity.activity}
+        </Link>
+      );
+    }
+    return activity.activity;
   };
 
   // Function to calculate the start date for each week
@@ -95,9 +107,14 @@ function WeekView() {
               <td>{`Week ${weekNumber}`}</td>
               <td>{calculateWeekStartDate(weekNumber)}</td>
               {daysOfWeek.map((day, dayIndex) => (
-                <React.Fragment key={dayIndex}>
-                  <ActivityCell weekNumber={weekNumber} day={day} program={program} />
-                  <td>
+               <React.Fragment key={dayIndex}>
+               {/* <ActivityCell weekNumber={weekNumber} day={day} program={program} /> */}
+               <td>
+               {program.schedule && program.schedule[weekIndex] && program.schedule[weekIndex].activities[dayIndex]
+                    ? renderActivityLink(program.schedule[weekIndex].activities[dayIndex], weekNumber)
+                    : ''}
+               </td>
+               <td>
                     <input
                       type="checkbox"
                       checked={workoutCompleted[weekIndex * 7 + dayIndex]}
