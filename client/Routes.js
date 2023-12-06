@@ -18,6 +18,7 @@ import TargetTimes from './components/TargetTimes';
 import WorkoutDetail from './components/WorkoutDetail';
 import Profile from './components/Profile';
 import Workouts from './components/Workouts';
+import PlanDetails from './components/PlanDetails';
 
 /**
  * COMPONENT
@@ -42,6 +43,7 @@ class Routes extends Component {
             <Route exact path="/profile/edit" component={EditProfile} />
             <Route exact path="/events" component={Events} />
             <Route exact path="/events/:eventId" component={EventDetail}/>
+            <Route exact path="/plan/" component={PlanDetails}/>
             <Route exact path="/users" component={Users} />
             <Route exact path="/workouts" component={Workouts} />
             <Route exact path="/users/:userId" component={UserPage} />
