@@ -43,7 +43,7 @@ class Routes extends Component {
             <Route exact path="/profile/edit" component={EditProfile} />
             <Route exact path="/events" component={Events} />
             <Route exact path="/events/:eventId" component={EventDetail}/>
-            <Route exact path="/plan/" component={PlanDetails}/>
+            <Route exact path="/plan/:planId" component={PlanDetails}/>
             <Route exact path="/users" component={Users} />
             <Route exact path="/workouts" component={Workouts} />
             <Route exact path="/users/:userId" component={UserPage} />

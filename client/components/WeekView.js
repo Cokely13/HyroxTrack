@@ -42,7 +42,7 @@ function WeekView() {
   const renderActivityLink = (activity, weekNumber) => {
     if (activity.plan) {
       return (
-        <Link to={`/plan`} plan={activity.plan}>
+        <Link to={`/plan/${activity.planId}`}>
           {activity.activity}
         </Link>
       );

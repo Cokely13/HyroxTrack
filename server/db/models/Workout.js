@@ -13,7 +13,10 @@ const Workout = db.define('workout', {
   done: {
     type: Sequelize.BOOLEAN,
     defaultValue: false
-  }
+  },
+  planId: {
+    type: Sequelize.INTEGER,
+  },
 
 })
 
