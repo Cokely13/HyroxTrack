@@ -13,12 +13,14 @@ function PlanDetails() {
     dispatch(fetchWorkout(planId));
   }, [dispatch, planId]);
 
-  console.log("plan", workout)
   return (
     <div>
       <h2>Plan Details</h2>
       <p>{workout.name}</p>
       <p>{workout.description}</p>
+      <Link to={`/grid`}>
+        Back to Week View
+        </Link>
     </div>
   );
 }
