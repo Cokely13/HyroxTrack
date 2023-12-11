@@ -1,78 +1,4 @@
-// import * as tf from '@tensorflow/tfjs';
 
-// // Step 1: Data Preprocessing
-// function convertDurationToSeconds(duration) {
-//   const [minutes, seconds] = duration.split(':');
-//   return parseInt(minutes) * 60 + parseInt(seconds);
-// }
-
-// async function fetchUserWorkoutData() {
-//   try {
-//     const response = await fetch('/api/results'); // Replace with your API endpoint
-//     if (!response.ok) {
-//       throw new Error('Failed to fetch user workout data');
-//     }
-//     const workoutData = await response.json();
-//     return workoutData;
-//   } catch (error) {
-//     console.error('Error fetching user workout data:', error);
-//     return [];
-//   }
-// }
-
-// // console.log("check", workoutData)
-
-// async function prepareData() {
-//   const workoutData = await fetchUserWorkoutData();
-
-//   const processedData = workoutData.map((workout) => ({
-//     duration: convertDurationToSeconds(workout.duration),
-//     // Add other relevant features here...
-//   }));
-
-//   // Rest of the data preprocessing steps
-//   // ...
-
-//   const inputFeatures = sequences.map((sequence) => sequence.map((data) => data.duration));
-//   // const targetTensor = /* target values for training */;
-
-//   return { inputFeatures, targetTensor, sequences };
-// }
-
-// async function trainModel(targetTensor) {
-//   const { inputFeatures } = await prepareData();
-
-//   // Step 4: Build and Train a Model (Example)
-//   const model = tf.sequential();
-//   model.add(tf.layers.lstm({ units: 50, inputShape: [sequenceLength, 1] }));
-//   model.add(tf.layers.dense({ units: 1 }));
-
-//   model.compile({ loss: 'meanSquaredError', optimizer: 'adam' });
-
-//   const inputTensor = tf.tensor(inputFeatures);
-
-//   await model.fit(inputTensor, targetTensor, { epochs: 100 });
-
-//   return model;
-// }
-
-// async function predictNextWorkoutTime(model) {
-//   const { sequences } = await prepareData();
-
-//   // Step 5: Predict Next Workout Time
-//   const lastSequence = sequences[sequences.length - 1];
-//   const inputForPrediction = lastSequence.map((data) => data.duration);
-//   const nextTimeInSeconds = await model.predict(tf.tensor([inputForPrediction]))[0].data();
-
-//   console.log(`Predicted next workout time: ${nextTimeInSeconds} seconds`);
-// }
-
-// // Call the functions to train and use the model
-// (async () => {
-//   const { targetTensor } = await prepareData();
-//   const model = await trainModel(targetTensor);
-//   await predictNextWorkoutTime(model);
-// })();
 
 import * as tf from '@tensorflow/tfjs';
 
@@ -88,55 +14,90 @@ const workoutData = [
   { duration: '01:54', date: '2023-12-09' },
   { duration: '02:19', date: '2023-12-04' },
   { duration: '02:01', date: '2023-12-22' },
+  { duration: '01:58', date: '2023-12-12' },
+  { duration: '01:59', date: '2023-12-23' },
+  { duration: '01:53', date: '2023-12-25' },
+  { duration: '01:49', date: '2023-12-27' },
 ];
 
+
 async function prepareData() {
-  const processedData = workoutData.map((workout) => ({
+  const processedData = workoutData.map(workout => ({
     duration: convertDurationToSeconds(workout.duration),
     // Add other relevant features here...
   }));
 
-  // Rest of the data preprocessing steps
-  // ...
+  const sequenceLength = 5;
+  const sequences = [];
+  const targetValues = []; // Array to hold target values
 
-  const inputFeatures = sequences.map((sequence) => sequence.map((data) => data.duration));
-  // const targetTensor = /* target values for training */;
+
+  for (let i = 0; i <= processedData.length - sequenceLength; i++) {
+    const sequence = processedData.slice(i, i + sequenceLength);
+    sequences.push(sequence);
+
+    // Assuming the target is the duration of the next workout
+    if (i + sequenceLength < processedData.length) {
+      targetValues.push(processedData[i + sequenceLength].duration);
+    }
+  }
+
+  if (!sequences || sequences.length === 0) {
+    console.error("No sequences available for data processing");
+    return { inputFeatures: null, targetTensor: null, sequences: null };
+  }
+
+
+  const inputFeatures = sequences.map(sequence =>
+    sequence.map(data => [data.duration]) // Ensure each data point is an array
+  );
+  const targetTensor = tf.tensor2d(targetValues, [targetValues.length, 1]); // Convert targetValues to a 2D tensor
 
   return { inputFeatures, targetTensor, sequences };
 }
 
-async function trainModel(targetTensor) {
-  const { inputFeatures } = await prepareData();
 
-  // Step 4: Build and Train a Model (Example)
-  const sequenceLength = 5; // Choose an appropriate sequence length
+
+export async function trainModel() {
+  const { inputFeatures, targetTensor } = await prepareData();
+
+  if (!inputFeatures || inputFeatures.length === 0 || !targetTensor) {
+    console.error("Input features or target tensor is undefined or empty");
+    return null;
+  }
+
+  const sequenceLength = inputFeatures[0].length;
+  const numFeatures = inputFeatures[0][0].length;
   const model = tf.sequential();
-  model.add(tf.layers.lstm({ units: 50, inputShape: [sequenceLength, 1] }));
+  model.add(tf.layers.lstm({ units: 50, inputShape: [sequenceLength, numFeatures] }));
   model.add(tf.layers.dense({ units: 1 }));
 
   model.compile({ loss: 'meanSquaredError', optimizer: 'adam' });
 
-  const inputTensor = tf.tensor(inputFeatures);
+  // Reshape inputFeatures to match the model's expected input shape
+  // const inputTensor = tf.tensor3d(inputFeatures, [inputFeatures.length, sequenceLength, 1]);
+  const inputTensor = tf.tensor3d(inputFeatures);
 
   await model.fit(inputTensor, targetTensor, { epochs: 100 });
 
   return model;
 }
 
-async function predictNextWorkoutTime(model) {
+export async function predictNextWorkoutTime(model) {
   const { sequences } = await prepareData();
 
-  // Step 5: Predict Next Workout Time
-  const lastSequence = sequences[sequences.length - 1];
-  const inputForPrediction = lastSequence.map((data) => data.duration);
-  const nextTimeInSeconds = await model.predict(tf.tensor([inputForPrediction]))[0].data();
+  if (!sequences || sequences.length === 0) {
+    console.error("No sequences available for prediction");
+    return null;
+  }
 
-  console.log(`Predicted next workout time: ${nextTimeInSeconds} seconds`);
+  const lastSequence = sequences[sequences.length - 1];
+  const inputForPrediction = lastSequence.map(data => data.duration);
+
+  // Reshape input for prediction to match the model's expected input shape
+  const predictionTensor = model.predict(tf.tensor3d([inputForPrediction], [1, inputForPrediction.length, 1]));
+  const prediction = await predictionTensor.data();
+
+  return prediction[0];
 }
 
-// Call the functions to train and use the model
-(async () => {
-  const { targetTensor } = await prepareData();
-  const model = await trainModel(targetTensor);
-  await predictNextWorkoutTime(model);
-})();
