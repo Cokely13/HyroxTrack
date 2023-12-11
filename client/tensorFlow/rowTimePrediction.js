@@ -32,7 +32,7 @@ async function prepareData() {
   const targetValues = []; // Array to hold target values
 
 
-  for (let i = 0; i <= processedData.length - sequenceLength; i++) {
+  for (let i = 0; i < processedData.length - sequenceLength; i++) {
     const sequence = processedData.slice(i, i + sequenceLength);
     sequences.push(sequence);
 
@@ -83,6 +83,24 @@ export async function trainModel() {
   return model;
 }
 
+// export async function predictNextWorkoutTime(model) {
+//   const { sequences } = await prepareData();
+
+//   if (!sequences || sequences.length === 0) {
+//     console.error("No sequences available for prediction");
+//     return null;
+//   }
+
+//   const lastSequence = sequences[sequences.length - 1];
+//   const inputForPrediction = lastSequence.map(data => data.duration);
+
+//   // Reshape input for prediction to match the model's expected input shape
+//   const predictionTensor = model.predict(tf.tensor3d([inputForPrediction], [1, inputForPrediction.length, 1]));
+//   const prediction = await predictionTensor.data();
+
+//   return prediction[0];
+// }
+
 export async function predictNextWorkoutTime(model) {
   const { sequences } = await prepareData();
 
@@ -92,9 +110,10 @@ export async function predictNextWorkoutTime(model) {
   }
 
   const lastSequence = sequences[sequences.length - 1];
-  const inputForPrediction = lastSequence.map(data => data.duration);
+  const inputForPrediction = lastSequence.map(data => [data.duration]); // Ensure this is a 2D array
 
   // Reshape input for prediction to match the model's expected input shape
+  // The shape should be [1, sequenceLength, numFeatures]
   const predictionTensor = model.predict(tf.tensor3d([inputForPrediction], [1, inputForPrediction.length, 1]));
   const prediction = await predictionTensor.data();
 
