@@ -8,7 +8,7 @@ function convertDurationToSeconds(duration) {
 
 async function fetchUserWorkoutData() {
   try {
-    const response = await fetch('/api/userworkouts'); // Replace with your API endpoint
+    const response = await fetch('/api/results'); // Replace with your API endpoint
     if (!response.ok) {
       throw new Error('Failed to fetch user workout data');
     }
@@ -19,6 +19,8 @@ async function fetchUserWorkoutData() {
     return [];
   }
 }
+
+// console.log("check", workoutData)
 
 async function prepareData() {
   const workoutData = await fetchUserWorkoutData();
@@ -31,11 +33,14 @@ async function prepareData() {
   // Rest of the data preprocessing steps
   // ...
 
+  const inputFeatures = sequences.map((sequence) => sequence.map((data) => data.duration));
+  // const targetTensor = /* target values for training */;
+
   return { inputFeatures, targetTensor, sequences };
 }
 
-async function trainModel() {
-  const { inputFeatures, targetTensor } = await prepareData();
+async function trainModel(targetTensor) {
+  const { inputFeatures } = await prepareData();
 
   // Step 4: Build and Train a Model (Example)
   const model = tf.sequential();
@@ -45,7 +50,6 @@ async function trainModel() {
   model.compile({ loss: 'meanSquaredError', optimizer: 'adam' });
 
   const inputTensor = tf.tensor(inputFeatures);
-  const targetTensor = tf.tensor(targetTensor);
 
   await model.fit(inputTensor, targetTensor, { epochs: 100 });
 
@@ -65,6 +69,7 @@ async function predictNextWorkoutTime(model) {
 
 // Call the functions to train and use the model
 (async () => {
-  const model = await trainModel();
+  const { targetTensor } = await prepareData();
+  const model = await trainModel(targetTensor);
   await predictNextWorkoutTime(model);
 })();

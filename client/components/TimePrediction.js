@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { createModel } from '/Users/RCokely/HyroxTrack/client/timePredictionModel.js'  // Import the createModel function
+// import { createModel } from '/Users/RCokely/HyroxTrack/client/timePredictionModel.js'  // Import the createModel function
+import {creatModel} from '../tensorFlow/rowTimePrediction'
 import * as tf from '@tensorflow/tfjs'
 
 function TimePrediction() {
