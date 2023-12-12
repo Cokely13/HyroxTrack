@@ -1,57 +1,25 @@
-// import React, { useState, useEffect } from 'react';
-// import * as tf from '@tensorflow/tfjs';
-// import { createModel, trainModel } from './model';
-
-// function Predictor() {
-//     const [model, setModel] = useState(null);
-
-
-//     useEffect(() => {
-//         const loadModel = async () => {
-//             const model = createModel();
-//             await trainModel(model, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);
-//             setModel(model);
-//         };
-//         loadModel();
-//     }, []);
-
-//     const predictNext = async () => {
-//         if(model) {
-//             const prediction = model.predict(tf.tensor2d([7], [1, 1]));
-//             const nextValue = prediction.dataSync()[0];
-//             console.log(nextValue); // Output the prediction
-//         }
-//     };
-
-//     return (
-//         <div>
-//             <button onClick={predictNext}>Predict Next Time</button>
-//         </div>
-//     );
-// }
-
-// export default Predictor;
-
 import React, { useState, useEffect } from 'react';
 import * as tf from '@tensorflow/tfjs';
 import { createModel, trainModel } from './model';
 
 function Predictor() {
     const [model, setModel] = useState(null);
+    const [prediction, setPrediction] = useState(null);
 
     useEffect(() => {
         const loadModel = async () => {
-            const model = createModel();
+            const rawData = [121, 122, 120, 121, 118, 120, 119, 120, 118, 121, 119, 118, 116, 117, 117, 114, 118, 116, 115, 116, 114];
+            const sequenceLength = 3;
+            const data = [];
+            const labels = [];
 
-            // Example date inputs and corresponding values
-            const dates = ["2023-11-09", "2023-11-12", "2023-11-13"];
-            const values = [121, 122, 118];
+            for (let i = 0; i < rawData.length - sequenceLength; i++) {
+                data.push(rawData.slice(i, i + sequenceLength));
+                labels.push(rawData[i + sequenceLength]);
+            }
 
-            // Preprocess dates
-            const numericDates = dates.map(date => new Date(date).getTime());
-
-            // Train the model
-            await trainModel(model, numericDates, values);
+            const model = createModel(sequenceLength);
+            await trainModel(model, data, labels);
             setModel(model);
         };
         loadModel();
@@ -59,21 +27,30 @@ function Predictor() {
 
     const predictNext = async () => {
         if(model) {
-            // Example prediction date
-            const predictionDate = new Date("2023-11-14").getTime();
-            const prediction = model.predict(tf.tensor2d([predictionDate], [1, 1]));
-            const nextValue = prediction.dataSync()[0];
-            console.log(nextValue); // Output the prediction
+            const lastData = [119, 118, 116]; // Last 3 numbers from your data
+            const predictionResult = model.predict(tf.tensor2d([lastData], [1, 3]));
+            const nextValue = predictionResult.dataSync()[0];
+            setPrediction(nextValue); // Update the prediction state
         }
+    };
+
+    // Function to convert seconds to minutes and seconds
+    const formatTime = (seconds) => {
+        const minutes = Math.floor(seconds / 60);
+        const remainingSeconds = Math.floor(seconds % 60);
+        return `${minutes} minute(s) and ${remainingSeconds} second(s)`;
     };
 
     return (
         <div>
             <button onClick={predictNext}>Predict Next Time</button>
+            {prediction && (
+                <div>
+                    <p>Predicted Time: {formatTime(prediction)}</p>
+                </div>
+            )}
         </div>
     );
 }
 
 export default Predictor;
-
-
