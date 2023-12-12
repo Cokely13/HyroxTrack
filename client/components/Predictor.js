@@ -1,10 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import * as tf from '@tensorflow/tfjs';
 import { createModel, trainModel } from './model';
+import { useSelector, useDispatch } from 'react-redux';
+import {fetchResults} from '../store/allResultsStore'
 
 function Predictor() {
+    const dispatch = useDispatch();
     const [model, setModel] = useState(null);
     const [prediction, setPrediction] = useState(null);
+    const results = useSelector((state) => state.allResults);
+
+    useEffect(() => {
+        dispatch(fetchResults());
+      }, [dispatch]);
+
+      console.log("results", results)
 
     useEffect(() => {
         const loadModel = async () => {
