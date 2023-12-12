@@ -15,6 +15,8 @@ function Results() {
     dispatch(fetchResults());
   }, [dispatch]);
 
+
+
   const handleChange = (event) => {
     setSelectedEvent(event.target.value);
   };
