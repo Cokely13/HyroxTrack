@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import * as tf from '@tensorflow/tfjs';
 import { createModel, trainModel } from './model';
 import { useSelector, useDispatch } from 'react-redux';
-import {fetchResults} from '../store/allResultsStore'
+import { fetchResults } from '../store/allResultsStore';
 
 function Predictor() {
     const dispatch = useDispatch();
@@ -10,34 +10,48 @@ function Predictor() {
     const [prediction, setPrediction] = useState(null);
     const results = useSelector((state) => state.allResults);
 
+    // Convert duration string to seconds
+    const durationToSeconds = (duration) => {
+        const [minutes, seconds] = duration.split(':').map(Number);
+        return minutes * 60 + seconds;
+    };
+
     useEffect(() => {
         dispatch(fetchResults());
-      }, [dispatch]);
+    }, [dispatch]);
 
-      console.log("results", results)
+    const sortedResults = [...results].sort((a, b) => new Date(a.date) - new Date(b.date));
+    const durationsInSeconds = sortedResults.map(result => durationToSeconds(result.duration));
+
+    console.log("sorted", sortedResults)
+    console.log("duration", durationsInSeconds)
+
+    const sequenceLength = 3;
+    const data = [];
+    const labels = [];
 
     useEffect(() => {
-        const loadModel = async () => {
-            const rawData = [121, 122, 120, 121, 118, 120, 119, 120, 118, 121, 119, 118, 116, 117, 117, 114, 118, 116, 115, 116, 114];
-            const sequenceLength = 3;
-            const data = [];
-            const labels = [];
+        if (results && results.length > 0) {
+            // Assuming each result has a 'date' field
 
-            for (let i = 0; i < rawData.length - sequenceLength; i++) {
-                data.push(rawData.slice(i, i + sequenceLength));
-                labels.push(rawData[i + sequenceLength]);
+
+            for (let i = 0; i < durationsInSeconds.length - sequenceLength; i++) {
+                data.push(durationsInSeconds.slice(i, i + sequenceLength));
+                labels.push(durationsInSeconds[i + sequenceLength]);
             }
 
-            const model = createModel(sequenceLength);
-            await trainModel(model, data, labels);
-            setModel(model);
-        };
-        loadModel();
-    }, []);
+            const loadModel = async () => {
+                const model = createModel(sequenceLength);
+                await trainModel(model, data, labels);
+                setModel(model);
+            };
+            loadModel();
+        }
+    }, [results]);
 
     const predictNext = async () => {
-        if(model) {
-            const lastData = [119, 118, 116]; // Last 3 numbers from your data
+        if (model && results && results.length > sequenceLength) {
+            const lastData = durationsInSeconds.slice(-sequenceLength);
             const predictionResult = model.predict(tf.tensor2d([lastData], [1, 3]));
             const nextValue = predictionResult.dataSync()[0];
             setPrediction(nextValue); // Update the prediction state
