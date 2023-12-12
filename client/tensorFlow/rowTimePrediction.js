@@ -8,6 +8,18 @@ function convertDurationToSeconds(duration) {
   return parseInt(minutes) * 60 + parseInt(seconds);
 }
 
+let dataMin, dataMax;
+
+function normalizeData(data) {
+  const dataMax = Math.max(...data);
+  const dataMin = Math.min(...data);
+  return data.map(value => (value - dataMin) / (dataMax - dataMin));
+}
+
+function denormalizeData(normalizedValue, dataMin, dataMax) {
+  return normalizedValue * (dataMax - dataMin) + dataMin;
+}
+
 // Dummy workout data for rowing (replace with actual data)
 const workoutData = [
   { duration: '02:06', date: '2023-12-08' },
@@ -22,23 +34,26 @@ const workoutData = [
 
 
 async function prepareData() {
-  const processedData = workoutData.map(workout => ({
-    duration: convertDurationToSeconds(workout.duration),
-    // Add other relevant features here...
-  }));
+  // const processedData = workoutData.map(workout => ({
+  //   duration: convertDurationToSeconds(workout.duration),
+  //   // Add other relevant features here...
+  // }));
+
+  const durationsInSeconds = workoutData.map(workout => convertDurationToSeconds(workout.duration));
+  const normalizedDurations = normalizeData(durationsInSeconds);
 
   const sequenceLength = 5;
   const sequences = [];
   const targetValues = []; // Array to hold target values
 
 
-  for (let i = 0; i < processedData.length - sequenceLength; i++) {
-    const sequence = processedData.slice(i, i + sequenceLength);
+  for (let i = 0; i <  normalizedDurations.length - sequenceLength; i++) {
+    const sequence =  normalizedDurations.slice(i, i + sequenceLength);
     sequences.push(sequence);
 
     // Assuming the target is the duration of the next workout
-    if (i + sequenceLength < processedData.length) {
-      targetValues.push(processedData[i + sequenceLength].duration);
+    if (i + sequenceLength <  normalizedDurations.length) {
+      targetValues.push(normalizedDurations[i + sequenceLength]);
     }
   }
 
@@ -48,9 +63,7 @@ async function prepareData() {
   }
 
 
-  const inputFeatures = sequences.map(sequence =>
-    sequence.map(data => [data.duration]) // Ensure each data point is an array
-  );
+  const inputFeatures = sequences.map(sequence => sequence.map(data => [data])); // Corrected
   const targetTensor = tf.tensor2d(targetValues, [targetValues.length, 1]); // Convert targetValues to a 2D tensor
 
   return { inputFeatures, targetTensor, sequences };
@@ -68,11 +81,25 @@ export async function trainModel() {
 
   const sequenceLength = inputFeatures[0].length;
   const numFeatures = inputFeatures[0][0].length;
-  const model = tf.sequential();
-  model.add(tf.layers.lstm({ units: 50, inputShape: [sequenceLength, numFeatures] }));
-  model.add(tf.layers.dense({ units: 1 }));
+  // const model = tf.sequential();
+  // model.add(tf.layers.lstm({ units: 50, inputShape: [sequenceLength, numFeatures] }));
+  // model.add(tf.layers.dense({ units: 1 }));
 
-  model.compile({ loss: 'meanSquaredError', optimizer: 'adam' });
+  // model.compile({ loss: 'meanSquaredError', optimizer: 'adam' });
+  const model = tf.sequential();
+model.add(tf.layers.lstm({
+  units: 64, // increased from 50 to 64
+  inputShape: [sequenceLength, numFeatures],
+  returnSequences: true // return sequences if adding another LSTM layer
+}));
+model.add(tf.layers.dropout(0.2)); // added dropout layer
+model.add(tf.layers.lstm({ units: 32 })); // added another LSTM layer
+model.add(tf.layers.dense({ units: 1 }));
+
+model.compile({
+  loss: 'meanSquaredError',
+  optimizer: tf.train.adam(0.001) // you can adjust the learning rate
+});
 
   // Reshape inputFeatures to match the model's expected input shape
   // const inputTensor = tf.tensor3d(inputFeatures, [inputFeatures.length, sequenceLength, 1]);
@@ -83,6 +110,8 @@ export async function trainModel() {
   return model;
 }
 
+
+
 // export async function predictNextWorkoutTime(model) {
 //   const { sequences } = await prepareData();
 
@@ -92,9 +121,10 @@ export async function trainModel() {
 //   }
 
 //   const lastSequence = sequences[sequences.length - 1];
-//   const inputForPrediction = lastSequence.map(data => data.duration);
+//   const inputForPrediction = lastSequence.map(data => [data.duration]); // Ensure this is a 2D array
 
 //   // Reshape input for prediction to match the model's expected input shape
+//   // The shape should be [1, sequenceLength, numFeatures]
 //   const predictionTensor = model.predict(tf.tensor3d([inputForPrediction], [1, inputForPrediction.length, 1]));
 //   const prediction = await predictionTensor.data();
 
@@ -103,20 +133,26 @@ export async function trainModel() {
 
 export async function predictNextWorkoutTime(model) {
   const { sequences } = await prepareData();
-
   if (!sequences || sequences.length === 0) {
     console.error("No sequences available for prediction");
     return null;
   }
 
   const lastSequence = sequences[sequences.length - 1];
-  const inputForPrediction = lastSequence.map(data => [data.duration]); // Ensure this is a 2D array
+  const inputForPrediction = lastSequence.map(data => [data]); // Corrected
 
-  // Reshape input for prediction to match the model's expected input shape
-  // The shape should be [1, sequenceLength, numFeatures]
+  console.log('Input for Prediction:', inputForPrediction);
+
   const predictionTensor = model.predict(tf.tensor3d([inputForPrediction], [1, inputForPrediction.length, 1]));
   const prediction = await predictionTensor.data();
 
-  return prediction[0];
-}
+  console.log('Raw Model Prediction:', prediction);
 
+  const denormalizedPrediction = denormalizeData(prediction[0], dataMin, dataMax);
+
+
+  // Add denormalization step here if needed
+  // const predictedSeconds = denormalizeData(prediction[0], dataMin, dataMax);
+
+  return denormalizedPrediction;
+}
