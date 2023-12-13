@@ -39,6 +39,39 @@ const EventAverages = () => {
     return null;
   };
 
+  const timeStringToSeconds = (time) => {
+    const [minutesPart, secondsPart] = time.split(':');
+    const minutes = parseInt(minutesPart, 10);
+    const seconds = parseInt(secondsPart, 10);
+    return minutes * 60 + seconds;
+  };
+
+  const averageTimeInSeconds =(eventId) => {
+    const eventResults = userResults.filter((result) => result.eventId == eventId);
+    if (eventResults.length > 0) {
+      const average = eventResults
+          .map((item) => timeStringToSeconds(item.duration))
+          .reduce((prev, next) => prev + next) / eventResults.length
+      return average}
+      return null;
+    }
+
+  const targetTimeStringToSeconds = (time) => {
+    const [hoursPart, minutesPart] = time.split(':');
+    const hours = parseInt(hoursPart, 10);
+    const minutes = parseInt(minutesPart, 10);
+    return hours * 60 * 60 + minutes * 60;
+  };
+
+  const testNeeded = events.filter(zone => {
+    const averageInSeconds = averageTimeInSeconds(zone.id);
+    console.log("needed", averageInSeconds)
+    const targetInSeconds = targetTimeStringToSeconds(zone.targetTime);
+    return averageInSeconds === null || averageInSeconds > targetInSeconds;
+  });
+
+
+
   const getRecord = (eventId) => {
     const eventResults = userResults.filter((result) => result.eventId == eventId);
     if (eventResults.length > 0) {
@@ -49,12 +82,6 @@ const EventAverages = () => {
   };
 
 
-  const timeStringToSeconds = (time) => {
-    const [minutesPart, secondsPart] = time.split(':');
-    const minutes = parseInt(minutesPart, 10);
-    const seconds = parseInt(secondsPart, 10);
-    return minutes * 60 + seconds;
-  };
 
   const formatTime = (timeInSeconds) => {
     if (timeInSeconds == null) {
@@ -66,15 +93,7 @@ const EventAverages = () => {
     return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`};
   };
 
-  const averageTimeInSeconds =(eventId) => {
-  const eventResults = userResults.filter((result) => result.eventId == eventId);
-  if (eventResults.length > 0) {
-    const average = eventResults
-        .map((item) => timeStringToSeconds(item.duration))
-        .reduce((prev, next) => prev + next) / eventResults.length
-    return average}
-    return null;
-  }
+
 
   const recentAverage = (eventId) => {
     const eventResults = userResults
@@ -114,7 +133,6 @@ const EventAverages = () => {
       .slice(0, 1);
 
     if (recent.length > 0) {
-      console.log("reaaa", recent[0].duration)
       return recent[0].duration
     }
 
