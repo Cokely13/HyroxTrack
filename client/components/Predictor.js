@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { fetchResults } from '../store/allResultsStore';
 import { createResult } from '../store/allResultsStore';
 import { fetchSingleUser } from '../store/singleUserStore';
+import { fetchEvents } from '../store/allEventsStore';
 
 function Predictor() {
     const dispatch = useDispatch();
@@ -27,6 +28,17 @@ function Predictor() {
         return minutes * 60 + seconds;
     };
 
+
+
+    useEffect(() => {
+        dispatch(fetchEvents())
+        // Safe to add dispatch to the dependencies array
+      }, [])
+
+      const handleEventChange = (e) => {
+        setEventName(e.target.value);
+      };
+
     useEffect(() => {
         dispatch(fetchSingleUser(id))
         // Safe to add dispatch to the dependencies array
@@ -36,25 +48,19 @@ function Predictor() {
         dispatch(fetchResults());
     }, [dispatch]);
 
-    const handleUserTimeChange = (event) => {
-        setUserTime(event.target.value);
-      };
 
-      const handleSubmitUserTime = () => {
-        // Here you can add the logic to process the submitted time
-        console.log('User entered time:', userTime);
-        // Convert userTime to seconds or other formats as needed
-      };
-
-    const sortedResults = [...results].sort((a, b) => new Date(a.date) - new Date(b.date));
+    const filteredResults = [...results.filter((event) => event.eventName == eventName)]
+    console.log("filter", filteredResults)
+    const sortedResults = [...filteredResults].sort((a, b) => new Date(a.date) - new Date(b.date));
     const durationsInSeconds = sortedResults.map(result => durationToSeconds(result.duration));
 
     const sequenceLength = 3;
     const data = [];
     const labels = [];
+    const canPredict = eventName && filteredResults.length > sequenceLength;
 
     useEffect(() => {
-        if (results && results.length > 0) {
+        if (filteredResults && filteredResults.length > 0) {
             // Assuming each result has a 'date' field
 
 
@@ -70,7 +76,7 @@ function Predictor() {
             };
             loadModel();
         }
-    }, [results]);
+    }, [filteredResults]);
 
     const handleDateChange = (e) => {
         setDate(e.target.value);
@@ -106,13 +112,19 @@ function Predictor() {
         const newResult = {
           userId: id,
           userName: user.userName,
-          eventName: "Rowing",
-          eventId: 5,
+          eventName,
+      eventId: events.filter((event) => event.name == eventName)[0].id,
           date,
           duration: `${minutes}:${seconds}`,
         };
 
         dispatch(createResult(newResult));
+        setSuccessMessage('Result Added Successfully!');
+        setEventName('');
+        setDate('');
+        setMinutes('');
+        setSeconds('');
+        setErrorMessage('');
       }
 
     const predictNext = async () => {
@@ -133,30 +145,37 @@ function Predictor() {
 
     return (
         <div>
-            <button onClick={predictNext}>Predict Next Time</button>
+              <div>
+        <label htmlFor="event" style={{ marginRight: "10px" }}>Event:</label>
+        <select id="event" value={eventName} onChange={handleEventChange}>
+          <option value=""> -- Select Event --</option>
+          <option value="Rowing">Rowing</option>
+          <option value="SkiErg">SkiErg</option>
+          <option value="SledPush">SledPush</option>
+          <option value="SledPull">SledPull</option>
+          <option value="Burpee Broad Jumps">Burpee Broad Jumps</option>
+          <option value="Farmers Carry">Farmers Carry</option>
+          <option value="Burpee Broad Jumps">Burpee Broad Jumps</option>
+          <option value="Sandbag Lunges">Sandbag Lunges</option>
+          <option value="Wall Balls">Wall Balls</option>
+        </select>
+      </div>
+      {canPredict ? (
+                <button onClick={predictNext}>Predict Next {eventName} Time</button>
+            ) : eventName && (
+                <p>Not Enough {eventName} Results to Predict</p>
+            )}
+
             {prediction && (
                 <div>
                     <p>Predicted Time: {formatTime(prediction)}</p>
                 </div>
             )}
 
-            {/* <div style={{ marginLeft: '35px', marginBottom: '35px' }}>
-        <label>
-          Enter your rowing time (e.g., "02:06"):
-          <input
-            type="text"
-            value={userTime}
-            onChange={handleUserTimeChange}
-            style={{ marginLeft: '10px' }}
-          />
-        </label>
-        <button onClick={handleSubmitUserTime} style={{ marginLeft: '10px' }}>
-          Submit Time
-        </button>
-        </div> */}
+
          <div className="profile rounded text-center add" style={{ backgroundColor: 'white', margin: '15px 50px 50px', textAlign: 'center', padding: '20px', fontSize: "25px"  }}>
 
-<h1 className="profile rounded text-center add" style={{ marginBottom: "15px", marginTop: "15px", marginLeft: "40%", marginRight: "40%"  }}><b>Add Result</b></h1>
+<h1 className="profile rounded text-center add" style={{ marginBottom: "15px", marginTop: "15px", marginLeft: "40%", marginRight: "40%"  }}><b>Add {eventName}  Result</b></h1>
 <form onSubmit={handleSubmit}>
 {errorMessage && <p>{errorMessage}</p>}
       {successMessage && <p>{successMessage}</p>}
