@@ -21,6 +21,7 @@ function Predictor() {
     const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
   const user = useSelector((state) => state.singleUser )
+  const events = useSelector((state) => state.allEvents )
 
     // Convert duration string to seconds
     const durationToSeconds = (duration) => {
@@ -59,24 +60,50 @@ function Predictor() {
     const labels = [];
     const canPredict = eventName && filteredResults.length > sequenceLength;
 
+    // useEffect(() => {
+    //     if (filteredResults && filteredResults.length > 0) {
+    //         // Assuming each result has a 'date' field
+
+
+    //         for (let i = 0; i < durationsInSeconds.length - sequenceLength; i++) {
+    //             data.push(durationsInSeconds.slice(i, i + sequenceLength));
+    //             labels.push(durationsInSeconds[i + sequenceLength]);
+    //         }
+
+    //         const loadModel = async () => {
+    //             const model = createModel(sequenceLength);
+    //             await trainModel(model, data, labels);
+    //             setModel(model);
+    //         };
+    //         loadModel();
+    //     }
+    // }, [filteredResults]);
+
     useEffect(() => {
-        if (filteredResults && filteredResults.length > 0) {
-            // Assuming each result has a 'date' field
+        if (eventName) {
+            // const filteredResults = results.filter(event => event.eventName === eventName);
+            // const sortedResults = filteredResults.sort((a, b) => new Date(a.date) - new Date(b.date));
+            // const durationsInSeconds = sortedResults.map(result => durationToSeconds(result.duration));
 
+            if (durationsInSeconds.length > sequenceLength) {
+                const data = [];
+                const labels = [];
 
-            for (let i = 0; i < durationsInSeconds.length - sequenceLength; i++) {
-                data.push(durationsInSeconds.slice(i, i + sequenceLength));
-                labels.push(durationsInSeconds[i + sequenceLength]);
+                for (let i = 0; i < durationsInSeconds.length - sequenceLength; i++) {
+                    data.push(durationsInSeconds.slice(i, i + sequenceLength));
+                    labels.push(durationsInSeconds[i + sequenceLength]);
+                }
+
+                const loadModel = async () => {
+                    const model = createModel(sequenceLength);
+                    await trainModel(model, data, labels);
+                    setModel(model);
+                };
+                loadModel();
             }
-
-            const loadModel = async () => {
-                const model = createModel(sequenceLength);
-                await trainModel(model, data, labels);
-                setModel(model);
-            };
-            loadModel();
         }
-    }, [filteredResults]);
+    }, [eventName, results]); // Dependency on eventName and results
+
 
     const handleDateChange = (e) => {
         setDate(e.target.value);
