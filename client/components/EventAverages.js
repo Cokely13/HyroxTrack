@@ -65,11 +65,11 @@ const EventAverages = () => {
 
   const testNeeded = events.filter(zone => {
     const averageInSeconds = averageTimeInSeconds(zone.id);
-    console.log("needed", averageInSeconds)
     const targetInSeconds = targetTimeStringToSeconds(zone.targetTime);
     return averageInSeconds === null || averageInSeconds > targetInSeconds;
   });
 
+  console.log("needed", testNeeded)
 
 
   const getRecord = (eventId) => {
