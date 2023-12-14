@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize')
 const db = require('../db')
 
-const Event = db.define('eventAverage', {
+const EventAverage = db.define('eventAverage', {
   eventId: {
     type: Sequelize.INTEGER,
     allowNull: false
