@@ -70,7 +70,7 @@ const EventAverages = () => {
   //   return averageInSeconds === null || averageInSeconds > targetInSeconds;
   // });
 
-
+console.log("user", user)
 
   const getRecord = (eventId) => {
     const eventResults = userResults.filter((result) => result.eventId == eventId);
