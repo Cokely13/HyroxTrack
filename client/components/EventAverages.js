@@ -9,6 +9,7 @@ import { fetchWorkouts } from '../store/allWorkoutsStore';
 import { fetchSingleUser } from '../store/singleUserStore';
 import { fetchResults } from '../store/allResultsStore';
 import AddResult from './AddResult';
+import Predictor from './Predictor';
 
 const EventAverages = () => {
   const dispatch = useDispatch();
@@ -184,7 +185,7 @@ const EventAverages = () => {
   return (
     <div style={{ marginTop: "15px" }} >
     {adding == true ? (
-      <AddResult />
+      <Predictor/>
     ) : (
     <div className="container-fluid bg-3 text-center" style={{fontSize:"25px"}}>
       <div className="row align-items-stretch">
