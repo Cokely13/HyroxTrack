@@ -6,6 +6,9 @@ import { fetchResults } from '../store/allResultsStore';
 import { createResult } from '../store/allResultsStore';
 import { fetchSingleUser } from '../store/singleUserStore';
 import { fetchEvents } from '../store/allEventsStore';
+import { updateSingleAverage } from '../store/singleAverageStore';
+import { createAverage } from '../store/allAveragesStore';
+
 
 function Predictor() {
     const dispatch = useDispatch();
@@ -51,7 +54,6 @@ function Predictor() {
 
 
     const filteredResults = [...results.filter((event) => event.eventName == eventName)]
-    console.log("filter", filteredResults)
     const sortedResults = [...filteredResults].sort((a, b) => new Date(a.date) - new Date(b.date));
     const durationsInSeconds = sortedResults.map(result => durationToSeconds(result.duration));
 
@@ -60,24 +62,7 @@ function Predictor() {
     const labels = [];
     const canPredict = eventName && filteredResults.length > sequenceLength;
 
-    // useEffect(() => {
-    //     if (filteredResults && filteredResults.length > 0) {
-    //         // Assuming each result has a 'date' field
 
-
-    //         for (let i = 0; i < durationsInSeconds.length - sequenceLength; i++) {
-    //             data.push(durationsInSeconds.slice(i, i + sequenceLength));
-    //             labels.push(durationsInSeconds[i + sequenceLength]);
-    //         }
-
-    //         const loadModel = async () => {
-    //             const model = createModel(sequenceLength);
-    //             await trainModel(model, data, labels);
-    //             setModel(model);
-    //         };
-    //         loadModel();
-    //     }
-    // }, [filteredResults]);
 
     useEffect(() => {
         if (eventName) {
@@ -144,6 +129,30 @@ function Predictor() {
           date,
           duration: `${minutes}:${seconds}`,
         };
+
+        // const oldAverage = filteredResults
+        // console.log("old", oldAverage)
+        const calculateOldAverage = (newDurationSeconds) => {
+            const totalDurationInSeconds = filteredResults.reduce((total, currentResult) => {
+                return total + durationToSeconds(currentResult.duration);
+            }, 0) + newDurationSeconds; // Include new duration in total
+
+            const averageDurationInSeconds = totalDurationInSeconds / (filteredResults.length + 1); // +1 for the new duration
+            return formatTime(averageDurationInSeconds); // Convert average to minutes:seconds format
+        };
+
+        // Assuming you have new duration in `minutes` and `seconds`
+        const newDurationSeconds = durationToSeconds(`${minutes}:${seconds}`);
+        const oldAverage = calculateOldAverage(newDurationSeconds);
+        const average = {
+            userId: id,
+        eventId: events.filter((event) => event.name == eventName)[0].id,
+            duration: oldAverage
+          };
+        console.log("average", average)
+          dispatch(createAverage(average))
+
+        ;
 
         dispatch(createResult(newResult));
         setSuccessMessage('Result Added Successfully!');

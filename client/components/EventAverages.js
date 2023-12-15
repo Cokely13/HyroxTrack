@@ -64,13 +64,12 @@ const EventAverages = () => {
     return hours * 60 * 60 + minutes * 60;
   };
 
-  const testNeeded = events.filter(zone => {
-    const averageInSeconds = averageTimeInSeconds(zone.id);
-    const targetInSeconds = targetTimeStringToSeconds(zone.targetTime);
-    return averageInSeconds === null || averageInSeconds > targetInSeconds;
-  });
+  // const testNeeded = events.filter(zone => {
+  //   const averageInSeconds = averageTimeInSeconds(zone.id);
+  //   const targetInSeconds = targetTimeStringToSeconds(zone.targetTime);
+  //   return averageInSeconds === null || averageInSeconds > targetInSeconds;
+  // });
 
-  console.log("needed", testNeeded)
 
 
   const getRecord = (eventId) => {

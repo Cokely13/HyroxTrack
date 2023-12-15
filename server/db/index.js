@@ -4,7 +4,7 @@ const db = require('./db')
 
 const User = require('./models/User')
 const Event = require('./models/Event')
-const EventAverage = require('./models/EventAverage')
+const Average = require('./models/Average')
 const Result = require('./models/Result')
 const Program= require('./models/Program')
 const Workout= require('./models/Workout')
@@ -23,10 +23,10 @@ UserWorkout.belongsTo(User)
 Event.hasMany(UserWorkout)
 UserWorkout.belongsTo(Workout)
 UserWorkout.belongsTo(Event)
-EventAverage.belongsTo(Event)
-EventAverage.belongsTo(User)
-Event.hasMany(EventAverage)
-User.hasMany(EventAverage)
+Average.belongsTo(Event)
+Average.belongsTo(User)
+Event.hasMany(Average)
+User.hasMany(Average)
 
 module.exports = {
   db,
@@ -37,6 +37,6 @@ module.exports = {
     Workout,
     UserWorkout,
     Program,
-    EventAverage,
+    Average,
   },
 }

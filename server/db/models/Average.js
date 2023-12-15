@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize')
 const db = require('../db')
 
-const EventAverage = db.define('eventAverage', {
+const Average = db.define('Average', {
   eventId: {
     type: Sequelize.INTEGER,
     allowNull: false
@@ -16,4 +16,4 @@ const EventAverage = db.define('eventAverage', {
 
 })
 
-module.exports = EventAverage
+module.exports = Average
