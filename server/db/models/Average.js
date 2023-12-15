@@ -10,8 +10,9 @@ const Average = db.define('Average', {
     type: Sequelize.INTEGER,
     allowNull: false
   },
-  time: {
-      type: Sequelize.TIME,
+  duration: {
+    type: Sequelize.STRING,
+    allowNull: false
   }
 
 })

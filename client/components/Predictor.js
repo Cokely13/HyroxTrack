@@ -8,6 +8,7 @@ import { fetchSingleUser } from '../store/singleUserStore';
 import { fetchEvents } from '../store/allEventsStore';
 import { updateSingleAverage } from '../store/singleAverageStore';
 import { createAverage } from '../store/allAveragesStore';
+import { fetchAverages } from '../store/allAveragesStore';
 
 
 function Predictor() {
@@ -25,6 +26,7 @@ function Predictor() {
   const [successMessage, setSuccessMessage] = useState('');
   const user = useSelector((state) => state.singleUser )
   const events = useSelector((state) => state.allEvents )
+  const averages = useSelector((state) => state.allAverages);
 
     // Convert duration string to seconds
     const durationToSeconds = (duration) => {
@@ -36,6 +38,11 @@ function Predictor() {
 
     useEffect(() => {
         dispatch(fetchEvents())
+        // Safe to add dispatch to the dependencies array
+      }, [])
+
+      useEffect(() => {
+        dispatch(fetchAverages())
         // Safe to add dispatch to the dependencies array
       }, [])
 
@@ -130,6 +137,8 @@ function Predictor() {
           duration: `${minutes}:${seconds}`,
         };
 
+        const existingAverage = averages.find(avg => avg.eventId === newResult.eventId && avg.userId === id);
+
         // const oldAverage = filteredResults
         // console.log("old", oldAverage)
         const calculateOldAverage = (newDurationSeconds) => {
@@ -150,7 +159,20 @@ function Predictor() {
             duration: oldAverage
           };
         console.log("average", average)
-          dispatch(createAverage(average))
+        if (!existingAverage) {
+            // Calculate the new average
+            // ... existing code for calculating oldAverage ...
+            dispatch(createAverage(average)); // Create a new average only if it doesn't exist
+        } else {
+            console.log("exist", existingAverage)
+            const updateAverage = {
+                id: existingAverage.id,
+                userId: id,
+            eventId: events.filter((event) => event.name == eventName)[0].id,
+                duration: oldAverage
+              };
+            dispatch(updateSingleAverage(updateAverage))
+        }
 
         ;
 
