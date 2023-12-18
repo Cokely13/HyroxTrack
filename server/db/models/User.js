@@ -22,6 +22,9 @@ const User = db.define('user', {
   image : {
     type: Sequelize.TEXT,
     defaultValue: "client/Images/Finish Pic 2.JPG"
+  },
+  targetDate: {
+    type: Sequelize.TEXT,
   }
 })
 

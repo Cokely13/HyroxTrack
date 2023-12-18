@@ -4,6 +4,7 @@ const db = require('./db')
 
 const User = require('./models/User')
 const Event = require('./models/Event')
+const Target = require('./models/Target')
 const Average = require('./models/Average')
 const Result = require('./models/Result')
 const Program= require('./models/Program')
@@ -43,6 +44,6 @@ module.exports = {
     UserWorkout,
     Program,
     Average,
-    Target
+    Target,
   },
 }
