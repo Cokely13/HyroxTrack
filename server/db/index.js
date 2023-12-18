@@ -27,6 +27,11 @@ Average.belongsTo(Event)
 Average.belongsTo(User)
 Event.hasMany(Average)
 User.hasMany(Average)
+Target.belongsTo(Event)
+Target.belongsTo(User)
+Event.hasMany(Target)
+User.hasMany(Target)
+
 
 module.exports = {
   db,
@@ -38,5 +43,6 @@ module.exports = {
     UserWorkout,
     Program,
     Average,
+    Target
   },
 }

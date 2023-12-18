@@ -4,7 +4,7 @@ module.exports = router
 
 router.get('/', async (req, res, next) => {
   try {
-    const averages = await Average.findAll({include: User})
+    const averages = await Average.findAll({include: [User, Event]})
     const sort = averages.sort((a,b) => a.time < b.time )
     res.json(averages)
   } catch (err) {
@@ -14,7 +14,7 @@ router.get('/', async (req, res, next) => {
 
 router.get('/:id', async (req, res, next) => {
   try {
-    const average = await Average.findByPk(req.params.id, {include: User});
+    const average = await Average.findByPk(req.params.id, {include: [User, Event]});
     res.json(average);
   } catch (err) {
     next(err);
