@@ -16,6 +16,7 @@ function UserTarget() {
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [minutes, setMinutes] = useState('00');
   const [seconds, setSeconds] = useState('00');
+  const [refreshTargets, setRefreshTargets] = useState(false);
 
   useEffect(() => {
     dispatch(fetchEvents());
@@ -23,7 +24,8 @@ function UserTarget() {
 
   useEffect(() => {
     dispatch(fetchTargets());
-  }, [dispatch]);
+    setRefreshTargets(false)
+  }, [dispatch, refreshTargets]);
 
   useEffect(() => {
     dispatch(fetchSingleUser(id))
@@ -41,7 +43,7 @@ function UserTarget() {
   const handleEdit = (chosen) => {
     setSelectedEventId(chosen.id);
     setSelectedEvent(chosen);
-    const targetTime = events.find((event) => event.id == chosen.id)?.targetTime || '00:00';
+    const targetTime = targets.find((target) => target.eventId == chosen.id && id == target.userId)?.duration || '00:00';
     const [ m, s] = targetTime.split(':');
     setMinutes(m);
     setSeconds(s);
@@ -55,16 +57,26 @@ function UserTarget() {
 
   const handleSubmit = () => {
     const targetTime = `${minutes}:${seconds}`;
-    const newTarget = {
-      eventId: selectedEventId,
+    const existingTarget = userTargets.find(target => target.eventId === selectedEventId && target.userId === id);
+
+    const targetData = {
       userId: id,
+      eventId: selectedEventId,
       duration: targetTime
+    };
+
+
+    if (existingTarget) {
+      // Update existing target
+      dispatch(updateSingleTarget({...existingTarget, ...targetData}));
+    } else {
+      // Create new target
+      dispatch(createTarget(targetData));
     }
-    selectedEvent.targetTime = targetTime
-    dispatch(createTarget(newTarget))
     setSelectedEventId(null);
     setMinutes('00');
     setSeconds('00');
+    setRefreshTargets(true)
   };
 
   return (
