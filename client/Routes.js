@@ -23,6 +23,7 @@ import TimePrediction from './components/TimePrediction';
 import RowTimePrediction from './components/RowTImePrediction';
 import Predictor from './components/Predictor'
 import UserTarget from './components/UserTarget';
+import Test from './components/Test'
 
 /**
  * COMPONENT
@@ -46,7 +47,8 @@ class Routes extends Component {
             <Route exact path="/myresults" component={MyResults} />
             <Route exact path="/profile/edit" component={EditProfile} />
             <Route exact path="/events" component={Events} />
-            <Route exact path="/test" component={Predictor} />
+            <Route exact path="/test" component={Test} />
+            <Route exact path="/predictor" component={Predictor} />
             <Route exact path="/events/:eventId" component={EventDetail}/>
             <Route exact path="/plan/:planId" component={PlanDetails}/>
             <Route exact path="/users" component={Users} />
