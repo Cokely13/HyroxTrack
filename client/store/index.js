@@ -17,7 +17,8 @@ import programsReducer from './allProgramsStore'
 import singleProgramReducer from './singleProgramStore'
 import singleAverageReducer from './singleAverageStore'
 import averagesReducer from './allAveragesStore'
-
+import targetsReducer from './allTargetsStore'
+import singleTargetReducer from './singleTargetStore'
 
 const reducer = combineReducers({ auth,
   allEvents: eventsReducer,
@@ -34,6 +35,8 @@ const reducer = combineReducers({ auth,
   singleProgram: singleProgramReducer,
   singleAverage: singleAverageReducer,
   allAverages: averagesReducer,
+  singleTarget: singleTargetReducer,
+  allTargets: targetsReducer
 })
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))
