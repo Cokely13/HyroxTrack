@@ -118,7 +118,8 @@ const handleTestButtonClick = () => {
   if (eligibleEvents.length > 0) {
     // Calculate weights for each eligible event
     const eventWeights = eligibleEvents.map(event => {
-      const lastTestDays = event.updatedAt ? (new Date() - new Date(event.updatedAt)) / (1000 * 60 * 60 * 24) : 20; // 20% weight if no last test
+      const lastTestDays = event.updatedAt ? (new Date() - new Date(event.updatedAt)) / (1000 * 60 * 60 * 24) : 50; // 20% weight if no last test
+      console.log("last", lastTestDays)
       const { difference, isOver } = calculateDifference(event.id);
       const differenceWeight = isOver ? Math.ceil(timeStringToSeconds(difference) / 5) : 0; // 1% for every 5 seconds over
 
@@ -128,12 +129,12 @@ const handleTestButtonClick = () => {
       };
     });
 
-    console.log("event weight", eventWeights)
+
 
     // Sum of all weights
     const totalWeight = eventWeights.reduce((sum, ew) => sum + ew.weight, 0);
 
-    console.log("total weight", totalWeight)
+
 
     // Get a random event based on weights
     let randomNum = Math.random() * totalWeight;
@@ -177,7 +178,6 @@ const handleTestButtonClick = () => {
     const eventWeight = eventWeights.find(ew => ew.event.id === event.id);
     const rowWeight = percents.filter(percent => percent.event.id == event.id)
     const totalWeight = percents.reduce((sum, ew) => sum + ew.weight, 0);
-    console.log('totalweight', totalWeight)
     return (
       <tr key={event.id}>
         <td>{event.name}</td>
