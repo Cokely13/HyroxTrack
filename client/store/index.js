@@ -19,6 +19,8 @@ import singleAverageReducer from './singleAverageStore'
 import averagesReducer from './allAveragesStore'
 import targetsReducer from './allTargetsStore'
 import singleTargetReducer from './singleTargetStore'
+import singleChallengeReducer from './singleChallengeStore'
+import challengesReducer from './allChallengesStore'
 
 const reducer = combineReducers({ auth,
   allEvents: eventsReducer,
@@ -36,7 +38,9 @@ const reducer = combineReducers({ auth,
   singleAverage: singleAverageReducer,
   allAverages: averagesReducer,
   singleTarget: singleTargetReducer,
-  allTargets: targetsReducer
+  allTargets: targetsReducer,
+  allChallenges: challengesReducer,
+  singleChallenge: singleChallengeReducer
 })
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))
