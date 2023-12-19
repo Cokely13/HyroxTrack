@@ -20,8 +20,8 @@ function Predictor() {
     const [userTime, setUserTime] = useState('');
     const [eventName, setEventName] = useState('');
     const [date, setDate] = useState('');
-    const [minutes, setMinutes] = useState('');
-    const [seconds, setSeconds] = useState('');
+    const [minutes, setMinutes] = useState('00');
+    const [seconds, setSeconds] = useState('00');
     const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
   const user = useSelector((state) => state.singleUser )
@@ -64,6 +64,7 @@ function Predictor() {
     const sortedResults = [...filteredResults].sort((a, b) => new Date(a.date) - new Date(b.date));
     const durationsInSeconds = sortedResults.map(result => durationToSeconds(result.duration));
 
+
     const sequenceLength = 3;
     const data = [];
     const labels = [];
@@ -96,6 +97,10 @@ function Predictor() {
         }
     }, [eventName, results]); // Dependency on eventName and results
 
+    function addLeadingZero(value) {
+      return value.toString().padStart(2, '0');
+    }
+
 
     const handleDateChange = (e) => {
         setDate(e.target.value);
@@ -125,7 +130,8 @@ function Predictor() {
           return;
         }
 
-
+      //  const formattedMinutes = handleMinutesChange(minutes)
+      //  const formattedSeconds = handleSecondsChange(seconds)
 
         // Create a new result object with the input values
         const newResult = {
@@ -139,14 +145,12 @@ function Predictor() {
 
         const existingAverage = averages.find(avg => avg.eventId === newResult.eventId && avg.userId === id);
 
-        // const oldAverage = filteredResults
-        // console.log("old", oldAverage)
         const calculateOldAverage = (newDurationSeconds) => {
             const totalDurationInSeconds = filteredResults.reduce((total, currentResult) => {
                 return total + durationToSeconds(currentResult.duration);
             }, 0) + newDurationSeconds; // Include new duration in total
 
-            const averageDurationInSeconds = totalDurationInSeconds / (filteredResults.length + 1); // +1 for the new duration
+            const averageDurationInSeconds =Math.round( totalDurationInSeconds / (filteredResults.length + 1)); // +1 for the new duration
             return formatTime(averageDurationInSeconds); // Convert average to minutes:seconds format
         };
 
@@ -158,13 +162,11 @@ function Predictor() {
         eventId: events.filter((event) => event.name == eventName)[0].id,
             duration: oldAverage
           };
-        console.log("average", average)
         if (!existingAverage) {
             // Calculate the new average
             // ... existing code for calculating oldAverage ...
             dispatch(createAverage(average)); // Create a new average only if it doesn't exist
         } else {
-            console.log("exist", existingAverage)
             const updateAverage = {
                 id: existingAverage.id,
                 userId: id,
@@ -194,12 +196,13 @@ function Predictor() {
         }
     };
 
-    // Function to convert seconds to minutes and seconds
+
     const formatTime = (seconds) => {
-        const minutes = Math.floor(seconds / 60);
-        const remainingSeconds = Math.floor(seconds % 60);
-        return `0${minutes}:${remainingSeconds}`;
-    };
+      const minutes = Math.floor(seconds / 60);
+      const remainingSeconds = seconds % 60;
+      return `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
+  };
+
 
     return (
         <div>
