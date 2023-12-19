@@ -20,6 +20,10 @@ const EventAverages = () => {
   const user = useSelector((state) => state.singleUser);
   const [adding, setAdding] = useState();
 
+  const averages = user.averages ? user.averages : null
+
+  console.log("aver", averages)
+
   useEffect(() => {
     dispatch(fetchEvents());
     dispatch(fetchResults());
@@ -29,6 +33,8 @@ const EventAverages = () => {
 
 
   const userResults = results.filter((result) => result.userId === id);
+
+  console.log("user", user)
 
   const getAverageTime = (eventId) => {
     const eventResults = userResults.filter((result) => result.eventId == eventId);
@@ -199,7 +205,7 @@ const EventAverages = () => {
                   <React.Fragment>
                   {formatTime(averageTimeInSeconds(zone.id)) ? <div>
                     <div><b>Record:</b> {getRecord(zone.id)}</div>
-                  <div><b>Average:</b> {formatTime(averageTimeInSeconds(zone.id))}  </div>
+                  <div><b>Average:</b> {averages ? averages.filter(average => average.eventId == zone.id)[0].duration : "No Average"}  </div>
                   <div><b>Recent Average:</b> {formatTime(recentAverage(zone.id))} </div>
                   <div><b>Most Recent Result Date:</b> {recentResultDate(zone.id)} </div>
                   <div><b>Most Recent Result:</b> {recentResult(zone.id)} </div>
