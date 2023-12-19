@@ -50,6 +50,29 @@ function Test() {
     return userAverage ? userAverage.duration : 'No Average yet';
   };
 
+  const timeStringToSeconds = (time) => {
+    const [minutes, seconds] = time.split(':').map(Number);
+    return (minutes * 60) + seconds;
+};
+
+const secondsToTimeString = (seconds) => {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+    return `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
+};
+
+const calculateDifference = (eventId) => {
+  const target = getTargetTimeForEvent(eventId);
+  const average = getAverageTimeForEvent(eventId);
+
+  if (target !== 'No Target selected yet' && average !== 'No Average yet') {
+      const targetInSeconds = timeStringToSeconds(target);
+      const averageInSeconds = timeStringToSeconds(average);
+      const differenceInSeconds = targetInSeconds - averageInSeconds;
+      return secondsToTimeString(Math.abs(differenceInSeconds));
+  }
+  return '---';
+};
 
 
 
@@ -61,7 +84,8 @@ function Test() {
           <tr style= {{fontSize:"30px"}}>
             <th>Event Name</th>
             <th>Target Time</th>
-            <th>Actions</th>
+            <th>Average Time</th>
+            <th>Difference</th>
           </tr>
         </thead>
         <tbody style= {{fontSize:"20px"}}>
@@ -94,6 +118,7 @@ function Test() {
               <td>
                     <div>{getAverageTimeForEvent(event.id)}</div>
               </td>
+              <td>{calculateDifference(event.id)}</td>
             </tr>
           ))}
         </tbody>
