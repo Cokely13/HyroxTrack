@@ -63,6 +63,11 @@ const secondsToTimeString = (seconds) => {
     return `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
 };
 
+const formatUpdatedAt = (eventId) => {
+  const userAverage = userAverages.find(average => average.eventId === eventId);
+  return userAverage ? new Date(userAverage.updatedAt).toLocaleDateString() : '---';
+};
+
 const calculateDifference = (eventId) => {
   const target = getTargetTimeForEvent(eventId);
   const average = getAverageTimeForEvent(eventId);
@@ -108,6 +113,7 @@ const handleTestButtonClick = () => {
             <th>Event Name</th>
             <th>Target Time</th>
             <th>Average Time</th>
+            <th>Last Test</th>
             <th>Difference</th>
           </tr>
         </thead>
@@ -147,6 +153,7 @@ const handleTestButtonClick = () => {
               <td>
                     <div>{getAverageTimeForEvent(event.id)}</div>
               </td>
+              <td>{formatUpdatedAt(event.id)}</td>
         <td style={differenceStyle}>
           {differenceSign}{difference}
         </td>
