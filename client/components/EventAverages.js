@@ -21,8 +21,9 @@ const EventAverages = () => {
   const [adding, setAdding] = useState();
 
   const averages = user.averages ? user.averages : null
+  const targets = user.targets? user.targets : null
 
-  console.log("aver", averages)
+  console.log("aver", targets)
 
   useEffect(() => {
     dispatch(fetchEvents());
@@ -34,7 +35,6 @@ const EventAverages = () => {
 
   const userResults = results.filter((result) => result.userId === id);
 
-  console.log("user", user)
 
   const getAverageTime = (eventId) => {
     const eventResults = userResults.filter((result) => result.eventId == eventId);
@@ -198,7 +198,7 @@ const EventAverages = () => {
             <div className="col-sm-3 mx-auto mb-4 d-flex" key={zone.id}>
               <div className={getDivStyle(formatTime(averageTimeInSeconds(zone.id)), zone.targetTime)}>
               <h1><b><Link to={`/events/${zone.id}`} style={{ color: 'black' }}>{zone.name}</Link></b></h1>
-                <div><b>Target Time: </b>{zone.targetTime.slice(0, 5)}</div>
+              {targets ?  (<div><b>Target Time: </b>{targets.filter(target => target.eventId == zone.id) ? targets.filter(target => target.eventId == zone.id )[0].duration : zone.targetTime.slice(0, 5)}</div>) :<div> Null </div> }
                 <div> { getWorkouts(formatTime(averageTimeInSeconds(zone.id)), zone.targetTime) == 1 ? <div className='flash'><Link to={`/workouts/${zone.id}`}>DO THESE WORKOUTS!</Link></div> : <div></div> } </div>
                 <div><b>Workouts Completed: </b> {events? getNumWorkouts(zone.id) : <div></div>} </div>
                 {userResults.length ? (

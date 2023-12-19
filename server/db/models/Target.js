@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize')
 const db = require('../db')
 
-const Target = db.define('Target', {
+const Target = db.define('target', {
   eventId: {
     type: Sequelize.INTEGER,
     allowNull: false
