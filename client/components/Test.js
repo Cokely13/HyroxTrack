@@ -18,6 +18,8 @@ function Test() {
   const [minutes, setMinutes] = useState('00');
   const [seconds, setSeconds] = useState('00');
   const [refreshTargets, setRefreshTargets] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
+  const [selectedTestEvent, setSelectedTestEvent] = useState(null);
 
   useEffect(() => {
     dispatch(fetchEvents());
@@ -69,9 +71,30 @@ const calculateDifference = (eventId) => {
       const targetInSeconds = timeStringToSeconds(target);
       const averageInSeconds = timeStringToSeconds(average);
       const differenceInSeconds = targetInSeconds - averageInSeconds;
-      return secondsToTimeString(Math.abs(differenceInSeconds));
+
+      return {
+        difference: secondsToTimeString(Math.abs(differenceInSeconds)),
+        isOver: averageInSeconds > targetInSeconds,
+      };
   }
-  return '---';
+  return { difference: '---', isOver: null };
+};
+
+const eligibleEventsForTest = () => {
+  return events.filter(event => {
+    const average = getAverageTimeForEvent(event.id);
+    const target = getTargetTimeForEvent(event.id);
+    return average === 'No Average yet' || (timeStringToSeconds(average) > timeStringToSeconds(target));
+  });
+};
+
+const handleTestButtonClick = () => {
+  const eligibleEvents = eligibleEventsForTest();
+  if (eligibleEvents.length > 0) {
+    const randomEvent = eligibleEvents[Math.floor(Math.random() * eligibleEvents.length)];
+    setSelectedTestEvent(randomEvent);
+    setShowPopup(true);
+  }
 };
 
 
@@ -89,10 +112,16 @@ const calculateDifference = (eventId) => {
           </tr>
         </thead>
         <tbody style= {{fontSize:"20px"}}>
-          {events.map((event) => (
-            <tr key={event.id}>
-              <td>{event.name}</td>
-              <td>
+          {events.map((event) => {
+    const { difference, isOver } = calculateDifference(event.id);
+    const differenceStyle = {
+      color: isOver === null ? 'inherit' : isOver ? 'red' : 'green',
+    };
+    const differenceSign = isOver === null ? '' : isOver ? '+' : '-';
+    return (
+      <tr key={event.id}>
+        <td>{event.name}</td>
+       <td>
                 {selectedEventId == event.id ? (
                   <div>
                     <select value={minutes} onChange={(e) => setMinutes(e.target.value)}>
@@ -118,11 +147,22 @@ const calculateDifference = (eventId) => {
               <td>
                     <div>{getAverageTimeForEvent(event.id)}</div>
               </td>
-              <td>{calculateDifference(event.id)}</td>
-            </tr>
-          ))}
+        <td style={differenceStyle}>
+          {differenceSign}{difference}
+        </td>
+      </tr>
+    );
+  })}
         </tbody>
       </table>
+      <button className="btn btn-primary" onClick={handleTestButtonClick}>Test</button>
+
+      {showPopup && (
+        <div className="popup">
+          Test {selectedTestEvent.name}
+          <button onClick={() => setShowPopup(false)}>Close</button>
+        </div>
+      )}
     </div>
   );
 }
