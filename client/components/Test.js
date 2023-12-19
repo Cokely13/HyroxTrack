@@ -20,6 +20,7 @@ function Test() {
   const [refreshTargets, setRefreshTargets] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
   const [selectedTestEvent, setSelectedTestEvent] = useState(null);
+  const [eventWeights, setEventWeights] = useState([]);
 
   useEffect(() => {
     dispatch(fetchEvents());
@@ -93,14 +94,62 @@ const eligibleEventsForTest = () => {
   });
 };
 
+const eligibleEvents = eligibleEventsForTest();
+
+const percents = eligibleEvents.map(event => {
+    const lastTestDays = event.updatedAt ? (new Date() - new Date(event.updatedAt)) / (1000 * 60 * 60 * 24) : 20; // 20% weight if no last test
+    const { difference, isOver } = calculateDifference(event.id);
+    const differenceWeight = isOver ? Math.ceil(timeStringToSeconds(difference) / 5) : 0; // 1% for every 5 seconds over
+
+    return {
+      event,
+      weight: 1 + lastTestDays + differenceWeight // Base weight of 1
+    };
+  });
+
+
+
+  const rowWeight = percents.filter(percent => percent.event.id == 2)
+
+
+
 const handleTestButtonClick = () => {
   const eligibleEvents = eligibleEventsForTest();
   if (eligibleEvents.length > 0) {
-    const randomEvent = eligibleEvents[Math.floor(Math.random() * eligibleEvents.length)];
-    setSelectedTestEvent(randomEvent);
-    setShowPopup(true);
+    // Calculate weights for each eligible event
+    const eventWeights = eligibleEvents.map(event => {
+      const lastTestDays = event.updatedAt ? (new Date() - new Date(event.updatedAt)) / (1000 * 60 * 60 * 24) : 20; // 20% weight if no last test
+      const { difference, isOver } = calculateDifference(event.id);
+      const differenceWeight = isOver ? Math.ceil(timeStringToSeconds(difference) / 5) : 0; // 1% for every 5 seconds over
+
+      return {
+        event,
+        weight: 1 + lastTestDays + differenceWeight // Base weight of 1
+      };
+    });
+
+    console.log("event weight", eventWeights)
+
+    // Sum of all weights
+    const totalWeight = eventWeights.reduce((sum, ew) => sum + ew.weight, 0);
+
+    console.log("total weight", totalWeight)
+
+    // Get a random event based on weights
+    let randomNum = Math.random() * totalWeight;
+    let cumulativeWeight = 0;
+
+    for (const ew of eventWeights) {
+      cumulativeWeight += ew.weight;
+      if (randomNum <= cumulativeWeight) {
+        setSelectedTestEvent(ew.event);
+        setShowPopup(true);
+        break;
+      }
+    }
   }
 };
+
 
 
 
@@ -115,6 +164,7 @@ const handleTestButtonClick = () => {
             <th>Average Time</th>
             <th>Last Test</th>
             <th>Difference</th>
+            <th>Test Weight</th>
           </tr>
         </thead>
         <tbody style= {{fontSize:"20px"}}>
@@ -124,6 +174,10 @@ const handleTestButtonClick = () => {
       color: isOver === null ? 'inherit' : isOver ? 'red' : 'green',
     };
     const differenceSign = isOver === null ? '' : isOver ? '+' : '-';
+    const eventWeight = eventWeights.find(ew => ew.event.id === event.id);
+    const rowWeight = percents.filter(percent => percent.event.id == event.id)
+    const totalWeight = percents.reduce((sum, ew) => sum + ew.weight, 0);
+    console.log('totalweight', totalWeight)
     return (
       <tr key={event.id}>
         <td>{event.name}</td>
@@ -157,6 +211,7 @@ const handleTestButtonClick = () => {
         <td style={differenceStyle}>
           {differenceSign}{difference}
         </td>
+        <td>{rowWeight[0]? `${((rowWeight[0].weight/ totalWeight)* 100).toFixed(2)}%` : '--!-'}</td>
       </tr>
     );
   })}
@@ -174,5 +229,4 @@ const handleTestButtonClick = () => {
   );
 }
 
-export default Test;
-
+export default Test
