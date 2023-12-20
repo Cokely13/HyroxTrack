@@ -16,12 +16,13 @@ export default function CreateChallenge() {
   const user = useSelector((state) => state.singleUser )
   const [eventId, setEventId] = useState();
   const [reload, setReload] = useState(1);
-  const [invite, setInvite] = useState([]);
+  const [invite, setInvite] = useState([id]);
   const [showDateSelection, setShowDateSelection] = useState(false);
   const [start, setStart] = useState((currentDate));
   const events = useSelector((state) => state.allEvents )
   const users = useSelector((state) => state.allUsers )
-  const [selectedUsers, setSelectedUsers] = useState([]);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [selectedUsers, setSelectedUsers] = useState([id.toString()]);
 
   useEffect(() => {
     dispatch(fetchEvents());
@@ -37,23 +38,13 @@ export default function CreateChallenge() {
   }, [reload, dispatch,])
 
 
-  const toggleInvite = (event, userId) => {
-    event.preventDefault();  // prevent the default button click behavior
-    if (invite.includes(userId)) {
-      setInvite(invite.filter(id => id !== userId));
-    } else {
-      setInvite([...invite, userId]);
-    }
-}
 
-  const isSelected = (userId) => {
-    return invite.includes(userId);
-  }
 
 
   const handleEventChange = (event) => {
     event.preventDefault()
     setEventId(event.target.value)
+    setErrorMessage('')
 
   }
 
@@ -104,6 +95,11 @@ export default function CreateChallenge() {
   const handleClick = (e) => {
     e.preventDefault()
 
+    if (!eventId) {
+      setErrorMessage("Please select an event.");
+      return; // Prevent further execution
+    }
+
     const startDateObject = new Date(start);
     startDateObject.setDate(startDateObject.getDate() + 7);
     const endDate = startDateObject.toISOString().split('T')[0];
@@ -121,6 +117,8 @@ export default function CreateChallenge() {
     dispatch(createChallenge(newChallenge))
     setEventId("")
     setStart(currentDate)
+    setSelectedUsers([id.toString()]); // Reset selected users, keeping only the user's own ID
+    setErrorMessage(''); // Optionally clear the error message
   }
 
   const handleToggleDateSelection = () => {
@@ -183,6 +181,11 @@ export default function CreateChallenge() {
            )
             </div>
       </div>
+      {errorMessage && (
+          <div style={{ color: 'red', marginBottom: '10px' }}>
+            {errorMessage}
+          </div>
+        )}
     </form>
     <div className="text-center">
     <button className="btn btn-primary text-center"  onClick={handleClick}>Add Challenge</button>

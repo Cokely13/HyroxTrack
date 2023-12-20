@@ -17,6 +17,8 @@ Event.hasMany(Result)
 Result.belongsTo(Event)
 Challenge.hasMany(Result)
 Result.belongsTo(Challenge)
+User.hasMany(Challenge)
+Challenge.belongsTo(User)
 User.hasMany(Result)
 Result.belongsTo(User)
 Event.hasMany(Workout)
@@ -41,6 +43,7 @@ module.exports = {
   db,
   models: {
     User,
+    Challenge,
     Event,
     Result,
     Workout,

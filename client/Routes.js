@@ -25,6 +25,7 @@ import Predictor from './components/Predictor'
 import UserTarget from './components/UserTarget';
 import Test from './components/Test'
 import CreateChallenge from './components/CreateChallenge';
+import MyChallenges from './components/MyChallenges';
 
 /**
  * COMPONENT
@@ -48,6 +49,7 @@ class Routes extends Component {
             <Route exact path="/myresults" component={MyResults} />
             <Route exact path="/profile/edit" component={EditProfile} />
             <Route exact path="/events" component={Events} />
+            <Route exact path="/mychallenges" component={MyChallenges} />
             <Route exact path="/test" component={Test} />
             <Route exact path="/predictor" component={Predictor} />
             <Route exact path="/events/:eventId" component={EventDetail}/>
