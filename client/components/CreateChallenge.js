@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useEffect, useState } from 'react'
 import { createChallenge} from '../store/allChallengesStore'
 import { fetchSingleUser } from '../store/singleUserStore'
+import {fetchUsers} from '../store/allUsersStore'
 import { fetchEvents } from '../store/allEventsStore'
 
 
@@ -13,7 +14,7 @@ export default function CreateChallenge() {
   const dispatch = useDispatch()
   const {id} = useSelector((state) => state.auth )
   const user = useSelector((state) => state.singleUser )
-  const [name, setName] = useState();
+  const [eventId, setEventId] = useState();
   const [reload, setReload] = useState(1);
   const [createdBy, setCreatedBy] = useState();
   const [location, setLocation] = useState();
@@ -24,10 +25,15 @@ export default function CreateChallenge() {
   const [showDateSelection, setShowDateSelection] = useState(false);
   const [start, setStart] = useState((currentDate));
   const [end, setEnd] = useState(currentDate);
-  const averages = useSelector((state) => state.allAverages);
+  const events = useSelector((state) => state.allEvents )
+  const users = useSelector((state) => state.allUsers )
 
   useEffect(() => {
     dispatch(fetchEvents());
+  }, []);
+
+  useEffect(() => {
+    dispatch(fetchUsers());
   }, []);
 
   useEffect(() => {
@@ -50,9 +56,9 @@ export default function CreateChallenge() {
   }
 
 
-  const handleChange = (event) => {
+  const handleEventChange = (event) => {
     event.preventDefault()
-    setName(event.target.value)
+    setEventId(event.target.value)
     setCreatedBy(id)
 
   }
@@ -88,20 +94,15 @@ export default function CreateChallenge() {
 
   const handleClick = (e) => {
     e.preventDefault()
-    const newTrip = {
-      name: name,
-      location: location,
-      length: length,
-      invite: invite,
-      startDate: start,
-      endDate: end,
-      responseDate: response,
-      createdBy: createdBy,
+    const newChallenge= {
+     eventId: eventId,
+     userId: id,
+     startDate: start,
+     endDate: end
     }
 
-    dispatch(createTrip(newTrip))
-    history.push('/list');
-    setName("")
+    dispatch(createChallenge(newChallenge))
+    setEventId("")
     setLength("")
     setDates("")
     setResponse(currentDate)
@@ -117,34 +118,24 @@ export default function CreateChallenge() {
     <div >
     <form>
       <div >
-        <div>
-        <label> <h2 htmlFor="name" style={{marginRight: "10px"}}>Event Id: </h2></label>
-          <input name='name' onChange={handleChange}  type="text" placeholder="Name"/>
-        </div>
-        {name?
-        <div >
-          <label> <h2 htmlFor="location" style={{marginRight: "10px"}}>Location: </h2></label>
-          <input name='location' onChange={handleChange2}  type="text" placeholder="Location"/> </div> : <div></div>}
-        {location?
-        <div>
-        <label> <h2 htmlFor="length" style={{marginRight: "10px"}}>Length of Trip: </h2></label>
-          <input name='length' onChange={handleChange3}  type="text" placeholder="Days"/>
-        </div>: <div></div>}
-        {length?
+      <div>
+  <label htmlFor="event" style={{ marginRight: "10px" }}>Event:</label>
+  <select id="event" value={eventId} onChange={handleEventChange}>
+    <option value=""> -- Select Event --</option>
+    {events.map((event) => (
+      <option key={event.id} value={event.id}>{event.name}</option>
+    ))}
+  </select>
+</div>
         <div>
           <label> <h2 htmlFor="invite" style={{ marginRight: "10px" }}>Invites: </h2></label>
-          {users.map(user => (
-           <button
-           key={user.id}
-           className={`btn ${isSelected(user.id) ? "btn-primary" : "btn-secondary"}`}
-           onClick={(event) => toggleInvite(event, user.id)}   // pass the event to the function
-       >
-           {user.username}
-           </button>
-          ))}
+          <select id="event" value={eventId} onChange={handleEventChange}>
+    <option value=""> -- Invite Users--</option>
+    {users.map((user) => (
+      <option key={user.id} value={user.id}>{user.userName}</option>
+    ))}
+  </select>
         </div>
-      : <div></div>}
-        {invite?
               <div>
               <label>
                 <h2 htmlFor="start" style={{marginRight: "10px"}}>Start Date: </h2>
@@ -163,51 +154,11 @@ export default function CreateChallenge() {
                </button>
              </>
            )
-            </div>: <div></div>}
-            {invite?
-              <div>
-              <label>
-                <h2 htmlFor="end" style={{marginRight: "10px"}}>End Date: </h2>
-              </label>
-
-              (
-             <>
-               <input
-                 type="date"
-                 id="dateInput"
-                 value={new Date(end).toISOString().split('T')[0]}
-                 onChange={handleChange5}
-               />
-               <button className="btn btn-primary" style={{marginLeft: "10px"}} onClick={handleToggleDateSelection}>
-                 Cancel
-               </button>
-             </>
-           )
-            </div>: <div></div>}
-        {invite?
-        <div>
-        <label>
-          <h2 htmlFor="response" style={{marginRight: "10px"}}>Respond By: </h2>
-        </label>
-
-        (
-       <>
-         <input
-           type="date"
-           id="dateInput"
-           value={new Date(response).toISOString().split('T')[0]}
-           onChange={handleChange7}
-         />
-         <button className="btn btn-primary" style={{marginLeft: "10px"}} onClick={handleToggleDateSelection}>
-           Cancel
-         </button>
-       </>
-     )
-      </div>: <div></div>}
+            </div>
       </div>
     </form>
     <div className="text-center">
-    <button className="btn btn-primary text-center"  onClick={handleClick}>Add Trip</button>
+    <button className="btn btn-primary text-center"  onClick={handleClick}>Add Challenge</button>
     </div>
   </div>
   )
