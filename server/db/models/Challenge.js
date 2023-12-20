@@ -9,9 +9,15 @@ const Challenge = db.define('challenge', {
     type: Sequelize.INTEGER,
     defaultVaule: 1
   },
-  description: {
-    type: Sequelize.STRING,
-    allowNull: false
+  active: {
+    type: Sequelize.BOOLEAN,
+    defaultVaule: true
+  },
+  startDate: {
+    type: Sequelize.DATEONLY,
+  },
+  endDate: {
+    type: Sequelize.DATEONLY,
   },
 
 })

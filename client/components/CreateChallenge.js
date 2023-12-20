@@ -24,15 +24,20 @@ export default function CreateChallenge() {
   const [showDateSelection, setShowDateSelection] = useState(false);
   const [start, setStart] = useState((currentDate));
   const [end, setEnd] = useState(currentDate);
+  const averages = useSelector((state) => state.allAverages);
 
   useEffect(() => {
     dispatch(fetchEvents());
   }, []);
 
+  useEffect(() => {
+    dispatch(fetchSingleUser(id))
+    // Safe to add dispatch to the dependencies array
+  }, [reload, dispatch,])
+
 
   const toggleInvite = (event, userId) => {
     event.preventDefault();  // prevent the default button click behavior
-    console.log("invite", invite)
     if (invite.includes(userId)) {
       setInvite(invite.filter(id => id !== userId));
     } else {
@@ -62,11 +67,6 @@ export default function CreateChallenge() {
     event.preventDefault()
     setLength(event.target.value)
   }
-
-  // const handleChange6 = (event) => {
-  //   event.preventDefault()
-  //   setLimit(event.target.value)
-  // }
 
   const handleChange4 = (event) => {
     event.preventDefault()
@@ -118,7 +118,7 @@ export default function CreateChallenge() {
     <form>
       <div >
         <div>
-        <label> <h2 htmlFor="name" style={{marginRight: "10px"}}>Trip Name: </h2></label>
+        <label> <h2 htmlFor="name" style={{marginRight: "10px"}}>Event Id: </h2></label>
           <input name='name' onChange={handleChange}  type="text" placeholder="Name"/>
         </div>
         {name?

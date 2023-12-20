@@ -24,6 +24,7 @@ import RowTimePrediction from './components/RowTImePrediction';
 import Predictor from './components/Predictor'
 import UserTarget from './components/UserTarget';
 import Test from './components/Test'
+import CreateChallenge from './components/CreateChallenge';
 
 /**
  * COMPONENT
@@ -59,6 +60,7 @@ class Routes extends Component {
             <Route exact path="/row" component={RowTimePrediction} />
             <Route exact path="/usertarget" component={TargetTimes} />
             <Route exact path="/target" component={UserTarget} />
+            <Route exact path="/challenge" component={CreateChallenge} />
             <Route exact path="/workouts/:workoutId" component={WorkoutDetail} />
             <Route exact path="/results/edit/:resultId" component={EditResult} />
             <Redirect to="/home" />
