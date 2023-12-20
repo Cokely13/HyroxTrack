@@ -16,17 +16,12 @@ export default function CreateChallenge() {
   const user = useSelector((state) => state.singleUser )
   const [eventId, setEventId] = useState();
   const [reload, setReload] = useState(1);
-  const [createdBy, setCreatedBy] = useState();
-  const [location, setLocation] = useState();
-  const [length, setLength] = useState();
   const [invite, setInvite] = useState([]);
-  const [dates, setDates] = useState();
-  const [response, setResponse] = useState(currentDate);
   const [showDateSelection, setShowDateSelection] = useState(false);
   const [start, setStart] = useState((currentDate));
-  const [end, setEnd] = useState(currentDate);
   const events = useSelector((state) => state.allEvents )
   const users = useSelector((state) => state.allUsers )
+  const [selectedUsers, setSelectedUsers] = useState([]);
 
   useEffect(() => {
     dispatch(fetchEvents());
@@ -59,9 +54,24 @@ export default function CreateChallenge() {
   const handleEventChange = (event) => {
     event.preventDefault()
     setEventId(event.target.value)
-    setCreatedBy(id)
 
   }
+
+  const handleCheckboxChange = (event) => {
+    const changedUserId = event.target.value;
+    const isChecked = event.target.checked;
+
+    setSelectedUsers(prevSelectedUsers => {
+      if (isChecked) {
+        // Add the user ID to the array if it's checked
+        return [...prevSelectedUsers, changedUserId];
+      } else {
+        // Remove the user ID from the array if it's unchecked
+        return prevSelectedUsers.filter(userId => userId !== changedUserId);
+      }
+    });
+  };
+
 
   const handleChange2 = (event) => {
     event.preventDefault()
@@ -89,24 +99,27 @@ export default function CreateChallenge() {
   const handleChange7 = (event) => {
     event.preventDefault()
     const selectedDate = new Date(event.target.value).getTime();
-    setResponse(event.target.value)
   }
 
   const handleClick = (e) => {
     e.preventDefault()
+
+    const startDateObject = new Date(start);
+    startDateObject.setDate(startDateObject.getDate() + 7);
+    const endDate = startDateObject.toISOString().split('T')[0];
+
     const newChallenge= {
      eventId: eventId,
      userId: id,
      startDate: start,
-     endDate: end
+     endDate: endDate,
+     invites: selectedUsers
     }
+
+    console.log("new", newChallenge)
 
     dispatch(createChallenge(newChallenge))
     setEventId("")
-    setLength("")
-    setDates("")
-    setResponse(currentDate)
-    setEnd(currentDate)
     setStart(currentDate)
   }
 
@@ -129,12 +142,26 @@ export default function CreateChallenge() {
 </div>
         <div>
           <label> <h2 htmlFor="invite" style={{ marginRight: "10px" }}>Invites: </h2></label>
-          <select id="event" value={eventId} onChange={handleEventChange}>
-    <option value=""> -- Invite Users--</option>
-    {users.map((user) => (
-      <option key={user.id} value={user.id}>{user.userName}</option>
-    ))}
-  </select>
+          <div>
+          <div>
+  <label>
+    <h2 style={{ marginRight: "10px" }}>Invites:</h2>
+  </label>
+  {users.map((user) => (
+    <div key={user.id}>
+      <input
+        type="checkbox"
+        id={`checkbox-${user.id}`}
+        value={user.id}
+        checked={selectedUsers.includes(user.id.toString())} // Ensuring the comparison is correct
+        onChange={handleCheckboxChange}
+      />
+      <label htmlFor={`checkbox-${user.id}`}>{user.userName}</label>
+    </div>
+  ))}
+</div>
+
+</div>
         </div>
               <div>
               <label>

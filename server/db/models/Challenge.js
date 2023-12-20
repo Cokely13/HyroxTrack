@@ -19,6 +19,10 @@ const Challenge = db.define('challenge', {
   endDate: {
     type: Sequelize.DATEONLY,
   },
+  invites: {
+    type: Sequelize.ARRAY(Sequelize.INTEGER), // Array of integers
+    defaultValue: []
+  }
 
 })
 
