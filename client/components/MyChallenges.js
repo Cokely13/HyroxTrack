@@ -85,6 +85,11 @@ function MyChallenges() {
   };
 
 
+const filteredChallenges = challenges.filter(challenge =>
+  challenge.invites.includes(id)
+);
+
+console.log("select", selectedEventFilter)
   return (
     <div>
     <h1 className="profile rounded text-center add" style={{ marginBottom: "15px", marginTop: "15px",  marginLeft: "auto", marginRight: "auto", width: "35%" }}><b>{user.userName}'s Challenges</b></h1>
@@ -125,7 +130,7 @@ function MyChallenges() {
     {challenges ? <div style={{marginLeft: "35px", marginBottom: "35px"}}>
       <select onChange={handleChange} name="filterEvents" className='custom-select'>
               <option value="All">Filter by Event</option>
-              {challenges.map((({ eventId }) => eventId)).filter((item, i, ar) => ar.indexOf(item) === i).map((result) => <option key={result} value={result}>{events.find(event => event.id === result)?.name || 'Event not found'}</option>)}
+              {filteredChallenges.map((({ eventId }) => eventId)).filter((item, i, ar) => ar.indexOf(item) === i).map((eventId) => <option key={eventId} value={eventId}>{events.find(event => event.id === eventId)?.name || 'Event not found'}</option>)}
           <option value="All">ALL</option>
               </select>
               </div> : <div></div>}
@@ -143,26 +148,20 @@ function MyChallenges() {
       {/* <th scope="col">Handle</th> */}
     </tr>
   </thead>
-  {selectedEventFilter !== "All" ? user.results.filter(result=>result.eventName == selectedEventFilter).map((result) => {
+  {selectedEventFilter !== "All" ? filteredChallenges.filter(challenge=>challenge.eventId == selectedEventFilter).map((challenge) => {
               return (
-                <tbody key={result.id} style= {{fontSize:"20px"}}>
+                <tbody key={challenge.id} style= {{fontSize:"20px"}}>
                 <tr className="text-center">
-                  <th scope="row">{challenges.invites.length}</th>
-                  <th scope="row">{result.date}</th>
-                  <td>{result.eventName}</td>
-                  <td>{result.duration}</td>
-                  <td>
-                  <Link className="btn btn-primary" onClick={() => handleEdit(result)}>Edit Result</Link>
-                  </td>
-                  <td>
-                  <button className="btn btn-danger" onClick={(event) =>(handleDelete(event, result))} to={`/results/edit/${result.id}`} style={{color:"white"}} >Delete Result</button>
-                  </td>
+                  <th scope="row">{challenge.invites.length}</th>
+                  <th scope="row">{challenge.startDate}</th>
+                  <td>{events.find(event => event.id === challenge.eventId)?.name || 'Event not found'}</td>
+                  <td><CountdownTimer targetDate={challenge.endDate} /></td>
                 </tr>
               </tbody>
               )
 
             }):
-            challenges.map((challenge) => {
+            filteredChallenges.map((challenge) => {
               return (
                 <tbody key={challenge.id} style= {{fontSize:"20px"}}>
                 <tr className="text-center">
