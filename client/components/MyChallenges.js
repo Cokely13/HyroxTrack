@@ -7,6 +7,7 @@ import { deleteResult } from '../store/allResultsStore'
 import { fetchChallenges } from '../store/allChallengesStore'
 import { updateSingleResult } from '../store/singleResultsStore'
 import { fetchEvents } from '../store/allEventsStore'
+import CountdownTimer from './CountdownTimer';
 
 function MyChallenges() {
   const dispatch = useDispatch()
@@ -124,7 +125,7 @@ function MyChallenges() {
     {challenges ? <div style={{marginLeft: "35px", marginBottom: "35px"}}>
       <select onChange={handleChange} name="filterEvents" className='custom-select'>
               <option value="All">Filter by Event</option>
-              {challenges.map((({ eventId }) => eventId)).filter((item, i, ar) => ar.indexOf(item) === i).map((result) => <option key={result} value={result}>{result}</option>)}
+              {challenges.map((({ eventId }) => eventId)).filter((item, i, ar) => ar.indexOf(item) === i).map((result) => <option key={result} value={result}>{events.find(event => event.id === result)?.name || 'Event not found'}</option>)}
           <option value="All">ALL</option>
               </select>
               </div> : <div></div>}
@@ -167,8 +168,8 @@ function MyChallenges() {
                 <tr className="text-center">
                   <th scope="row">{challenge.invites.length}</th>
                   <th scope="row">{challenge.startDate}</th>
-                  <td>{challenge.eventId}</td>
-                  <td>test</td>
+                  <td>{events.find(event => event.id === challenge.eventId)?.name || 'Event not found'}</td>
+                  <td><CountdownTimer targetDate={challenge.endDate} /></td>
                   {/* <td>
                   <div className="btn btn-primary" onClick={() => handleEdit(result)} >Edit Result</div>
                   </td>
