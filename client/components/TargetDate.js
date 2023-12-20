@@ -34,6 +34,12 @@ export default function TargetDate() {
 
   const handleToggleDateSelection = () => {
     setShowDateSelection(!showDateSelection);
+
+    // Update targetDate state to current date or user's target date
+    if (!showDateSelection) {
+      const currentDate = user.targetDate ? new Date(user.targetDate) : new Date();
+      setTargetDate(currentDate.toISOString().split('T')[0]);
+    }
   };
 
   return (
@@ -46,7 +52,7 @@ export default function TargetDate() {
             <input
               type="date"
               id="dateInput"
-              value={new Date(user.targetDate).toISOString().split('T')[0]}
+              value={new Date(targetDate).toISOString().split('T')[0]}
               onChange={handleDateChange}
             />
             <button className="btn btn-primary" style={{marginLeft: "10px"}} onClick={handleToggleDateSelection}>
