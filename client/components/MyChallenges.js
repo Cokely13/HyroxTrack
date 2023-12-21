@@ -8,6 +8,7 @@ import { fetchChallenges } from '../store/allChallengesStore'
 import { updateSingleResult } from '../store/singleResultsStore'
 import { fetchEvents } from '../store/allEventsStore'
 import CountdownTimer from './CountdownTimer';
+import AddResult from './AddResult'
 
 function MyChallenges() {
   const dispatch = useDispatch()
@@ -19,6 +20,8 @@ function MyChallenges() {
   const [selectedEvent, setSelectedEvent] = useState("All")
   const [selectedEventFilter, setSelectedEventFilter] = useState("All")
   const [selectedEventId, setSelectedEventId] = useState(null);
+  const [add, setAdd] = useState("")
+  const [selectedChallenge, setSelectedChallenge] = useState("")
   const [reload, setReload] = useState(false);
   const [minutes, setMinutes] = useState('00');
   const [seconds, setSeconds] = useState('00');
@@ -52,6 +55,12 @@ function MyChallenges() {
 
   }
 
+  const handleResultAdded = () => {
+    setAdd(false); // Hide AddResult component
+    setReload(!reload); // Trigger data reload
+  };
+
+
   const handleDelete =(event, result) => {
     event.preventDefault()
     dispatch(deleteResult(result.id))
@@ -74,6 +83,11 @@ function MyChallenges() {
     setSeconds('00');
   };
 
+  const handleAdd = (select) => {
+    setSelectedChallenge(select);
+   setAdd(true)
+  };
+
   const handleSubmit = () => {
     const newTime = `${minutes}:${seconds}`;
     selectedEvent.duration = newTime
@@ -89,7 +103,7 @@ const filteredChallenges = challenges.filter(challenge =>
   challenge.invites.includes(id)
 );
 
-console.log("select", selectedEventFilter)
+
   return (
     <div>
     <h1 className="profile rounded text-center add" style={{ marginBottom: "15px", marginTop: "15px",  marginLeft: "auto", marginRight: "auto", width: "35%" }}><b>{user.userName}'s Challenges</b></h1>
@@ -139,12 +153,13 @@ console.log("select", selectedEventFilter)
           <table className="table table-bordered  text-center profile rounded text-center add" style= {{backgroundColor:"rgb(211, 211, 211)"}}>
   <thead>
     <tr style= {{fontSize:"30px"}}>
+    <th scope="col">Challenge ID</th>
       <th scope="col"># of Challengers</th>
       <th scope="col">Start Date</th>
       <th scope="col">Event Name</th>
       <th scope="col">Time Left</th>
-      <th scope="col"></th>
-      <th scope="col"></th>
+      <th scope="col">Add Result</th>
+      <th scope="col">Challenge Done</th>
       {/* <th scope="col">Handle</th> */}
     </tr>
   </thead>
@@ -152,10 +167,12 @@ console.log("select", selectedEventFilter)
               return (
                 <tbody key={challenge.id} style= {{fontSize:"20px"}}>
                 <tr className="text-center">
+                <th scope="row">{challenge.id}</th>
                   <th scope="row">{challenge.invites.length}</th>
                   <th scope="row">{challenge.startDate}</th>
                   <td>{events.find(event => event.id === challenge.eventId)?.name || 'Event not found'}</td>
                   <td><CountdownTimer targetDate={challenge.endDate} /></td>
+                  <td><button className="btn btn-primary" onClick={() => handleEdit(result)}>Add Result</button></td>
                 </tr>
               </tbody>
               )
@@ -165,16 +182,12 @@ console.log("select", selectedEventFilter)
               return (
                 <tbody key={challenge.id} style= {{fontSize:"20px"}}>
                 <tr className="text-center">
+                <th scope="row">{challenge.id}</th>
                   <th scope="row">{challenge.invites.length}</th>
                   <th scope="row">{challenge.startDate}</th>
                   <td>{events.find(event => event.id === challenge.eventId)?.name || 'Event not found'}</td>
                   <td><CountdownTimer targetDate={challenge.endDate} /></td>
-                  {/* <td>
-                  <div className="btn btn-primary" onClick={() => handleEdit(result)} >Edit Result</div>
-                  </td>
-                  <td>
-                  <button className="btn btn-danger" onClick={(event) =>(handleDelete(event, result))} to={`/results/edit/${result.id}`} style={{color:"white"}} >Delete Result</button>
-                  </td> */}
+                  <td><button  className="btn btn-primary" onClick={() => handleAdd(challenge)}>Add Result</button></td>
                 </tr>
               </tbody>
               )
@@ -183,6 +196,7 @@ console.log("select", selectedEventFilter)
 </div>: <div>NO Results</div>}
 
     </div>}
+    {add ? <AddResult selectedChallenge= {selectedChallenge} onResultAdded={handleResultAdded}  /> : <div></div>}
     </div>
   )
 }

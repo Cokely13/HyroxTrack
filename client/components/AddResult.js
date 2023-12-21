@@ -5,7 +5,7 @@ import { createResult } from '../store/allResultsStore';
 import { fetchSingleUser } from '../store/singleUserStore';
 import { fetchEvents } from '../store/allEventsStore';
 
-const AddResult = () => {
+const AddResult = ({ selectedChallenge, onResultAdded  }) => {
   const { id } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const [eventName, setEventName] = useState('');
@@ -16,6 +16,9 @@ const AddResult = () => {
   const [successMessage, setSuccessMessage] = useState('');
   const user = useSelector((state) => state.singleUser )
   const events = useSelector((state) => state.allEvents )
+
+  const {eventId} = selectedChallenge
+  const { id: challengeId } = selectedChallenge
 
 
 
@@ -54,10 +57,6 @@ const AddResult = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!eventName) {
-      setErrorMessage('Please Select Event');
-      return;
-    }
 
     if (!date) {
       setErrorMessage('Please Select Date');
@@ -75,8 +74,9 @@ const AddResult = () => {
     const newResult = {
       userId: id,
       userName: user.userName,
-      eventName,
-      eventId: events.filter((event) => event.name == eventName)[0].id,
+      challengeId: challengeId,
+      eventName: events.find(event => event.id === eventId)?.name,
+      eventId: eventId,
       date,
       duration: `${minutes}:${seconds}`,
     };
@@ -90,6 +90,7 @@ const AddResult = () => {
     setMinutes('');
     setSeconds('');
     setErrorMessage('');
+    onResultAdded();
   };
 
   return (
@@ -101,18 +102,7 @@ const AddResult = () => {
       {successMessage && <p>{successMessage}</p>}
       <div>
         <label htmlFor="event" style={{ marginRight: "10px" }}>Event:</label>
-        <select id="event" value={eventName} onChange={handleEventChange}>
-          <option value=""> -- Select Event --</option>
-          <option value="Rowing">Rowing</option>
-          <option value="SkiErg">SkiErg</option>
-          <option value="SledPush">SledPush</option>
-          <option value="SledPull">SledPull</option>
-          <option value="Burpee Broad Jumps">Burpee Broad Jumps</option>
-          <option value="Farmers Carry">Farmers Carry</option>
-          <option value="Burpee Broad Jumps">Burpee Broad Jumps</option>
-          <option value="Sandbag Lunges">Sandbag Lunges</option>
-          <option value="Wall Balls">Wall Balls</option>
-        </select>
+      <div>{events.find(event => event.id === eventId)?.name}</div>
       </div>
       <div>
         <label htmlFor="date" style={{ marginRight: "10px" }}>Date:  </label>
