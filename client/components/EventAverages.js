@@ -161,6 +161,8 @@ const EventAverages = () => {
   };
 
   const getDivStyle = (average, targetTime) => {
+    console.log("average", average)
+    console.log("average", targetTime)
     if (average == null) {
       return "col yellow" ;
     } else if (average < targetTime) {
@@ -196,16 +198,16 @@ const EventAverages = () => {
         {events.length ? (
           events.map((zone) => (
             <div className="col-sm-3 mx-auto mb-4 d-flex" key={zone.id}>
-              <div className={getDivStyle(formatTime(averageTimeInSeconds(zone.id)), zone.targetTime)}>
+              <div className={getDivStyle( (averages ? averages.find(average => average.eventId === zone.id)?.duration|| null: null), (targets ? targets.find(target => target.eventId === zone.id)?.duration|| null: null) )}>
               <h1><b><Link to={`/events/${zone.id}`} style={{ color: 'black' }}>{zone.name}</Link></b></h1>
              <div><b>Target Time: </b> {targets ? (<div> {targets.find(target => target.eventId === zone.id)?.duration|| 'No Target Set'} </div>) : <div> hey</div>} </div>
-                <div> { getWorkouts(formatTime(averageTimeInSeconds(zone.id)), zone.targetTime) == 1 ? <div className='flash'><Link to={`/workouts/${zone.id}`}>DO THESE WORKOUTS!</Link></div> : <div></div> } </div>
+                <div> { getWorkouts( (averages ? averages.find(average => average.eventId === zone.id)?.duration|| null: null), (targets ? targets.find(target => target.eventId === zone.id)?.duration|| null: null) ) == 1 ? <div className='flash'><Link to={`/workouts/${zone.id}`}>DO THESE WORKOUTS!</Link></div> : <div></div> } </div>
                 <div><b>Workouts Completed: </b> {events? getNumWorkouts(zone.id) : <div></div>} </div>
                 {userResults.length ? (
                   <React.Fragment>
                   {formatTime(averageTimeInSeconds(zone.id)) ? <div>
                     <div><b>Record:</b> {getRecord(zone.id)}</div>
-                  <div><b>Average:</b> {averages ? averages.filter(average => average.eventId == zone.id)[0].duration : "No Average"}  </div>
+                  <div><b>Average:</b> {averages ? averages.find(average => average.eventId == zone.id)?.duration || "No Average" : <div></div>}  </div>
                   <div><b>Recent Average:</b> {formatTime(recentAverage(zone.id))} </div>
                   <div><b>Most Recent Result Date:</b> {recentResultDate(zone.id)} </div>
                   <div><b>Most Recent Result:</b> {recentResult(zone.id)} </div>
