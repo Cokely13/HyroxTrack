@@ -26,6 +26,7 @@ import UserTarget from './components/UserTarget';
 import Test from './components/Test'
 import CreateChallenge from './components/CreateChallenge';
 import MyChallenges from './components/MyChallenges';
+import AddResult from './components/AddResult';
 
 /**
  * COMPONENT
@@ -59,10 +60,11 @@ class Routes extends Component {
             <Route exact path="/users/:userId" component={UserPage} />
             <Route exact path="/results" component={Results} />
             <Route exact path="/prediction" component={TimePrediction} />
+            <Route exact path="/add" component={AddResult} />
             <Route exact path="/row" component={RowTimePrediction} />
             <Route exact path="/usertarget" component={TargetTimes} />
             <Route exact path="/target" component={UserTarget} />
-            <Route exact path="/challenge" component={CreateChallenge} />
+            <Route exact path="/createchallenge" component={CreateChallenge} />
             <Route exact path="/workouts/:workoutId" component={WorkoutDetail} />
             <Route exact path="/results/edit/:resultId" component={EditResult} />
             <Redirect to="/home" />

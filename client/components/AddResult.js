@@ -3,11 +3,16 @@ import { useSelector, useDispatch } from 'react-redux';
 // import TimePicker from 'react-time-picker';
 import { createResult } from '../store/allResultsStore';
 import { fetchSingleUser } from '../store/singleUserStore';
+import { fetchResults } from '../store/allResultsStore';
 import { fetchEvents } from '../store/allEventsStore';
+import { updateSingleAverage } from '../store/singleAverageStore';
+import { createAverage } from '../store/allAveragesStore';
+import { fetchAverages } from '../store/allAveragesStore';
 
 const AddResult = ({ selectedChallenge, onResultAdded  }) => {
   const { id } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+  const results = useSelector((state) => state.allResults);
   const [eventName, setEventName] = useState('');
   const [date, setDate] = useState('');
   const [minutes, setMinutes] = useState('');
@@ -16,10 +21,25 @@ const AddResult = ({ selectedChallenge, onResultAdded  }) => {
   const [successMessage, setSuccessMessage] = useState('');
   const user = useSelector((state) => state.singleUser )
   const events = useSelector((state) => state.allEvents )
+  const averages = useSelector((state) => state.allAverages);
 
   const {eventId} = selectedChallenge
   const { id: challengeId } = selectedChallenge
 
+  const durationToSeconds = (duration) => {
+    const [minutes, seconds] = duration.split(':').map(Number);
+    return minutes * 60 + seconds;
+};
+
+const formatTime = (seconds) => {
+  const minutes = Math.floor(seconds / 60);
+  const remainingSeconds = seconds % 60;
+  return `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
+};
+
+  const filteredResults = [...results.filter((event) => event.eventName == eventName)]
+  const sortedResults = [...filteredResults].sort((a, b) => new Date(a.date) - new Date(b.date));
+  const durationsInSeconds = sortedResults.map(result => durationToSeconds(result.duration));
 
 
   useEffect(() => {
@@ -80,6 +100,39 @@ const AddResult = ({ selectedChallenge, onResultAdded  }) => {
       date,
       duration: `${minutes}:${seconds}`,
     };
+
+    const existingAverage = averages.find(avg => avg.eventId === newResult.eventId && avg.userId === id);
+
+    const calculateOldAverage = (newDurationSeconds) => {
+        const totalDurationInSeconds = filteredResults.reduce((total, currentResult) => {
+            return total + durationToSeconds(currentResult.duration);
+        }, 0) + newDurationSeconds; // Include new duration in total
+
+        const averageDurationInSeconds =Math.round( totalDurationInSeconds / (filteredResults.length + 1)); // +1 for the new duration
+        return formatTime(averageDurationInSeconds); // Convert average to minutes:seconds format
+    };
+
+    // // Assuming you have new duration in `minutes` and `seconds`
+    const newDurationSeconds = durationToSeconds(`${minutes}:${seconds}`);
+    const oldAverage = calculateOldAverage(newDurationSeconds);
+    const average = {
+        userId: id,
+    eventId: eventId,
+        duration: oldAverage
+      };
+    if (!existingAverage) {
+        // Calculate the new average
+        // ... existing code for calculating oldAverage ...
+        dispatch(createAverage(average)); // Create a new average only if it doesn't exist
+    } else {
+        const updateAverage = {
+            id: existingAverage.id,
+            userId: id,
+        eventId: eventId,
+            duration: oldAverage
+          };
+        dispatch(updateSingleAverage(updateAverage))
+    }
 
     dispatch(createResult(newResult));
 

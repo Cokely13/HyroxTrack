@@ -22,7 +22,10 @@ const Challenge = db.define('challenge', {
   invites: {
     type: Sequelize.ARRAY(Sequelize.INTEGER), // Array of integers
     defaultValue: []
-  }
+  },
+  champ: {
+    type: Sequelize.INTEGER,
+  },
 
 })
 

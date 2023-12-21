@@ -87,7 +87,10 @@ const Navbar = ({handleClick, isLoggedIn}) => {
         <a className="nav-link" href="/target">Target Times</a>
       </li>
       <li className="nav-item">
-        <a className="nav-link" href="/averages">Averages</a>
+        <a className="nav-link" href="/mychallenges">Challenges</a>
+      </li>
+      <li className="nav-item">
+        <a className="nav-link" href="/createchallenge">Create Challenge</a>
       </li>
       <li className="nav-item dropdown">
                 <a

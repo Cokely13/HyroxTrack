@@ -22,6 +22,9 @@ const Result = db.define('result', {
     type: Sequelize.DATEONLY,
     allowNull: false
   },
+  rank: {
+    type: Sequelize.INTEGER,
+  }
 })
 
 module.exports = Result

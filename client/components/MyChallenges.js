@@ -165,16 +165,18 @@ const filteredChallenges = challenges.filter(challenge =>
     </tr>
   </thead>
   {selectedEventFilter !== "All" ? filteredChallenges.filter(challenge=>challenge.eventId == selectedEventFilter).map((challenge) => {
+
               return (
                 <tbody key={challenge.id} style= {{fontSize:"20px"}}>
                 <tr className="text-center">
                 <th scope="row">{challenge.id}</th>
                   <th scope="row">{challenge.invites.length}</th>
-                  <th scope="row">{challenge.workouts.length}</th>
+                  <th scope="row">{challenge.results.length}</th>
                   <th scope="row">{challenge.startDate}</th>
                   <td>{events.find(event => event.id === challenge.eventId)?.name || 'Event not found'}</td>
                   <td><CountdownTimer targetDate={challenge.endDate} /></td>
-                  <td><button className="btn btn-primary" onClick={() => handleEdit(result)}>Add Result</button></td>
+                  <td>{(challenge.results.find(result => result.userId === id)?.duration || 'Not Done') == 'Not Done' ?<button  className="btn btn-primary" onClick={() => handleAdd(challenge)}>Add Result</button> : "DONE"}</td>
+                  <td scope="row">{challenge.results.find(result => result.userId === id)?.duration || 'Not Done'}</td>
                 </tr>
               </tbody>
               )
