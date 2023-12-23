@@ -14,10 +14,10 @@ const Challenge = db.define('challenge', {
     defaultVaule: true
   },
   startDate: {
-    type: Sequelize.DATEONLY,
+    type: Sequelize.DATE,
   },
   endDate: {
-    type: Sequelize.DATEONLY,
+    type: Sequelize.DATE,
   },
   invites: {
     type: Sequelize.ARRAY(Sequelize.INTEGER), // Array of integers

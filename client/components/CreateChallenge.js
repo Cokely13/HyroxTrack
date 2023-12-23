@@ -1,134 +1,78 @@
-
-
-import React from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import { useEffect, useState } from 'react'
-import { createChallenge} from '../store/allChallengesStore'
-import { fetchSingleUser } from '../store/singleUserStore'
-import {fetchUsers} from '../store/allUsersStore'
-import { fetchEvents } from '../store/allEventsStore'
-
+import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { createChallenge } from '../store/allChallengesStore';
+import { fetchSingleUser } from '../store/singleUserStore';
+import { fetchUsers } from '../store/allUsersStore';
+import { fetchEvents } from '../store/allEventsStore';
 
 export default function CreateChallenge() {
-  const currentDate = new Date().getTime()
-  const dispatch = useDispatch()
-  const {id} = useSelector((state) => state.auth )
-  const user = useSelector((state) => state.singleUser )
+  const currentDateTime = new Date().toISOString().slice(0, 16);
+  const dispatch = useDispatch();
+  const { id } = useSelector((state) => state.auth);
+  const user = useSelector((state) => state.singleUser);
   const [eventId, setEventId] = useState();
-  const [reload, setReload] = useState(1);
-  const [invite, setInvite] = useState([id]);
-  const [showDateSelection, setShowDateSelection] = useState(false);
-  const [start, setStart] = useState((currentDate));
-  const events = useSelector((state) => state.allEvents )
-  const users = useSelector((state) => state.allUsers )
+  const [start, setStart] = useState(currentDateTime);
+  const [endDate, setEndDate] = useState(currentDateTime);
+  const events = useSelector((state) => state.allEvents);
+  const users = useSelector((state) => state.allUsers);
   const [errorMessage, setErrorMessage] = useState('');
   const [selectedUsers, setSelectedUsers] = useState([id.toString()]);
 
   useEffect(() => {
     dispatch(fetchEvents());
-  }, []);
-
-  useEffect(() => {
     dispatch(fetchUsers());
-  }, []);
-
-  useEffect(() => {
-    dispatch(fetchSingleUser(id))
-    // Safe to add dispatch to the dependencies array
-  }, [reload, dispatch,])
-
-
-
-
+    dispatch(fetchSingleUser(id));
+  }, [dispatch, id]);
 
   const handleEventChange = (event) => {
-    event.preventDefault()
-    setEventId(event.target.value)
-    setErrorMessage('')
-
-  }
+    setEventId(event.target.value);
+    setErrorMessage('');
+  };
 
   const handleCheckboxChange = (event) => {
     const changedUserId = event.target.value;
     const isChecked = event.target.checked;
-
     setSelectedUsers(prevSelectedUsers => {
-      if (isChecked) {
-        // Add the user ID to the array if it's checked
-        return [...prevSelectedUsers, changedUserId];
-      } else {
-        // Remove the user ID from the array if it's unchecked
-        return prevSelectedUsers.filter(userId => userId !== changedUserId);
-      }
+      return isChecked
+        ? [...prevSelectedUsers, changedUserId]
+        : prevSelectedUsers.filter(userId => userId !== changedUserId);
     });
   };
 
-
-  const handleChange2 = (event) => {
-    event.preventDefault()
-    setLocation(event.target.value)
-
-  }
-
-  const handleChange3 = (event) => {
-    event.preventDefault()
-    setLength(event.target.value)
-  }
-
   const handleChange4 = (event) => {
-    event.preventDefault()
-    const selectedDate = new Date(event.target.value).getTime();
-    setStart(event.target.value)
-  }
+    setStart(event.target.value);
+  };
 
   const handleChange5 = (event) => {
-    event.preventDefault()
-    const selectedDate = new Date(event.target.value).getTime();
-    setEnd(event.target.value)
-  }
-
-  const handleChange7 = (event) => {
-    event.preventDefault()
-    const selectedDate = new Date(event.target.value).getTime();
-  }
+    setEndDate(event.target.value);
+  };
 
   const handleClick = (e) => {
-    e.preventDefault()
-
+    e.preventDefault();
     if (!eventId) {
       setErrorMessage("Please select an event.");
-      return; // Prevent further execution
+      return;
     }
 
-    const startDateObject = new Date(start);
-    startDateObject.setDate(startDateObject.getDate() + 7);
-    const endDate = startDateObject.toISOString().split('T')[0];
+    const newChallenge = {
+      eventId: eventId,
+      userId: id,
+      startDate: start,
+      endDate: endDate,
+      invites: selectedUsers
+    };
 
-    const newChallenge= {
-     eventId: eventId,
-     userId: id,
-     startDate: start,
-     endDate: endDate,
-     invites: selectedUsers
-    }
-
-    console.log("new", newChallenge)
-
-    dispatch(createChallenge(newChallenge))
-    setEventId("")
-    setStart(currentDate)
-    setSelectedUsers([id.toString()]); // Reset selected users, keeping only the user's own ID
-    setErrorMessage(''); // Optionally clear the error message
-  }
-
-  const handleToggleDateSelection = () => {
-    setShowDateSelection(!showDateSelection);
+    dispatch(createChallenge(newChallenge));
+    setEventId("");
+    setStart(currentDate);
+    setEndDate('');
+    setSelectedUsers([id.toString()]);
+    setErrorMessage('');
   };
 
   return (
-    <div >
-    <form>
-      <div >
+    <div>
+      <form>
       <div>
   <label htmlFor="event" style={{ marginRight: "10px" }}>Event:</label>
   <select id="event" value={eventId} onChange={handleEventChange}>
@@ -161,36 +105,33 @@ export default function CreateChallenge() {
 
 </div>
         </div>
-              <div>
-              <label>
-                <h2 htmlFor="start" style={{marginRight: "10px"}}>Start Date: </h2>
-              </label>
-
-              (
-             <>
-               <input
-                 type="date"
-                 id="dateInput"
-                 value={new Date(start).toISOString().split('T')[0]}
-                 onChange={handleChange4}
-               />
-               <button className="btn btn-primary" style={{marginLeft: "10px"}} onClick={handleToggleDateSelection}>
-                 Cancel
-               </button>
-             </>
-           )
-            </div>
-      </div>
-      {errorMessage && (
+        <div>
+          <label><h2 htmlFor="start">Start Date:</h2></label>
+          <input
+            type="datetime-local"
+            id="startDateInput"
+            value={start}
+            onChange={handleChange4}
+          />
+        </div>
+        <div>
+          <label><h2 htmlFor="end">End Date and Time:</h2></label>
+          <input
+            type="datetime-local"
+            id="endDateInput"
+            value={endDate}
+            onChange={handleChange5}
+          />
+        </div>
+        {errorMessage && (
           <div style={{ color: 'red', marginBottom: '10px' }}>
             {errorMessage}
           </div>
         )}
-    </form>
-    <div className="text-center">
-    <button className="btn btn-primary text-center"  onClick={handleClick}>Add Challenge</button>
+      </form>
+      <div className="text-center">
+        <button className="btn btn-primary" onClick={handleClick}>Add Challenge</button>
+      </div>
     </div>
-  </div>
-  )
+  );
 }
-
