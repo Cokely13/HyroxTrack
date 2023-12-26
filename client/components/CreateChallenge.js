@@ -11,6 +11,8 @@ export default function CreateChallenge() {
   const { id } = useSelector((state) => state.auth);
   const user = useSelector((state) => state.singleUser);
   const [eventId, setEventId] = useState();
+
+
   const [start, setStart] = useState(currentDateTime);
   const [endDate, setEndDate] = useState(currentDateTime);
   const events = useSelector((state) => state.allEvents);
