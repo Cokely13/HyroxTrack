@@ -11,7 +11,7 @@ const Challenge = db.define('challenge', {
   },
   active: {
     type: Sequelize.BOOLEAN,
-    defaultVaule: true
+    defaultValue: true
   },
   startDate: {
     type: Sequelize.DATE,

@@ -66,7 +66,7 @@ export default function CreateChallenge() {
 
     dispatch(createChallenge(newChallenge));
     setEventId("");
-    setStart(currentDate);
+    setStart(start);
     setEndDate('');
     setSelectedUsers([id.toString()]);
     setErrorMessage('');
