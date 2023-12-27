@@ -6,45 +6,39 @@ function durationToSeconds(duration) {
   const [minutes, seconds] = duration.split(':').map(Number);
   return minutes * 60 + seconds;
 }
-
-cron.schedule('*/1 * * * *', async () => {  // This will run every 5 minutes
+cron.schedule('0 8 * * *', async () => {
     console.log(`Cron job running at ${new Date().toISOString()}`);
-  try {
+    try {
       const challengesToUpdate = await Challenge.findAll({
-          where: {
-              endDate: {
-                  [Sequelize.Op.lt]: new Date()
-              },
-              active: true
-          }
+        where: {
+          active: true
+        }
       });
 
       for (let challenge of challengesToUpdate) {
-          const results = await Result.findAll({
-              where: { challengeId: challenge.id },
-              order: [[Sequelize.literal("duration_to_seconds(duration)"), 'ASC']]
-          });
+        let results = await Result.findAll({
+          where: { challengeId: challenge.id }
+        });
 
+        if (results.length > 0) {
+          // Sort results by duration in seconds
+          results.sort((a, b) => durationToSeconds(a.duration) - durationToSeconds(b.duration));
+
+          // Update ranks and find champ
           for (let i = 0; i < results.length; i++) {
-              results[i].rank = i + 1;
-              await results[i].save();
+            results[i].rank = i + 1;
+            await results[i].save();
 
-              if (i === 0) {
-                  challenge.champ = results[i].userId;
-              }
+            if (i === 0) {
+              challenge.champ = results[i].userId;
+            }
           }
 
           challenge.active = false;
           await challenge.save();
+        }
       }
-  } catch (error) {
+    } catch (error) {
       console.error('Error running the challenge update:', error);
-  }
-});
-
-function duration_to_seconds(duration) {
-  const [minutes, seconds = '0'] = duration.split(':');
-  return parseInt(minutes, 10) * 60 + parseInt(seconds, 10);
-}
-
-Sequelize.prototype.duration_to_seconds = duration_to_seconds;
+    }
+  });
