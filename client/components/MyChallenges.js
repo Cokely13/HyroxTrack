@@ -154,6 +154,7 @@ const filteredChallenges = challenges.filter(challenge =>
   <thead>
     <tr style= {{fontSize:"30px"}}>
     <th scope="col">Challenge ID</th>
+    <th scope="col">Active</th>
       <th scope="col"># of Challengers</th>
       <th scope="col"># of Completed Challenges</th>
       <th scope="col">Start Date</th>
@@ -161,6 +162,7 @@ const filteredChallenges = challenges.filter(challenge =>
       <th scope="col">Time Left</th>
       <th scope="col">Add Result</th>
       <th scope="col">Challenge Done</th>
+      <th scope="col">Rank</th>
       {/* <th scope="col">Handle</th> */}
     </tr>
   </thead>
@@ -169,14 +171,16 @@ const filteredChallenges = challenges.filter(challenge =>
               return (
                 <tbody key={challenge.id} style= {{fontSize:"20px"}}>
                 <tr className="text-center">
-                <th scope="row">{challenge.id}</th>
-                  <th scope="row">{challenge.invites.length}</th>
-                  <th scope="row">{challenge.results.length}</th>
-                  <th scope="row">{challenge.startDate}</th>
+                <td scope="row">{challenge.id}</td>
+                <td scope="row">{challenge.active ? "true" : "false"}</td>
+                  <td scope="row">{challenge.invites.length}</td>
+                  <td scope="row">{challenge.results.length}</td>
+                  <td scope="row">{challenge.startDate.slice(0, 10)}</td>
                   <td>{events.find(event => event.id === challenge.eventId)?.name || 'Event not found'}</td>
                   <td><CountdownTimer targetDate={challenge.endDate} /></td>
-                  <td>{(challenge.results.find(result => result.userId === id)?.duration || 'Not Done') == 'Not Done' ?<button  className="btn btn-primary" onClick={() => handleAdd(challenge)}>Add Result</button> : "DONE"}</td>
+                  <td>{challenge.active &&(challenge.results.find(result => result.userId === id)?.duration || 'Not Done') == 'Not Done' ?<button  className="btn btn-primary" onClick={() => handleAdd(challenge)}>Add Result</button> : "DONE"}</td>
                   <td scope="row">{challenge.results.find(result => result.userId === id)?.duration || 'Not Done'}</td>
+                  <td scope="row">{challenge.results.find(result => result.userId === id)?.rank || ''}</td>
                 </tr>
               </tbody>
               )
@@ -187,13 +191,15 @@ const filteredChallenges = challenges.filter(challenge =>
                 <tbody key={challenge.id} style= {{fontSize:"20px"}}>
                 <tr className="text-center">
                 <th scope="row">{challenge.id}</th>
+                <td scope="row">{challenge.active ? "true" : "false"}</td>
                   <td scope="row">{challenge.invites.length}</td>
                   <td scope="row">{challenge.results.length}</td>
-                  <td scope="row">{challenge.startDate}</td>
+                  <td scope="row">{challenge.startDate.slice(0, 10)}</td>
                   <td>{events.find(event => event.id === challenge.eventId)?.name || 'Event not found'}</td>
                   <td><CountdownTimer targetDate={challenge.endDate} /></td>
-                  <td>{(challenge.results.find(result => result.userId === id)?.duration || 'Not Done') == 'Not Done' ?<button  className="btn btn-primary" onClick={() => handleAdd(challenge)}>Add Result</button> : "DONE"}</td>
+                  <td>{challenge.active && (challenge.results.find(result => result.userId === id)?.duration || 'Not Done') == 'Not Done'?<button  className="btn btn-primary" onClick={() => handleAdd(challenge)}>Add Result</button> : "DONE"}</td>
                   <td scope="row">{challenge.results.find(result => result.userId === id)?.duration || 'Not Done'}</td>
+                  <td scope="row">{challenge.results.find(result => result.userId === id)?.rank || ''}</td>
                 </tr>
               </tbody>
               )
