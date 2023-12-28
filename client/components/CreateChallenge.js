@@ -4,6 +4,9 @@ import { createChallenge } from '../store/allChallengesStore';
 import { fetchSingleUser } from '../store/singleUserStore';
 import { fetchUsers } from '../store/allUsersStore';
 import { fetchEvents } from '../store/allEventsStore';
+import { useHistory } from 'react-router-dom'; // Import useHistory
+
+
 
 export default function CreateChallenge() {
   const currentDateTime = new Date().toISOString().slice(0, 16);
@@ -11,6 +14,7 @@ export default function CreateChallenge() {
   const { id } = useSelector((state) => state.auth);
   const user = useSelector((state) => state.singleUser);
   const [eventId, setEventId] = useState();
+  const history = useHistory()
 
 
   const [start, setStart] = useState(currentDateTime);
@@ -65,6 +69,8 @@ export default function CreateChallenge() {
     };
 
     dispatch(createChallenge(newChallenge));
+
+    history.push('/home');
     setEventId("");
     setStart(start);
     setEndDate('');
