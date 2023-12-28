@@ -25,6 +25,7 @@ function MyChallenges() {
   const [reload, setReload] = useState(false);
   const [minutes, setMinutes] = useState('00');
   const [seconds, setSeconds] = useState('00');
+  const [, forceUpdate] = useState();
 
   useEffect(() => {
     dispatch(fetchSingleUser(id))
@@ -55,10 +56,19 @@ function MyChallenges() {
 
   }
 
-  const handleResultAdded = () => {
-    setAdd(false); // Hide AddResult component
-    setReload(!reload); // Trigger data reload
-  };
+//   const handleResultAdded = () => {
+//     setAdd(false); // Hide AddResult component
+//     dispatch(fetchChallenges()); // Re-fetch challenges data to update the component with the latest information
+//     setReload(!reload); // You can keep this if you need to trigger other updates
+// };
+
+const handleResultAdded = () => {
+  setAdd(false); // Hide AddResult component
+  dispatch(fetchChallenges())
+    .then(() => {
+      forceUpdate({}); // Force re-render
+    });
+};
 
 
   const handleDelete =(event, result) => {
