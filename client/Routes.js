@@ -27,6 +27,7 @@ import Test from './components/Test'
 import CreateChallenge from './components/CreateChallenge';
 import MyChallenges from './components/MyChallenges';
 import AddResult from './components/AddResult';
+import ChallengeDetails from './components/ChallengeDetails';
 
 /**
  * COMPONENT
@@ -55,6 +56,7 @@ class Routes extends Component {
             <Route exact path="/predictor" component={Predictor} />
             <Route exact path="/events/:eventId" component={EventDetail}/>
             <Route exact path="/plan/:planId" component={PlanDetails}/>
+            <Route exact path="/challenges/:challengeId" component={ChallengeDetails}/>
             <Route exact path="/users" component={Users} />
             <Route exact path="/workouts" component={Workouts} />
             <Route exact path="/users/:userId" component={UserPage} />

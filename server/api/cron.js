@@ -6,11 +6,14 @@ function durationToSeconds(duration) {
   const [minutes, seconds] = duration.split(':').map(Number);
   return minutes * 60 + seconds;
 }
-cron.schedule('0 8 * * *', async () => {
+cron.schedule('0 0 * * *', async () => {
     console.log(`Cron job running at ${new Date().toISOString()}`);
     try {
       const challengesToUpdate = await Challenge.findAll({
         where: {
+            endDate: {
+            [Sequelize.Op.lte]: new Date(), // Challenges with endDate today or in the past
+        },
           active: true
         }
       });

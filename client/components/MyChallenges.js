@@ -171,7 +171,7 @@ const filteredChallenges = challenges.filter(challenge =>
               return (
                 <tbody key={challenge.id} style= {{fontSize:"20px"}}>
                 <tr className="text-center">
-                <td scope="row">{challenge.id}</td>
+                <th scope="row">{challenge.id}</th>
                 <td scope="row">{challenge.active ? "true" : "false"}</td>
                   <td scope="row">{challenge.invites.length}</td>
                   <td scope="row">{challenge.results.length}</td>
