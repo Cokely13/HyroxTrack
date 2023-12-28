@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 import { fetchChallenge } from '../store/singleChallengeStore';
 import { fetchUsers } from '../store/allUsersStore';
+import ChallengeTimer from './ChallengeTimer';
 
 function ChallengeDetails() {
   const dispatch = useDispatch();
@@ -54,6 +55,7 @@ function ChallengeDetails() {
                   <p>Number of Results: {challenge.results ?challenge.results.length : ""}</p>
                    <p>Start Date: {challenge.startDate ?challenge.startDate.slice(0, 10) : ""}</p></div> :
                   <div>No Challenge Details Available</div>}
+                  <td><ChallengeTimer targetDate={challenge.endDate} /></td>
       <Link to={`/mychallenges`}>
         Back to My Challenges
         </Link>
