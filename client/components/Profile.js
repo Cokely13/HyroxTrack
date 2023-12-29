@@ -3,6 +3,7 @@ import { Link, useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { useEffect, useState } from 'react'
 import { fetchSingleUser } from '../store/singleUserStore'
+import { fetchChallenges } from '../store/allChallengesStore'
 
 
 function Profile() {
@@ -10,14 +11,20 @@ function Profile() {
   let history = useHistory();
   const {id} = useSelector((state) => state.auth )
   const user = useSelector((state) => state.singleUser )
+  const challenges = useSelector((state) => state.allChallenges )
 
+  console.log("user", user)
 
   useEffect(() => {
     dispatch(fetchSingleUser(id))
     // Safe to add dispatch to the dependencies array
   }, [dispatch,])
 
-console.log("user", user)
+  useEffect(() => {
+    dispatch(fetchChallenges())
+    // Safe to add dispatch to the dependencies array
+  }, [dispatch,])
+
 
 const recentResult = () => {
   const recent = user.results ? user.results : []
@@ -25,7 +32,6 @@ const recentResult = () => {
     .slice(0, 1);
 
   if (recent.length > 0) {
-    console.log("reaaa", recent[0].duration)
     return recent[0].date
   }
 
@@ -38,7 +44,6 @@ const recentWorkout = () => {
     .slice(0, 1);
 
   if (recent.length > 0) {
-    console.log("reaaa", recent)
     return recent[0].updatedAt.slice(0, 10)
   }
 
@@ -51,6 +56,10 @@ const recentWorkout = () => {
     <div style={{fontSize:"25px"}} >
     <div><b>Total Workouts:</b> {user.userworkouts ? user.userworkouts.length : 0}</div>
     <div><b>Total Results:</b> {user.results ? user.results.length : 0}</div>
+    <div><b>Total Challenges:</b> {user.challenges ? user.challenges.length : 0}</div>
+    <div><b>Champs:</b>  {user.challenges
+    ? user.challenges.filter(challenge => challenge.champ === id).length
+    : 0}</div>
     <div><b>Most Recent Result: </b>{recentResult()} </div>
     <div><b>Most Recent Workout: </b>{recentWorkout()} </div>
     </div>
