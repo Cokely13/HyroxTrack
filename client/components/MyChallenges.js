@@ -6,6 +6,7 @@ import { fetchSingleUser } from '../store/singleUserStore'
 import { deleteResult } from '../store/allResultsStore'
 import { fetchChallenges } from '../store/allChallengesStore'
 import { updateSingleResult } from '../store/singleResultsStore'
+import { fetchUsers } from '../store/allUsersStore'
 import { fetchEvents } from '../store/allEventsStore'
 import ChallengeTimer from './ChallengeTimer'
 import AddResult from './AddResult'
@@ -15,6 +16,7 @@ function MyChallenges() {
   let history = useHistory();
   const {id} = useSelector((state) => state.auth )
   const user = useSelector((state) => state.singleUser )
+  const users = useSelector((state) => state.allUsers )
   const challenges = useSelector((state) => state.allChallenges )
   const events = useSelector((state) => state.allEvents )
   const [selectedEvent, setSelectedEvent] = useState("All")
@@ -39,6 +41,7 @@ function MyChallenges() {
 
   useEffect(() => {
     dispatch(fetchEvents())
+    dispatch(fetchUsers())
     // Safe to add dispatch to the dependencies array
   }, [])
 
@@ -173,7 +176,7 @@ const filteredChallenges = challenges.filter(challenge =>
       <th scope="col">Add Result</th>
       <th scope="col">Challenge Done</th>
       <th scope="col">Rank</th>
-      {/* <th scope="col">Handle</th> */}
+      <th scope="col">Champ</th>
     </tr>
   </thead>
   {selectedEventFilter !== "All" ? filteredChallenges.filter(challenge=>challenge.eventId == selectedEventFilter).map((challenge) => {
@@ -191,6 +194,7 @@ const filteredChallenges = challenges.filter(challenge =>
                   <td>{challenge.active &&(challenge.results.find(result => result.userId === id)?.duration || 'Not Done') == 'Not Done' ?<button  className="btn btn-primary" onClick={() => handleAdd(challenge)}>Add Result</button> : "DONE"}</td>
                   <td scope="row">{challenge.results.find(result => result.userId === id)?.duration || 'Not Done'}</td>
                   <td scope="row">{challenge.results.find(result => result.userId === id)?.rank || ''}</td>
+                  <td scope="row">{users.find(user => user.id === challenge.champ) ? users.find(user => user.id === challenge.champ).userName :"" }</td>
                 </tr>
               </tbody>
               )
@@ -210,6 +214,7 @@ const filteredChallenges = challenges.filter(challenge =>
                   <td>{challenge.active && (challenge.results.find(result => result.userId === id)?.duration || 'Not Done') == 'Not Done'?<button  className="btn btn-primary" onClick={() => handleAdd(challenge)}>Add Result</button> : "DONE"}</td>
                   <td scope="row">{challenge.results.find(result => result.userId === id)?.duration || 'Not Done'}</td>
                   <td scope="row">{challenge.results.find(result => result.userId === id)?.rank || ''}</td>
+                  <td scope="row">{users.find(user => user.id === challenge.champ) ? users.find(user => user.id === challenge.champ).userName :"" }</td>
                 </tr>
               </tbody>
               )

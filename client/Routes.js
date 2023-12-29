@@ -29,6 +29,7 @@ import MyChallenges from './components/MyChallenges';
 import AddResult from './components/AddResult';
 import ChallengeDetails from './components/ChallengeDetails';
 import UpcomingChallenges from './components/UpcomingChallenges';
+import Medals from './components/Medals';
 
 /**
  * COMPONENT
@@ -68,6 +69,7 @@ class Routes extends Component {
             <Route exact path="/row" component={RowTimePrediction} />
             <Route exact path="/usertarget" component={TargetTimes} />
             <Route exact path="/target" component={UserTarget} />
+            <Route exact path="/medals" component={Medals} />
             <Route exact path="/createchallenge" component={CreateChallenge} />
             <Route exact path="/workouts/:workoutId" component={WorkoutDetail} />
             <Route exact path="/results/edit/:resultId" component={EditResult} />
