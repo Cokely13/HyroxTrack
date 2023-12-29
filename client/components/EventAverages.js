@@ -23,7 +23,7 @@ const EventAverages = () => {
   const averages = user.averages ? user.averages : null
   const targets = user.targets? user.targets : null
 
-  console.log("aver", targets)
+
 
   useEffect(() => {
     dispatch(fetchEvents());
@@ -161,8 +161,6 @@ const EventAverages = () => {
   };
 
   const getDivStyle = (average, targetTime) => {
-    console.log("average", average)
-    console.log("average", targetTime)
     if (average == null) {
       return "col yellow" ;
     } else if (average < targetTime) {
