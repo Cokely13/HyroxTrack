@@ -39,13 +39,13 @@ function Medals() {
                 <tr className="text-center">
                 <td scope="row">{user.userName}</td>
                 <td scope="row">{user.challenges
-    ? user.challenges.filter(challenge => challenge.champ === id).length
+    ? user.results.filter(result => result.rank === 1).length
     : 0}</td>
                   <td scope="row">{user.challenges
-    ? user.challenges.filter(challenge => challenge.rank === 2).length
+    ? user.results.filter(result => result.rank === 2).length
     : 0}</td>
                   <td scope="row">{user.challenges
-    ? user.challenges.filter(challenge => challenge.rank === 3).length
+    ? user.results.filter(result => result.rank === 3).length
     : 0}</td>
                 </tr>
               </tbody>

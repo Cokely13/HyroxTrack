@@ -90,6 +90,9 @@ const Navbar = ({handleClick, isLoggedIn}) => {
         <a className="nav-link" href="/mychallenges">Challenges</a>
       </li>
       <li className="nav-item">
+        <a className="nav-link" href="/medals">Medals</a>
+      </li>
+      <li className="nav-item">
         <a className="nav-link" href="/createchallenge">Create Challenge</a>
       </li>
       <li className="nav-item dropdown">

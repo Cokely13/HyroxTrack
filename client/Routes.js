@@ -20,7 +20,7 @@ import Profile from './components/Profile';
 import Workouts from './components/Workouts';
 import PlanDetails from './components/PlanDetails';
 import TimePrediction from './components/TimePrediction';
-import RowTimePrediction from './components/RowTImePrediction';
+// import RowTimePrediction from './components/RowTImePrediction';
 import Predictor from './components/Predictor'
 import UserTarget from './components/UserTarget';
 import Test from './components/Test'
@@ -66,7 +66,7 @@ class Routes extends Component {
             <Route exact path="/results" component={Results} />
             <Route exact path="/prediction" component={TimePrediction} />
             <Route exact path="/add" component={AddResult} />
-            <Route exact path="/row" component={RowTimePrediction} />
+            {/* <Route exact path="/row" component={RowTimePrediction} /> */}
             <Route exact path="/usertarget" component={TargetTimes} />
             <Route exact path="/target" component={UserTarget} />
             <Route exact path="/medals" component={Medals} />
