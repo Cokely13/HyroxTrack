@@ -70,11 +70,6 @@ const EventAverages = () => {
     return hours * 60 * 60 + minutes * 60;
   };
 
-  // const testNeeded = events.filter(zone => {
-  //   const averageInSeconds = averageTimeInSeconds(zone.id);
-  //   const targetInSeconds = targetTimeStringToSeconds(zone.targetTime);
-  //   return averageInSeconds === null || averageInSeconds > targetInSeconds;
-  // });
 
 
   const getRecord = (eventId) => {
@@ -195,7 +190,7 @@ const EventAverages = () => {
       <div className="row align-items-stretch">
         {events.length ? (
           events.map((zone) => (
-            <div className="col-sm-3 mx-auto mb-4 d-flex" key={zone.id}>
+            <div className="col-sm-4 mx-auto mb-4 d-flex" key={zone.id}>
               <div className={getDivStyle( (averages ? averages.find(average => average.eventId === zone.id)?.duration|| null: null), (targets ? targets.find(target => target.eventId === zone.id)?.duration|| null: null) )}>
               <h1><b><Link to={`/events/${zone.id}`} style={{ color: 'black' }}>{zone.name}</Link></b></h1>
              <div><b>Target Time: </b> {targets ? (<div> {targets.find(target => target.eventId === zone.id)?.duration|| 'No Target Set'} </div>) : <div> hey</div>} </div>

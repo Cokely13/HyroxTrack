@@ -37,7 +37,7 @@ function Medals() {
               return (
                 <tbody key={user.id} style= {{fontSize:"20px"}}>
                 <tr className="text-center">
-                <td scope="row">{user.userName}</td>
+                <td scope="row"><Link to={`/users/${user.id}`}>{user.userName}</Link></td>
                 <td scope="row">{user.challenges
     ? user.results.filter(result => result.rank === 1).length
     : 0}</td>
