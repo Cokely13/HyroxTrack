@@ -143,10 +143,11 @@ function WorkoutDetail() {
             <div className="text-center" style={{ paddingLeft: '15px', paddingRight: '15px' }}>
               <table className="table table-bordered text-center add" style={{ backgroundColor: 'rgb(211, 211, 211)' }}>
                 <thead>
-                  <tr style={{ fontSize: '30px' }}>
+                  <tr style={{ fontSize: "30px", backgroundColor: "rgb(150, 150, 150)" }}>
                     <th scope="col">Description</th>
                     <th scope="col">#</th>
                     {user.admin && <th scope="col">Actions</th>}
+                    <th scope="col">Add</th>
                   </tr>
                 </thead>
                 <tbody>
