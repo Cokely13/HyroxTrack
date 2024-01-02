@@ -16,6 +16,32 @@ const Navbar = ({handleClick, isLoggedIn}) => {
 
   const uniqueWorkouts = [...new Map(workouts.map((workout) => [workout.name, workout])).values()];
 
+  const customStyles = {
+    navbar: {
+      backgroundColor: "rgb(211, 211, 211)",
+      border: "1px solid black",
+    },
+    navbarLink: {
+      fontSize: "18px", // Adjusted default font size
+    },
+  };
+
+  // Define handleMediaQueryChange outside the component
+  const handleMediaQueryChange = (mediaQuery) => {
+    if (mediaQuery.matches) {
+      // If the screen is less than 768px wide
+      customStyles.navbarLink.fontSize = "15px"; // Smaller font size for small screens
+    } else {
+      // If the screen is wider than 768px
+      customStyles.navbarLink.fontSize = "18px"; // Larger font size for large screens
+    }
+  };
+
+  const mediaQuery = window.matchMedia("(max-width: 768px)");
+  mediaQuery.addEventListener('change', handleMediaQueryChange);
+  handleMediaQueryChange(mediaQuery); // Initial check
+
+
   useEffect(() => {
     dispatch(fetchEvents());
     dispatch(fetchWorkouts())
@@ -27,9 +53,9 @@ const Navbar = ({handleClick, isLoggedIn}) => {
     {/* <div classNameName='test'></div> */}
     {/* <img src={Logo}/> */}
 
-    <nav className="navbar navbar-expand-lg navbar-light add" style={{backgroundColor: "rgb(211, 211, 211)"}} >
+    <nav className="navbar navbar-expand-lg navbar-light add" style={{backgroundColor: "rgb(211, 211, 211)"}}>
       {isLoggedIn ? (
-        <div className="navbar-brand fw-bolder" style={{fontSize:"25px"}} >
+        <div className="navbar-brand fw-bolder" >
           <ul className="navbar-nav">
           <li className="nav-item active">
         <a className="nav-link" href="/home">Home</a>
@@ -145,6 +171,8 @@ const Navbar = ({handleClick, isLoggedIn}) => {
 }
 
 
+
+
 /**
  * CONTAINER
  */
@@ -160,6 +188,11 @@ const mapDispatch = dispatch => {
       dispatch(logout())
     }
   }
+
+
 }
+
+
+
 
 export default connect(mapState, mapDispatch)(Navbar)
