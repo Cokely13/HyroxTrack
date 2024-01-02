@@ -27,6 +27,7 @@ function MyChallenges() {
   const [reload, setReload] = useState(false);
   const [minutes, setMinutes] = useState('00');
   const [seconds, setSeconds] = useState('00');
+  const [activeFilter, setActiveFilter] = useState("All");
   const [, forceUpdate] = useState();
 
   useEffect(() => {
@@ -112,10 +113,10 @@ const handleResultAdded = () => {
   };
 
 
-const filteredChallenges = challenges.filter(challenge =>
-  challenge.invites.includes(id)
-);
-
+  const filteredChallenges = challenges.filter(challenge =>
+    challenge.invites.includes(id) &&
+    (activeFilter === "All" || challenge.active.toString() === activeFilter)
+  );
 
   return (
     <div>
@@ -154,13 +155,20 @@ const filteredChallenges = challenges.filter(challenge =>
                   </div>
                   </div>
                 ) : <div>
-    {challenges ? <div style={{marginLeft: "35px", marginBottom: "35px"}}>
+    {challenges ?<div> <div style={{marginLeft: "35px", marginBottom: "35px"}}>
       <select onChange={handleChange} name="filterEvents" className='custom-select'>
               <option value="All">Filter by Event</option>
               {filteredChallenges.map((({ eventId }) => eventId)).filter((item, i, ar) => ar.indexOf(item) === i).map((eventId) => <option key={eventId} value={eventId}>{events.find(event => event.id === eventId)?.name || 'Event not found'}</option>)}
           <option value="All">ALL</option>
               </select>
-              </div> : <div></div>}
+              </div>
+              <div style={{ marginLeft: "35px", marginBottom: "35px" }}>
+              <select onChange={(e) => setActiveFilter(e.target.value)} className='custom-select'>
+                  <option value="All">All Challenges</option>
+                  <option value="true">Active Challenges</option>
+                  <option value="false">Inactive Challenges</option>
+              </select>
+           </div> </div> : <div></div>}
           {user.results ?
           <div style={{paddingLeft: "15px",paddingRight: "15px", paddingBottom: "15px", paddingTop: "15px"}}>
           <table className="table table-bordered  text-center profile rounded text-center add" style= {{backgroundColor:"rgb(211, 211, 211)"}}>
