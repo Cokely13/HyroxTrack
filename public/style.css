@@ -293,8 +293,16 @@ th {
 }
 
 /* Apply alternating row colors for better readability */
-tr:nth-child(even) {
+/* tr:nth-child(even) {
   background-color: #f2f2f2;
+} */
+
+tr:nth-child(even) {
+  background-color: #f2f2f2; /* light grey */
+}
+
+tr:nth-child(odd) {
+  background-color: #fff; /* white */
 }
 
 /* td:nth-child(even) {

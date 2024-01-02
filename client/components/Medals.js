@@ -23,7 +23,7 @@ function Medals() {
     <h1 className="profile rounded text-center add" style={{ marginBottom: "15px", marginTop: "15px",  marginLeft: "auto", marginRight: "auto", width: "35%" }}><b> Medals</b></h1>
           {users?
           <div style={{paddingLeft: "15px",paddingRight: "15px"}}>
-          <table className="table table-bordered  text-center profile rounded text-center add" style= {{backgroundColor:"rgb(211, 211, 211)"}}>
+          <table className="table table-bordered  text-center profile rounded text-center add">
   <thead>
     <tr style={{ fontSize: "30px", backgroundColor: "rgb(150, 150, 150)" }}>
     <th scope="col">UserName</th>
@@ -32,11 +32,10 @@ function Medals() {
       <th scope="col">Bronze</th>
     </tr>
   </thead>
-
+  <tbody style= {{fontSize:"20px"}}>
             {users.map((user) => {
               return (
-                <tbody key={user.id} style= {{fontSize:"20px"}}>
-                <tr className="text-center">
+                <tr key={user.id}  className="text-center">
                 <td scope="row"><Link to={`/users/${user.id}`}>{user.userName}</Link></td>
                 <td scope="row">{user.challenges
     ? user.results.filter(result => result.rank === 1).length
@@ -48,9 +47,10 @@ function Medals() {
     ? user.results.filter(result => result.rank === 3).length
     : 0}</td>
                 </tr>
-              </tbody>
+
               )
             })}
+            </tbody>
                        </table>
 </div>: <div>NO Results</div>}
 

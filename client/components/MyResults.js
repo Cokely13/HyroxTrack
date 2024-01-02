@@ -128,10 +128,11 @@ function MyResults() {
       {/* <th scope="col">Handle</th> */}
     </tr>
   </thead>
+  <tbody  style= {{fontSize:"20px"}}>
   {selectedEventFilter !== "All" ? user.results.filter(result=>result.eventName == selectedEventFilter).map((result) => {
               return (
-                <tbody key={result.id} style= {{fontSize:"20px"}}>
-                <tr className="text-center">
+
+                <tr key={result.id} className="text-center">
                   <td >{result.id}</td>
                   <td>{result.date}</td>
                   <td>{result.eventName}</td>
@@ -143,13 +144,12 @@ function MyResults() {
                   <button className="btn btn-danger" onClick={(event) =>(handleDelete(event, result))} to={`/results/edit/${result.id}`} style={{color:"white"}} >Delete Result</button>
                   </td>
                 </tr>
-              </tbody>
               )
 
             }):
             user.results.map((result) => {
               return (
-                <tbody key={result.id} style= {{fontSize:"20px"}}>
+
                 <tr className="text-center">
                   <td>{result.id}</td>
                   <td>{result.date}</td>
@@ -162,9 +162,9 @@ function MyResults() {
                   <button className="btn btn-danger" onClick={(event) =>(handleDelete(event, result))} to={`/results/edit/${result.id}`} style={{color:"white"}} >Delete Result</button>
                   </td>
                 </tr>
-              </tbody>
               )
             })}
+            </tbody>
                        </table>
 </div>: <div>NO Results</div>}
 
