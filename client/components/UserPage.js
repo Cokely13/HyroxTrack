@@ -49,33 +49,34 @@ function UserPage() {
       {/* <th scope="col">Handle</th> */}
     </tr>
   </thead>
+  <tbody  style= {{fontSize:"20px"}}>
   {selectedEvent !== "All"  ? user.results.filter(result=>result.eventName == selectedEvent).map((result) => {
               return (
-                <tbody key={result.id} style= {{fontSize:"20px"}}>
-                <tr>
+
+                <tr key={result.id}>
                   <td >{result.id}</td>
                   <td >{result.date}</td>
                   <td>{result.eventName}</td>
                   <td>{result.duration}</td>
                 </tr>
-              </tbody>
               )
 
             }):
             user.results.map((result) => {
               return (
-                <tbody key={result.id} style= {{fontSize:"20px"}}>
                 <tr>
                   <td >{result.id}</td>
                   <td >{result.date}</td>
                   <td><Link to={`/events/${result.eventId}`}>{result.eventName}</Link></td>
                   <td>{result.duration}</td>
                 </tr>
-              </tbody>
+
               )
-            })}
+            })}</tbody>
+
                        </table>
 </div>: <div>NO Results</div>}
+
 
     </div>
   )

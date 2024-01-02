@@ -166,24 +166,25 @@ const filteredChallenges = challenges.filter(challenge =>
           <table className="table table-bordered  text-center profile rounded text-center add" style= {{backgroundColor:"rgb(211, 211, 211)"}}>
   <thead>
     <tr style={{ fontSize: "30px", backgroundColor: "rgb(150, 150, 150)" }}>
-    <th scope="col">Challenge ID</th>
+    <th scope="col">ID</th>
     <th scope="col">Active</th>
-      <th scope="col"># of Challengers</th>
-      <th scope="col"># of Completed Challenges</th>
+      <th scope="col">Challengers</th>
+      <th scope="col">Results</th>
       <th scope="col">Start Date</th>
       <th scope="col">Event Name</th>
       <th scope="col">Time Left</th>
       <th scope="col">Add Result</th>
-      <th scope="col">Challenge Done</th>
+      <th scope="col">Result</th>
       <th scope="col">Rank</th>
       <th scope="col">Champ</th>
     </tr>
   </thead>
+  <tbody  style= {{fontSize:"20px"}}>
   {selectedEventFilter !== "All" ? filteredChallenges.filter(challenge=>challenge.eventId == selectedEventFilter).map((challenge) => {
 
               return (
-                <tbody key={challenge.id} style= {{fontSize:"20px"}}>
-                <tr className="text-center" >
+
+                <tr key={challenge.id} className="text-center" >
                 <th scope="row"><Link to={`/challenges/${challenge.id}`}>{challenge.id}</Link></th>
                 <td scope="row">{challenge.active ? "true" : "false"}</td>
                   <td scope="row">{challenge.invites.length}</td>
@@ -196,29 +197,31 @@ const filteredChallenges = challenges.filter(challenge =>
                   <td scope="row">{challenge.results.find(result => result.userId === id)?.rank || ''}</td>
                   <td scope="row"><Link to={`/users/${challenge.champ}`}>{users.find(user => user.id === challenge.champ) ? users.find(user => user.id === challenge.champ).userName :"" }</Link></td>
                 </tr>
-              </tbody>
               )
 
             }):
+
             filteredChallenges.map((challenge) => {
               return (
-                <tbody key={challenge.id} style= {{fontSize:"20px"}}>
-                <tr className="text-center">
+
+                <tr key={challenge.id} className="text-center">
                 <th scope="row"><Link to={`/challenges/${challenge.id}`}>{challenge.id}</Link></th>
-                <td scope="row">{challenge.active ? "true" : "false"}</td>
+                <td scope="row">{challenge.active ? <i className="fas fa-check" style={{ color: 'green' }}></i>
+    : <i className="fas fa-times" style={{ color: 'red' }}></i>}</td>
                   <td scope="row">{challenge.invites.length}</td>
                   <td scope="row">{challenge.results.length}</td>
                   <td scope="row">{challenge.startDate.slice(0, 10)}</td>
                   <td><Link to={`/events/${challenge.eventId}`}>{events.find(event => event.id === challenge.eventId)?.name || 'Event not found'}</Link></td>
-                  <td><ChallengeTimer targetDate={challenge.endDate} /></td>
-                  <td>{challenge.active && (challenge.results.find(result => result.userId === id)?.duration || 'Not Done') == 'Not Done'?<button  className="btn btn-primary" onClick={() => handleAdd(challenge)}>Add Result</button> : "DONE"}</td>
-                  <td scope="row">{challenge.results.find(result => result.userId === id)?.duration || 'Not Done'}</td>
+                  <td>{!challenge.active ?  "" : <ChallengeTimer targetDate={challenge.endDate}  />}</td>
+                  <td>{challenge.active && (challenge.results.find(result => result.userId === id)?.duration || 'Not Done') == 'Not Done'?<button  className="btn btn-primary" onClick={() => handleAdd(challenge)}>Add Result</button> : ""}</td>
+                  <td scope="row">{challenge.results.find(result => result.userId === id)?.duration || ''}</td>
                   <td scope="row">{challenge.results.find(result => result.userId === id)?.rank || ''}</td>
                   <td scope="row"><Link to={`/users/${challenge.champ}`}>{users.find(user => user.id === challenge.champ) ? users.find(user => user.id === challenge.champ).userName :"" }</Link></td>
                 </tr>
-              </tbody>
+
               )
             })}
+          </tbody>
                        </table>
 </div>: <div>NO Results</div>}
 
