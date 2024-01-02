@@ -13,7 +13,7 @@ function UserPage() {
   const user = useSelector((state) => state.singleUser )
   const [selectedEvent, setSelectedEvent] = useState("All")
 
-  console.log("restults", user)
+
 
   useEffect(() => {
     dispatch(fetchSingleUser(userId))
@@ -41,7 +41,7 @@ function UserPage() {
           <div style={{paddingLeft: "15px",paddingRight: "15px"}}>
           <table className="table table-bordered text-center profile rounded text-center add" style= {{backgroundColor:"rgb(211, 211, 211)"}}>
   <thead>
-    <tr style= {{fontSize:"30px"}}>
+    <tr style={{ fontSize: "30px", backgroundColor: "rgb(150, 150, 150)" }}>
       <th scope="col">#</th>
       <th scope="col">Date</th>
       <th scope="col">Event Name</th>

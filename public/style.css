@@ -265,10 +265,10 @@ td {
   border: 1px solid #ddd;
 }
 
-th {
+/* th {
   background-color: #f2f2f2;
   font-weight: bold;
-}
+} */
 
 .results-table th:first-child, .results-table td:first-child {
   background-color: green; /* or your desired color */
@@ -282,7 +282,12 @@ th {
 } */
 
 /* Style header cells for days of the week */
-th:not(:first-child) {
+/* th:not(:first-child) {
+  background-color: #4CAF50;
+  color: #fff;
+} */
+
+th {
   background-color: #4CAF50;
   color: #fff;
 }
@@ -291,6 +296,10 @@ th:not(:first-child) {
 tr:nth-child(even) {
   background-color: #f2f2f2;
 }
+
+/* td:nth-child(even) {
+  background-color: #f2f2f2;
+} */
 
 /* Add hover effect for rows */
 tr:hover {

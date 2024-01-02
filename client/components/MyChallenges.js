@@ -165,7 +165,7 @@ const filteredChallenges = challenges.filter(challenge =>
           <div style={{paddingLeft: "15px",paddingRight: "15px"}}>
           <table className="table table-bordered  text-center profile rounded text-center add" style= {{backgroundColor:"rgb(211, 211, 211)"}}>
   <thead>
-    <tr style= {{fontSize:"30px"}}>
+    <tr style={{ fontSize: "30px", backgroundColor: "rgb(150, 150, 150)" }}>
     <th scope="col">Challenge ID</th>
     <th scope="col">Active</th>
       <th scope="col"># of Challengers</th>
@@ -183,7 +183,7 @@ const filteredChallenges = challenges.filter(challenge =>
 
               return (
                 <tbody key={challenge.id} style= {{fontSize:"20px"}}>
-                <tr className="text-center">
+                <tr className="text-center" >
                 <th scope="row"><Link to={`/challenges/${challenge.id}`}>{challenge.id}</Link></th>
                 <td scope="row">{challenge.active ? "true" : "false"}</td>
                   <td scope="row">{challenge.invites.length}</td>

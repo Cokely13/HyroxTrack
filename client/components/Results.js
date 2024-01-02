@@ -86,9 +86,9 @@ function Results() {
       </div>
       {results ? (
         <div style={{ paddingLeft: '15px', paddingRight: '15px' }}>
-          <table className="table table-bordered text-center profile rounded text-center add" style= {{backgroundColor:"rgb(211, 211, 211)"}}>
+          <table className="table table-bordered text-center profile rounded text-center add"  >
             <thead>
-              <tr style= {{fontSize:"30px"}}>
+              <tr style={{ fontSize: "30px", backgroundColor: "rgb(150, 150, 150)" }} >
                 <th scope="col">#</th>
                 <th scope="col">Date</th>
                 <th scope="col">
