@@ -36,7 +36,22 @@ function Medals() {
             {users.map((user) => {
               return (
                 <tr key={user.id}  className="text-center">
-                <td scope="row"><Link to={`/users/${user.id}`}>{user.userName}</Link></td>
+                <td scope="row">
+                <Link to={`/users/${user.id}`}>{user.userName}</Link>
+          {user.image && (
+
+            <div style={{
+              width: '100px',
+              height: '100px',
+              borderRadius: '50%',
+              margin: 'auto',
+              backgroundImage: `url(${user.image})`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat'
+            }}> </div>
+
+          )}</td>
                 <td scope="row">{user.challenges
     ? user.results.filter(result => result.rank === 1).length
     : 0}</td>

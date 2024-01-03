@@ -91,7 +91,7 @@ export default function CreateChallenge() {
   </select>
 </div>
         <div>
-          <label> <h2 htmlFor="invite" style={{ marginRight: "10px" }}>Invites: </h2></label>
+          {/* <label> <h2 htmlFor="invite" style={{ marginRight: "10px" }}>Invites: </h2></label> */}
           <div>
           <div>
   <label>
@@ -106,7 +106,16 @@ export default function CreateChallenge() {
         checked={selectedUsers.includes(user.id.toString())} // Ensuring the comparison is correct
         onChange={handleCheckboxChange}
       />
-      <label htmlFor={`checkbox-${user.id}`}>{user.userName}</label>
+      <label htmlFor={`checkbox-${user.id}`}>{user.userName}{   <div style={{
+            width: '100px',
+            height: '100px',
+            borderRadius: '50%',
+            margin: '10px auto 10px',
+            backgroundImage: `url(${user.image})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat'
+          }}> </div>}</label>
     </div>
   ))}
 </div>
