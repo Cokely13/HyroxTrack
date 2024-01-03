@@ -6,6 +6,7 @@ function durationToSeconds(duration) {
   const [minutes, seconds] = duration.split(':').map(Number);
   return minutes * 60 + seconds;
 }
+
 cron.schedule('0 0,12 * * *', async () => {
     console.log(`Cron job running at ${new Date().toISOString()}`);
     try {

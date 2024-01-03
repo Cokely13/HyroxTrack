@@ -16,7 +16,7 @@ function Profile() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
 
-
+console.log("id", id)
 
   useEffect(() => {
     dispatch(fetchSingleUser(id))
@@ -53,6 +53,8 @@ const recentWorkout = () => {
   return null;
 };
 
+const imageUrl = user.image ? `http://localhost:8080/${user.image}` : null;
+
 const handleFileChange = (event) => {
   const file = event.target.files[0];
   if (file) {
@@ -61,6 +63,7 @@ const handleFileChange = (event) => {
   }
 };
 
+
 const handleUpload = async () => {
   if (!selectedFile) {
     alert('Please select a file to upload');
@@ -68,34 +71,39 @@ const handleUpload = async () => {
   }
 
   const formData = new FormData();
-  formData.append('file', selectedFile);
+  formData.append('image', selectedFile);
 
   try {
     // Upload the photo to your server
-    const uploadResponse = await fetch('/upload', {
-      method: 'POST',
+    const uploadResponse = await fetch(`/api/users/${user.id}`, {
+      method: 'PUT', // Change this to PUT
       body: formData,
     });
 
     if (uploadResponse.ok) {
-      const photoData = await uploadResponse.json(); // Assuming the server returns the URL or identifier of the uploaded photo
-
-      // Update the user's profile with the new photo
-      dispatch(updateSingleUser(id, { photoUrl: photoData.url }));
-
+      const responseData = await uploadResponse.json();
+      // Assuming the server response contains the URL of the uploaded image
+      dispatch(updateSingleUser({ id, image: responseData.imageUrl }));
       alert('Photo uploaded and profile updated successfully');
     } else {
       alert('Upload failed');
     }
   } catch (error) {
-    console.error('Error uploading file:', error);
+    console.error('Error uploading file:', error.response ? error.response.data : error);
     alert('Upload failed');
   }
 };
 
+
   return (
     <div className="text-center">
     <h1 className="profile rounded text-center add" style={{ marginBottom: "15px", marginTop: "25px",  marginLeft: "auto", marginRight: "auto", width: "35%" }}><b>{user.userName}'s Profile</b></h1>
+
+    {user.image && (
+    <div className="profile rounded text-center add"  style={{ marginBottom: "15px", marginTop: "25px",  marginLeft: "auto", marginRight: "auto", width: "15%" }}>
+      <img  src={imageUrl} alt={`${user.userName}'s profile`} style={{ maxWidth: '100%', height: 'auto' }} />
+    </div>
+  )}
     <div style={{fontSize:"25px"}} >
     <div><b>Total Workouts:</b> {user.userworkouts ? user.userworkouts.length : 0}</div>
     <div><b>Total Results:</b> {user.results ? user.results.length : 0}</div>

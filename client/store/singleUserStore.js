@@ -28,7 +28,7 @@ export const fetchSingleUser = (id) => {
   };
 };
 
-export const updateSingleUser = (user, history) => {
+export const updateSingleUser = (user) => {
   return async (dispatch) => {
     try {
 
@@ -36,10 +36,9 @@ export const updateSingleUser = (user, history) => {
         const { data: userData } = await axios.get(`/api/users/${user.id}`);
 
         dispatch(_updateSingleUser(userData));
-        history.push(`/profile`)
       }
      catch (error) {
-      console.log("EVENT11111", error)
+      console.log("LAAA", error)
     }
   };
 };

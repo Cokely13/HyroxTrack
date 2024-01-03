@@ -12,14 +12,14 @@ async function seed() {
 
   // Creating Users
   const users = await Promise.all([
-    User.create({ userName: 'Ryan', password: '123', admin: true}),
-    User.create({ userName: 'Jamal', password: '123' }),
-    User.create({ userName: 'Scott', password: '123' }),
-    User.create({ userName: 'Darren', password: '123' }),
-    User.create({ userName: 'Deepak', password: '123' }),
-    User.create({ userName: 'Jeff', password: '123' }),
-    User.create({ userName: 'H', password: '123' }),
-    User.create({ userName: 'Simmons', password: '123' }),
+    User.create({ userName: 'Ryan', password: '123', admin: true, image: 'uploads/default.jpg' }),
+    User.create({ userName: 'Jamal', password: '123', image: 'uploads/default.jpg' }),
+    User.create({ userName: 'Scott', password: '123', image: 'uploads/default.jpg' }),
+    User.create({ userName: 'Darren', password: '123', image: 'uploads/default.jpg' }),
+    User.create({ userName: 'Deepak', password: '123', image: 'uploads/default.jpg' }),
+    User.create({ userName: 'Jeff', password: '123', image: 'uploads/default.jpg' }),
+    User.create({ userName: 'H', password: '123', image: 'uploads/default.jpg' }),
+    User.create({ userName: 'Simmons', password: '123', image: 'uploads/default.jpg' }),
   ])
 
   const programs = await Promise.all([

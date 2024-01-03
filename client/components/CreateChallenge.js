@@ -80,8 +80,48 @@ export default function CreateChallenge() {
 
   return (
     <div>
+      <h1 className="profile rounded text-center add" style={{ marginBottom: "15px", marginTop: "15px",  marginLeft: "auto", marginRight: "auto", width: "35%" }}><b>Create Challenge</b></h1>
       <form>
-      <div>
+
+        <div>
+          <div>
+          <div>
+  <label>
+    <h2 style={{ marginRight: "10px" }}>Invites:</h2>
+  </label>
+
+   <div className="user-invites-container" style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '20px' }}>
+               {users.map((user) => (
+            <div key={user.id} style={{ textAlign: 'center', width: '120px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+              {/* User image */}
+              <div style={{
+                width: '100px',
+                height: '100px',
+                borderRadius: '50%',
+                margin: 'auto',
+                backgroundImage: `url(${user.image})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                backgroundRepeat: 'no-repeat'
+              }} />
+              {/* User name */}
+              <div style={{ margin: '10px 0' }}>{user.userName}</div>
+              {/* Checkbox */}
+              <div style={{ textAlign: 'center' }}>
+                <input
+                  type="checkbox"
+                  id={`checkbox-${user.id}`}
+                  value={user.id}
+                  checked={selectedUsers.includes(user.id.toString())}
+                  onChange={handleCheckboxChange}
+                />
+                <label htmlFor={`checkbox-${user.id}`}></label>
+              </div>
+            </div>
+          ))}
+            </div>
+</div>
+<div>
   <label htmlFor="event" style={{ marginRight: "10px" }}>Event:</label>
   <select id="event" value={eventId} onChange={handleEventChange}>
     <option value=""> -- Select Event --</option>
@@ -89,35 +129,6 @@ export default function CreateChallenge() {
       <option key={event.id} value={event.id}>{event.name}</option>
     ))}
   </select>
-</div>
-        <div>
-          {/* <label> <h2 htmlFor="invite" style={{ marginRight: "10px" }}>Invites: </h2></label> */}
-          <div>
-          <div>
-  <label>
-    <h2 style={{ marginRight: "10px" }}>Invites:</h2>
-  </label>
-  {users.map((user) => (
-    <div key={user.id}>
-      <input
-        type="checkbox"
-        id={`checkbox-${user.id}`}
-        value={user.id}
-        checked={selectedUsers.includes(user.id.toString())} // Ensuring the comparison is correct
-        onChange={handleCheckboxChange}
-      />
-      <label htmlFor={`checkbox-${user.id}`}>{user.userName}{   <div style={{
-            width: '100px',
-            height: '100px',
-            borderRadius: '50%',
-            margin: '10px auto 10px',
-            backgroundImage: `url(${user.image})`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            backgroundRepeat: 'no-repeat'
-          }}> </div>}</label>
-    </div>
-  ))}
 </div>
 
 </div>

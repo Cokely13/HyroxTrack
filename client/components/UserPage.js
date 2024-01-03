@@ -64,7 +64,7 @@ function UserPage() {
             }):
             user.results.map((result) => {
               return (
-                <tr>
+                <tr key={result.id}>
                   <td >{result.id}</td>
                   <td >{result.date}</td>
                   <td><Link to={`/events/${result.eventId}`}>{result.eventName}</Link></td>
