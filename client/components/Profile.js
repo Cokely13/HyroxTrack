@@ -128,13 +128,13 @@ const handleUpload = async () => {
     </div>
     {newPhoto ? <div style={{ margin: '20px 0' }}>
         <input type="file" onChange={handleFileChange} />
-        <button onClick={handleUpload}>Upload Photo</button>
+        <button class="btn btn-success"onClick={handleUpload}>Upload Photo</button>
         {previewUrl && (
           <div style={{ marginTop: '20px' }}>
             <img src={previewUrl} alt="Preview" style={{ maxWidth: '20%', height: 'auto' }} />
           </div>
         )}
-      </div> : <div><button onClick={() => setNewPhoto(true)}>Change Photo</button></div>}
+      </div> : <div style={{ marginTop: '20px' }}><button class="btn btn-secondary" onClick={() => setNewPhoto(true)}>Change Photo</button></div>}
     </div>
   )
 }
