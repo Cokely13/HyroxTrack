@@ -216,7 +216,25 @@ function MyChallenges() {
                   <td scope="row" style={{paddingLeft: "15px",paddingRight: "15px", paddingBottom: "15px", paddingTop: "15px"}}>{!challenge.active ?  "" : <ChallengeTimer targetDate={challenge.endDate}  />}</td>
                   <td scope="row" style={{paddingLeft: "15px",paddingRight: "15px", paddingBottom: "15px", paddingTop: "25px"}}>{challenge.active && (challenge.results.find(result => result.userId === id)?.duration || 'Not Done') == 'Not Done'?<button  className="btn btn-primary" onClick={() => handleAdd(challenge)}>Add Result</button> : ""}</td>
                   <td scope="row">{challenge.results.find(result => result.userId === id)?.duration || ''}</td>
-                  <td scope="row">{challenge.results.find(result => result.userId === id)?.rank || ''}</td>
+                  {challenge.results ?
+  (challenge.results.find(result => result.userId === id)?.rank || '') == 1 ?
+    <td scope="row" style={{ paddingLeft: "15px", paddingRight: "15px", paddingBottom: "15px", paddingTop: "25px" }}>
+      <i className='fas fa-medal' style={{ fontSize: "48px", color:"gold"}} ></i>
+    </td> :
+    (challenge.results.find(result => result.userId === id)?.rank || '') == 2 ?
+      <td scope="row" style={{ paddingLeft: "15px", paddingRight: "15px", paddingBottom: "15px", paddingTop: "25px" }}>
+        <i className='fas fa-medal' style={{ fontSize: "48px", color:"silver"}} ></i>
+      </td> :
+      (challenge.results.find(result => result.userId === id)?.rank || '') == 2 ?
+        <td scope="row" style={{ paddingLeft: "15px", paddingRight: "15px", paddingBottom: "15px", paddingTop: "25px" }}>
+          <i className='fas fa-medal' style={{ fontSize: "48px", color:"#cd7f32"}} ></i> {/* Bronze color */}
+        </td> :
+        <td scope="row">
+          {challenge.results.find(result => result.userId === id)?.rank || ''}
+        </td>
+:
+<td scope="row" style={{ paddingLeft: "15px", paddingRight: "15px", paddingBottom: "15px", paddingTop: "25px" }}></td>
+}
                   <td scope="row" ><Link to={`/users/${challenge.champ}`}>{users.find(user => user.id === challenge.champ) ? <div style={{
                     width: '100px',
                     height: '100px',
@@ -248,7 +266,25 @@ function MyChallenges() {
                   <td scope="row" style={{paddingLeft: "15px",paddingRight: "15px", paddingBottom: "15px", paddingTop: "15px"}}>{!challenge.active ?  "" : <ChallengeTimer targetDate={challenge.endDate}  />}</td>
                   {challenge.results ? <td scope="row" style={{paddingLeft: "15px",paddingRight: "15px", paddingBottom: "15px", paddingTop: "25px"}}>{challenge.active && (challenge.results.find(result => result.userId === id)?.duration || 'Not Done') == 'Not Done'?<button  className="btn btn-primary" onClick={() => handleAdd(challenge)}>Add Result</button> : ""}</td> : <td scope="row" style={{paddingLeft: "15px",paddingRight: "15px", paddingBottom: "15px", paddingTop: "25px"}}></td>}
                   {challenge.results ? <td scope="row">{challenge.results.find(result => result.userId === id)?.duration || ''}</td>: <td scope="row" style={{paddingLeft: "15px",paddingRight: "15px", paddingBottom: "15px", paddingTop: "25px"}}></td>}
-                  {challenge.results ? <td scope="row">{challenge.results.find(result => result.userId === id)?.rank || ''}</td>: <td scope="row" style={{paddingLeft: "15px",paddingRight: "15px", paddingBottom: "15px", paddingTop: "25px"}}></td>}
+                  {challenge.results ?
+  (challenge.results.find(result => result.userId === id)?.rank || '') == 1 ?
+    <td scope="row" style={{ paddingLeft: "15px", paddingRight: "15px", paddingBottom: "15px", paddingTop: "25px" }}>
+      <i className='fas fa-medal' style={{ fontSize: "48px", color:"gold"}} ></i>
+    </td> :
+    (challenge.results.find(result => result.userId === id)?.rank || '') == 2 ?
+      <td scope="row" style={{ paddingLeft: "15px", paddingRight: "15px", paddingBottom: "15px", paddingTop: "25px" }}>
+        <i className='fas fa-medal' style={{ fontSize: "48px", color:"silver"}} ></i>
+      </td> :
+      (challenge.results.find(result => result.userId === id)?.rank || '') == 2 ?
+        <td scope="row" style={{ paddingLeft: "15px", paddingRight: "15px", paddingBottom: "15px", paddingTop: "25px" }}>
+          <i className='fas fa-medal' style={{ fontSize: "48px", color:"#cd7f32"}} ></i> {/* Bronze color */}
+        </td> :
+        <td scope="row">
+          {challenge.results.find(result => result.userId === id)?.rank || ''}
+        </td>
+:
+<td scope="row" style={{ paddingLeft: "15px", paddingRight: "15px", paddingBottom: "15px", paddingTop: "25px" }}></td>
+}
                   {challenge.results ? <td scope="row" ><Link to={`/users/${challenge.champ}`}>{users.find(user => user.id === challenge.champ) ?    <div style={{
                     width: '100px',
                     height: '100px',
