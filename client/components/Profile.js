@@ -100,15 +100,25 @@ const handleUpload = async () => {
     <h1 className="profile rounded text-center add" style={{ marginBottom: "15px", marginTop: "25px",  marginLeft: "auto", marginRight: "auto", width: "35%" }}><b>{user.userName}'s Profile</b></h1>
 
     {user.image && (
-    <div className="profile rounded text-center add"  style={{ marginBottom: "15px", marginTop: "25px",  marginLeft: "auto", marginRight: "auto", width: "15%" }}>
-      <img  src={imageUrl} alt={`${user.userName}'s profile`} style={{ maxWidth: '100%', height: 'auto' }} />
+    <div  style={{ marginBottom: "15px", marginTop: "25px",  marginLeft: "auto", marginRight: "auto", width: "15%" }}>
+       <div style={{
+              width: '200px',
+              height: '200px',
+              borderRadius: '50%',
+              margin: 'auto',
+              backgroundImage: `url(${user.image})`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat',
+              border: '3px solid black'
+            }}> </div>
     </div>
   )}
     <div style={{fontSize:"25px"}} >
     <div><b>Total Workouts:</b> {user.userworkouts ? user.userworkouts.length : 0}</div>
     <div><b>Total Results:</b> {user.results ? user.results.length : 0}</div>
     <div><b>Total Challenges:</b> {user.challenges ? user.challenges.length : 0}</div>
-    <div><b>Champs:</b>  {user.challenges
+    <div><b>Challenge Wins:</b>  {user.challenges
     ? user.challenges.filter(challenge => challenge.champ === id).length
     : 0}</div>
     <div><b>Most Recent Result: </b>{recentResult()} </div>

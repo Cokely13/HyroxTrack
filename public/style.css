@@ -271,37 +271,19 @@ th, td {
   border: 1px solid #ddd;
 }
 
-/* th {
-  background-color: #f2f2f2;
-  font-weight: bold;
-} */
 
 .results-table th:first-child, .results-table td:first-child {
   background-color: green; /* or your desired color */
   /* other styles */
 }
 
-/* Style the first column (exercise names) differently */
-/* td:first-child {
-  background-color: #f2f2f2;
-  font-weight: bold;
-} */
-
-/* Style header cells for days of the week */
-/* th:not(:first-child) {
-  background-color: #4CAF50;
-  color: #fff;
-} */
 
 th {
   background-color: #4CAF50;
   color: #fff;
 }
 
-/* Apply alternating row colors for better readability */
-/* tr:nth-child(even) {
-  background-color: #f2f2f2;
-} */
+
 
 tr:nth-child(even) {
   background-color: #f2f2f2; /* light grey */
@@ -311,9 +293,7 @@ tr:nth-child(odd) {
   background-color: #fff; /* white */
 }
 
-/* td:nth-child(even) {
-  background-color: #f2f2f2;
-} */
+
 
 /* Add hover effect for rows */
 tr:hover {

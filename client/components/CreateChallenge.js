@@ -79,30 +79,29 @@ export default function CreateChallenge() {
   };
 
   return (
-    <div>
+    <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '20px', width: '100%', marginLeft: 'auto', marginRight: 'auto' }}>
       <h1 className="profile rounded text-center add" style={{ marginBottom: "15px", marginTop: "15px",  marginLeft: "auto", marginRight: "auto", width: "35%" }}><b>Create Challenge</b></h1>
       <form>
 
         <div>
           <div>
           <div>
-  <label>
-    <h2 style={{ marginRight: "10px" }}>Invites:</h2>
-  </label>
 
-   <div className="user-invites-container" style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '20px' }}>
+  <div className="user-invites-container" style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '80px', width: '35%', marginLeft: 'auto', marginRight: 'auto' }}>
                {users.map((user) => (
-            <div key={user.id} style={{ textAlign: 'center', width: '120px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <div className="profile rounded text-center add" key={user.id} style={{ textAlign: 'center', width: '120px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
               {/* User image */}
               <div style={{
                 width: '100px',
                 height: '100px',
                 borderRadius: '50%',
                 margin: 'auto',
+                marginTop: "5%",
                 backgroundImage: `url(${user.image})`,
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
-                backgroundRepeat: 'no-repeat'
+                backgroundRepeat: 'no-repeat',
+                border: '3px solid black'
               }} />
               {/* User name */}
               <div style={{ margin: '10px 0' }}>{user.userName}</div>
@@ -121,8 +120,8 @@ export default function CreateChallenge() {
           ))}
             </div>
 </div>
-<div>
-  <label htmlFor="event" style={{ marginRight: "10px" }}>Event:</label>
+<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
+  <label htmlFor="event">Event:</label>
   <select id="event" value={eventId} onChange={handleEventChange}>
     <option value=""> -- Select Event --</option>
     {events.map((event) => (
@@ -133,7 +132,9 @@ export default function CreateChallenge() {
 
 </div>
         </div>
-        <div>
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+  {/* Start Date Container */}
+  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
           <label><h2 htmlFor="start">Start Date:</h2></label>
           <input
             type="datetime-local"
@@ -142,8 +143,8 @@ export default function CreateChallenge() {
             onChange={handleChange4}
           />
         </div>
-        <div>
-          <label><h2 htmlFor="end">End Date and Time:</h2></label>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', }}>
+          <label><h2 htmlFor="end">End Date:</h2></label>
           <input
             type="datetime-local"
             id="endDateInput"
@@ -151,13 +152,14 @@ export default function CreateChallenge() {
             onChange={handleChange5}
           />
         </div>
+        </div>
         {errorMessage && (
-          <div style={{ color: 'red', marginBottom: '10px' }}>
+          <div className="text-center" style={{ color: 'red', marginBottom: '10px', marginLeft: 'auto', marginRight: 'auto' }}>
             {errorMessage}
           </div>
         )}
       </form>
-      <div className="text-center">
+      <div className="text-center" style={ {marginBottom : '20px'}} >
         <button className="btn btn-primary" onClick={handleClick}>Add Challenge</button>
       </div>
     </div>
