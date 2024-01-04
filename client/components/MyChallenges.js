@@ -60,19 +60,14 @@ function MyChallenges() {
 
   }
 
-//   const handleResultAdded = () => {
-//     setAdd(false); // Hide AddResult component
-//     dispatch(fetchChallenges()); // Re-fetch challenges data to update the component with the latest information
-//     setReload(!reload); // You can keep this if you need to trigger other updates
-// };
 
-const handleResultAdded = () => {
-  setAdd(false); // Hide AddResult component
-  dispatch(fetchChallenges())
-    .then(() => {
-      forceUpdate({}); // Force re-render
-    });
-};
+// const handleResultAdded = () => {
+//   setAdd(false); // Hide AddResult component
+//   dispatch(fetchChallenges())
+//     .then(() => {
+//       forceUpdate({}); // Force re-render
+//     });
+// };
 
 
   const handleDelete =(event, result) => {
@@ -106,11 +101,27 @@ const handleResultAdded = () => {
     const newTime = `${minutes}:${seconds}`;
     selectedEvent.duration = newTime
     dispatch(updateSingleResult(selectedEvent));
+    history.push('/home');
     setSelectedEventId(null);
+    setAdd(false)
     setMinutes('00');
     setSeconds('00');
-    setReload(!reload);
+    // setReload(!reload);
   };
+
+  // const handleSubmit = () => {
+  //   const newTime = `${minutes}:${seconds}`;
+  //   selectedEvent.duration = newTime;
+  //   dispatch(updateSingleResult(selectedEvent));
+  //   setSelectedEventId(null);
+  //   setAdd(false);
+  //   setMinutes('00');
+  //   setSeconds('00');
+  //   setReload(!reload);
+
+  //   // Add this line to reload the page
+  //   window.location.reload();
+  // };
 
 
   const filteredChallenges = challenges.filter(challenge =>
@@ -119,6 +130,8 @@ const handleResultAdded = () => {
   );
 
   return (
+    <div>
+    {add ? <AddResult selectedChallenge= {selectedChallenge}  /> :
     <div>
     <h1 className="profile rounded text-center add" style={{ marginBottom: "15px", marginTop: "15px",  marginLeft: "auto", marginRight: "auto", width: "35%" }}><b>{user.userName}'s Challenges</b></h1>
     {selectedEventId !== null? (
@@ -212,7 +225,8 @@ const handleResultAdded = () => {
                     backgroundImage: `url(${users.find(user => user.id === challenge.champ).image})`,
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
-                    backgroundRepeat: 'no-repeat'
+                    backgroundRepeat: 'no-repeat',
+                    border: '3px solid black'
                   }}> </div> :"" }</Link></td>
                 </tr>
 
@@ -227,15 +241,15 @@ const handleResultAdded = () => {
                 <th scope="row" style={{paddingLeft: "15px",paddingRight: "15px", paddingBottom: "15px", paddingTop: "25px"}}><Link to={`/challenges/${challenge.id}`}>{challenge.id}</Link></th>
                 <td scope="row" style={{paddingLeft: "15px",paddingRight: "15px", paddingBottom: "15px", paddingTop: "25px"}}>{challenge.active ? <i className="fas fa-check" style={{ color: 'green' }}></i>
     : <i className="fas fa-times" style={{ color: 'red' }}></i>}</td>
-                  <td çcope="row" style={{paddingLeft: "15px",paddingRight: "15px", paddingBottom: "15px", paddingTop: "25px"}}>{challenge.invites.length}</td>
-                  <td scope="row" style={{paddingLeft: "15px",paddingRight: "15px", paddingBottom: "15px", paddingTop: "25px"}}>{challenge.results.length}</td>
+                  {challenge.results ? <td çcope="row" style={{paddingLeft: "15px",paddingRight: "15px", paddingBottom: "15px", paddingTop: "25px"}}>{challenge.invites.length}</td>: <td scope="row"></td>}
+                  {challenge.results ? <td scope="row" style={{paddingLeft: "15px",paddingRight: "15px", paddingBottom: "15px", paddingTop: "25px"}}>{challenge.results.length}</td> : <td scope="row"></td>}
                   <td scope="row" style={{paddingLeft: "15px",paddingRight: "15px", paddingBottom: "15px", paddingTop: "25px"}}>{challenge.startDate.slice(0, 10)}</td>
                   <td style={{paddingLeft: "15px",paddingRight: "15px", paddingBottom: "15px", paddingTop: "25px"}}><Link to={`/events/${challenge.eventId}`}>{events.find(event => event.id === challenge.eventId)?.name || 'Event not found'}</Link></td>
                   <td scope="row" style={{paddingLeft: "15px",paddingRight: "15px", paddingBottom: "15px", paddingTop: "15px"}}>{!challenge.active ?  "" : <ChallengeTimer targetDate={challenge.endDate}  />}</td>
-                  <td scope="row" style={{paddingLeft: "15px",paddingRight: "15px", paddingBottom: "15px", paddingTop: "25px"}}>{challenge.active && (challenge.results.find(result => result.userId === id)?.duration || 'Not Done') == 'Not Done'?<button  className="btn btn-primary" onClick={() => handleAdd(challenge)}>Add Result</button> : ""}</td>
-                  <td scope="row">{challenge.results.find(result => result.userId === id)?.duration || ''}</td>
-                  <td scope="row">{challenge.results.find(result => result.userId === id)?.rank || ''}</td>
-                  <td scope="row" ><Link to={`/users/${challenge.champ}`}>{users.find(user => user.id === challenge.champ) ?    <div style={{
+                  {challenge.results ? <td scope="row" style={{paddingLeft: "15px",paddingRight: "15px", paddingBottom: "15px", paddingTop: "25px"}}>{challenge.active && (challenge.results.find(result => result.userId === id)?.duration || 'Not Done') == 'Not Done'?<button  className="btn btn-primary" onClick={() => handleAdd(challenge)}>Add Result</button> : ""}</td> : <td scope="row" style={{paddingLeft: "15px",paddingRight: "15px", paddingBottom: "15px", paddingTop: "25px"}}></td>}
+                  {challenge.results ? <td scope="row">{challenge.results.find(result => result.userId === id)?.duration || ''}</td>: <td scope="row" style={{paddingLeft: "15px",paddingRight: "15px", paddingBottom: "15px", paddingTop: "25px"}}></td>}
+                  {challenge.results ? <td scope="row">{challenge.results.find(result => result.userId === id)?.rank || ''}</td>: <td scope="row" style={{paddingLeft: "15px",paddingRight: "15px", paddingBottom: "15px", paddingTop: "25px"}}></td>}
+                  {challenge.results ? <td scope="row" ><Link to={`/users/${challenge.champ}`}>{users.find(user => user.id === challenge.champ) ?    <div style={{
                     width: '100px',
                     height: '100px',
                     borderRadius: '50%',
@@ -243,8 +257,9 @@ const handleResultAdded = () => {
                     backgroundImage: `url(${users.find(user => user.id === challenge.champ).image})`,
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
-                    backgroundRepeat: 'no-repeat'
-                  }}> </div> :"" }</Link></td>
+                    backgroundRepeat: 'no-repeat',
+                    border: '3px solid black'
+                  }}> </div> :"" }</Link></td>: <td scope="row" style={{paddingLeft: "15px",paddingRight: "15px", paddingBottom: "15px", paddingTop: "25px"}}></td>}
                 </tr>
 
               )
@@ -254,7 +269,7 @@ const handleResultAdded = () => {
 </div>: <div>NO Results</div>}
 
     </div>}
-    {add ? <AddResult selectedChallenge= {selectedChallenge} onResultAdded={handleResultAdded}  /> : <div></div>}
+    </div>}
     </div>
   )
 }

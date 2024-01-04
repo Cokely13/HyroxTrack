@@ -70,7 +70,7 @@ export default function CreateChallenge() {
 
     dispatch(createChallenge(newChallenge));
 
-    history.push('/home');
+    history.push('/mychallenges');
     setEventId("");
     setStart(start);
     setEndDate('');

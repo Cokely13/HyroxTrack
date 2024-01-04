@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom'
 // import TimePicker from 'react-time-picker';
 import { createResult } from '../store/allResultsStore';
 import { fetchSingleUser } from '../store/singleUserStore';
@@ -9,9 +10,10 @@ import { updateSingleAverage } from '../store/singleAverageStore';
 import { createAverage } from '../store/allAveragesStore';
 import { fetchAverages } from '../store/allAveragesStore';
 
-const AddResult = ({ selectedChallenge, onResultAdded  }) => {
+const AddResult = ({ selectedChallenge }) => {
   const { id } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+  let history = useHistory();
   const results = useSelector((state) => state.allResults);
   const [eventName, setEventName] = useState('');
   const [date, setDate] = useState('');
@@ -136,6 +138,9 @@ const formatTime = (seconds) => {
 
     dispatch(createResult(newResult));
 
+
+    history.push('/myresults');
+    console.log("it made it!")
     // Set the success message and clear the input fields
     setSuccessMessage('Result Added Successfully!');
     setEventName('');
@@ -143,7 +148,7 @@ const formatTime = (seconds) => {
     setMinutes('');
     setSeconds('');
     setErrorMessage('');
-    onResultAdded();
+    // onResultAdded();
   };
 
   return (

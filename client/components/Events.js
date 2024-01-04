@@ -6,6 +6,7 @@ import { fetchEvents } from '../store/allEventsStore'
 import {fetchSingleUser} from '../store/singleUserStore'
 import { createResult } from '../store/allResultsStore'
 import AddResult from './AddResult'
+import Predictor from './Predictor'
 
 function Events() {
   const dispatch = useDispatch()
@@ -58,7 +59,7 @@ function Events() {
     {adding == "add"?
 
 
-    <AddResult/>
+    <Predictor/>
     :
     <div >
     <h1 className="profile rounded text-center add" style={{ marginBottom: "15px", marginTop: "15px",  marginLeft: "auto", marginRight: "auto", width: "35%" }}><b>Events</b></h1>

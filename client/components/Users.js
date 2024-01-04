@@ -34,7 +34,8 @@ return (
             backgroundImage: `url(${user.image})`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
-            backgroundRepeat: 'no-repeat'
+            backgroundRepeat: 'no-repeat',
+            border: '3px solid black'
           }}> </div>
         )}
         <div style={{ marginTop: "15%"}} >
