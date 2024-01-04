@@ -15,6 +15,7 @@ function Profile() {
   const challenges = useSelector((state) => state.allChallenges )
   const [selectedFile, setSelectedFile] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
+  const [newPhoto, setNewPhoto] = useState(null);
 
 console.log("id", id)
 
@@ -85,6 +86,7 @@ const handleUpload = async () => {
       // Assuming the server response contains the URL of the uploaded image
       dispatch(updateSingleUser({ id, image: responseData.imageUrl }));
       alert('Photo uploaded and profile updated successfully');
+      setNewPhoto(false)
     } else {
       alert('Upload failed');
     }
@@ -124,7 +126,7 @@ const handleUpload = async () => {
     <div><b>Most Recent Result: </b>{recentResult()} </div>
     <div><b>Most Recent Workout: </b>{recentWorkout()} </div>
     </div>
-    <div style={{ margin: '20px 0' }}>
+    {newPhoto ? <div style={{ margin: '20px 0' }}>
         <input type="file" onChange={handleFileChange} />
         <button onClick={handleUpload}>Upload Photo</button>
         {previewUrl && (
@@ -132,7 +134,7 @@ const handleUpload = async () => {
             <img src={previewUrl} alt="Preview" style={{ maxWidth: '20%', height: 'auto' }} />
           </div>
         )}
-      </div>
+      </div> : <div><button onClick={() => setNewPhoto(true)}>Change Photo</button></div>}
     </div>
   )
 }
