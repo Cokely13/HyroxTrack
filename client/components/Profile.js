@@ -17,7 +17,6 @@ function Profile() {
   const [previewUrl, setPreviewUrl] = useState(null);
   const [newPhoto, setNewPhoto] = useState(null);
 
-console.log("id", id)
 
   useEffect(() => {
     dispatch(fetchSingleUser(id))

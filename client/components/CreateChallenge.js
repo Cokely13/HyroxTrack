@@ -50,7 +50,21 @@ export default function CreateChallenge() {
   };
 
   const handleChange5 = (event) => {
-    setEndDate(event.target.value);
+    const newEndDate = event.target.value;
+    const currentDate = new Date().toISOString().slice(0, 16);
+    const selectedEndDate = new Date(newEndDate);
+    const selectedStartDate = new Date(start);
+
+    if (selectedEndDate < new Date(currentDate)) {
+      setErrorMessage('End date cannot be in the past.');
+      return;
+    } else if (selectedEndDate < selectedStartDate) {
+      setErrorMessage('End date cannot be earlier than start date.');
+      return;
+    }
+
+    setEndDate(newEndDate);
+    setErrorMessage('');
   };
 
   const handleClick = (e) => {
@@ -154,7 +168,7 @@ export default function CreateChallenge() {
         </div>
         </div>
         {errorMessage && (
-          <div className="text-center" style={{ color: 'red', marginBottom: '10px', marginLeft: 'auto', marginRight: 'auto' }}>
+          <div style={{ color: 'red', marginBottom: '10px', textAlign: 'center', width: '100%' }}>
             {errorMessage}
           </div>
         )}
