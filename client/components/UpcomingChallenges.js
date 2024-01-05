@@ -36,7 +36,7 @@ function UpcomingChallenges() {
       {nearestChallenge ? (
         <>
           <ul>
-            <li># of Challenges: <Link to={'/mychallenges'}> {challenges.length}</Link></li>
+            <li># of Challenges: <Link to={'/mychallenges'}> {challenges.filter((challenge) => challenge.active == true && challenge.invites.includes(id)).length}</Link></li>
           </ul>
           <h2>Next Challenge Countdown</h2>
           <ChallengeTimer targetDate={nearestChallenge.endDate} />
