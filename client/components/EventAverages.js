@@ -34,7 +34,7 @@ const EventAverages = () => {
 
 
   const userResults = results.filter((result) => result.userId === id);
-
+  const filteredEvents= events.filter((event) => event.name !== "Random");
 
   const getAverageTime = (eventId) => {
     const eventResults = userResults.filter((result) => result.eventId == eventId);
@@ -188,8 +188,8 @@ const EventAverages = () => {
     ) : (
     <div className="container-fluid bg-3 text-center" style={{fontSize:"25px"}}>
       <div className="row align-items-stretch">
-        {events.length ? (
-          events.map((zone) => (
+        {filteredEvents.length ? (
+          filteredEvents.map((zone) => (
             <div className="col-sm-4 mx-auto mb-4 d-flex" key={zone.id}>
               <div className={getDivStyle( (averages ? averages.find(average => average.eventId === zone.id)?.duration|| null: null), (targets ? targets.find(target => target.eventId === zone.id)?.duration|| null: null) )}>
               <h1><b><Link to={`/events/${zone.id}`} style={{ color: 'black' }}>{zone.name}</Link></b></h1>

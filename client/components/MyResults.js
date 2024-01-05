@@ -5,12 +5,14 @@ import { useEffect, useState } from 'react'
 import { fetchSingleUser } from '../store/singleUserStore'
 import { deleteResult } from '../store/allResultsStore'
 import { updateSingleResult } from '../store/singleResultsStore'
+import { fetchChallenges } from '../store/allChallengesStore'
 
 function MyResults() {
   const dispatch = useDispatch()
   let history = useHistory();
   const {id} = useSelector((state) => state.auth )
   const user = useSelector((state) => state.singleUser )
+  const challenges = useSelector((state) => state.allChallenges )
   const [selectedEvent, setSelectedEvent] = useState("All")
   const [selectedEventFilter, setSelectedEventFilter] = useState("All")
   const [selectedEventId, setSelectedEventId] = useState(null);
@@ -22,6 +24,11 @@ function MyResults() {
     dispatch(fetchSingleUser(id))
     // Safe to add dispatch to the dependencies array
   }, [reload, dispatch,])
+
+  useEffect(() => {
+    dispatch(fetchChallenges())
+    // Safe to add dispatch to the dependencies array
+  }, [dispatch,])
 
   useEffect(() => {
         if (reload) {
@@ -69,6 +76,7 @@ function MyResults() {
     setReload(!reload);
   };
 
+  console.log("challenges", challenges)
 
   return (
     <div>
@@ -130,15 +138,16 @@ function MyResults() {
   </thead>
   <tbody  style= {{fontSize:"20px"}}>
   {selectedEventFilter !== "All" ? user.results.filter(result=>result.eventName == selectedEventFilter).map((result) => {
+    console.log("result", result)
               return (
 
                 <tr key={result.id} className="text-center">
                   <td >{result.id}</td>
                   <td>{result.date}</td>
-                  <td>{result.eventName}</td>
+                  <td>{ result.eventName == "Random" ? challenges.find(challenge => challenge.id == result.challengeId)?.description : result.eventName}</td>
                   <td>{result.duration}</td>
                   <td>
-                  <Link className="btn btn-primary" onClick={() => handleEdit(result)}>Edit Result</Link>
+                  <button className="btn btn-primary" onClick={() => handleEdit(result)}>Edit Result</button>
                   </td>
                   <td>
                   <button className="btn btn-danger" onClick={(event) =>(handleDelete(event, result))} to={`/results/edit/${result.id}`} style={{color:"white"}} >Delete Result</button>
@@ -150,10 +159,10 @@ function MyResults() {
             user.results.map((result) => {
               return (
 
-                <tr className="text-center">
+                <tr key={result.id} className="text-center">
                   <td>{result.id}</td>
                   <td>{result.date}</td>
-                  <td>{result.eventName}</td>
+                  <td>{ result.eventName == "Random" ? challenges.find(challenge => challenge.id == result.challengeId)?.description : result.eventName}</td>
                   <td>{result.duration}</td>
                   <td>
                   <div className="btn btn-primary" onClick={() => handleEdit(result)} >Edit Result</div>

@@ -210,7 +210,7 @@ function MyChallenges() {
                 <td scope="row" style={{paddingLeft: "15px",paddingRight: "15px", paddingBottom: "15px", paddingTop: "25px"}}>{challenge.active ? <i className="fas fa-check" style={{ color: 'green' }}></i>
     : <i className="fas fa-times" style={{ color: 'red' }}></i>}</td>
                   <td çcope="row" style={{paddingLeft: "15px",paddingRight: "15px", paddingBottom: "15px", paddingTop: "25px"}}>{challenge.invites.length}</td>
-                  <td scope="row" style={{paddingLeft: "15px",paddingRight: "15px", paddingBottom: "15px", paddingTop: "25px"}}>{challenge.results.length}</td>
+                 {challenge.results ? <td scope="row" style={{paddingLeft: "15px",paddingRight: "15px", paddingBottom: "15px", paddingTop: "25px"}}>{challenge.results.length}</td> : <td scope="row" style={{paddingLeft: "15px",paddingRight: "15px", paddingBottom: "15px", paddingTop: "25px"}}></td>}
                   <td scope="row" style={{paddingLeft: "15px",paddingRight: "15px", paddingBottom: "15px", paddingTop: "25px"}}>{challenge.startDate.slice(0, 10)}</td>
                   {(events.find(event => event.id === challenge.eventId)?.name == 'Random') ? <td style={{paddingLeft: "15px",paddingRight: "15px", paddingBottom: "15px", paddingTop: "25px"}}> {challenge.description} </td> : <td><Link to={`/events/${challenge.eventId}`}>{events.find(event => event.id === challenge.eventId)?.name} </Link></td>}
                   <td scope="row" style={{paddingLeft: "15px",paddingRight: "15px", paddingBottom: "15px", paddingTop: "15px"}}>{!challenge.active ?  "" : <ChallengeTimer targetDate={challenge.endDate}  />}</td>

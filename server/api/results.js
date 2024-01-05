@@ -1,9 +1,9 @@
 const router = require('express').Router()
-const { models: { Result, User }} = require('../db')
+const { models: { Result, User, Challenge }} = require('../db')
 
 router.get('/', async (req, res, next) => {
   try {
-    const results = await Result.findAll({include: User})
+    const results = await Result.findAll({include: [User, Challenge, ]})
     const sort = results.sort((a,b) => a.time < b.time )
     res.json(results)
   } catch (err) {
@@ -13,7 +13,7 @@ router.get('/', async (req, res, next) => {
 
 router.get('/:id', async (req, res, next) => {
   try {
-    const result = await Result.findByPk(req.params.id, {include: User});
+    const result = await Result.findByPk(req.params.id, {include: [User, Challenge]});
     res.json(result);
   } catch (err) {
     next(err);
