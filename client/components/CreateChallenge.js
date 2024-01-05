@@ -33,9 +33,12 @@ export default function CreateChallenge() {
   }, [dispatch, id]);
 
   const handleEventChange = (event) => {
-    if(event.target.value == "New"){
-      setNewEvent(true)
+    const selectedEvent = events.find(target => target.id === parseInt(event.target.value, 10))
+
+    if (selectedEvent?.name === 'Random') {
+      setNewEvent(true);
       setErrorMessage('');
+      setEventId(event.target.value)
     } else {
     setEventId(event.target.value);
     setNewEvent(false)
@@ -53,7 +56,7 @@ export default function CreateChallenge() {
   };
 
   const handleDescriptionChange = (description) => {
-    setDescription(event.target.value)
+    setDescription(description.target.value)
   }
 
   const handleChange4 = (event) => {
@@ -150,7 +153,6 @@ export default function CreateChallenge() {
   <label htmlFor="event">Event:</label>
   <select id="event" value={eventId} onChange={handleEventChange}>
     <option value=""> -- Select Event --</option>
-    <option value="New"> New Event</option>
     {events.map((event) => (
       <option key={event.id} value={event.id}>{event.name}</option>
     ))}
