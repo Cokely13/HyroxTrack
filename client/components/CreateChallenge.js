@@ -14,10 +14,12 @@ export default function CreateChallenge() {
   const { id } = useSelector((state) => state.auth);
   const user = useSelector((state) => state.singleUser);
   const [eventId, setEventId] = useState();
+  const [newEvent, setNewEvent] = useState();
   const history = useHistory()
 
 
   const [start, setStart] = useState(currentDateTime);
+  const [description, setDescription] = useState("");
   const [endDate, setEndDate] = useState(currentDateTime);
   const events = useSelector((state) => state.allEvents);
   const users = useSelector((state) => state.allUsers);
@@ -31,8 +33,13 @@ export default function CreateChallenge() {
   }, [dispatch, id]);
 
   const handleEventChange = (event) => {
+    if(event.target.value == "New"){
+      setNewEvent(true)
+      setErrorMessage('');
+    } else {
     setEventId(event.target.value);
-    setErrorMessage('');
+    setNewEvent(false)
+    setErrorMessage('');}
   };
 
   const handleCheckboxChange = (event) => {
@@ -44,6 +51,10 @@ export default function CreateChallenge() {
         : prevSelectedUsers.filter(userId => userId !== changedUserId);
     });
   };
+
+  const handleDescriptionChange = (description) => {
+    setDescription(event.target.value)
+  }
 
   const handleChange4 = (event) => {
     setStart(event.target.value);
@@ -69,7 +80,7 @@ export default function CreateChallenge() {
 
   const handleClick = (e) => {
     e.preventDefault();
-    if (!eventId) {
+    if (!eventId && !description) {
       setErrorMessage("Please select an event.");
       return;
     }
@@ -79,7 +90,8 @@ export default function CreateChallenge() {
       userId: id,
       startDate: start,
       endDate: endDate,
-      invites: selectedUsers
+      invites: selectedUsers,
+      description: description
     };
 
     dispatch(createChallenge(newChallenge));
@@ -138,11 +150,22 @@ export default function CreateChallenge() {
   <label htmlFor="event">Event:</label>
   <select id="event" value={eventId} onChange={handleEventChange}>
     <option value=""> -- Select Event --</option>
+    <option value="New"> New Event</option>
     {events.map((event) => (
       <option key={event.id} value={event.id}>{event.name}</option>
     ))}
   </select>
 </div>
+{newEvent ?<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
+  <label htmlFor="event">Description:</label>
+  <input
+  type="text"
+  id="description"
+  value={description}
+  onChange={handleDescriptionChange}
+  placeholder="Enter Description"
+/>
+</div> : <div></div>}
 
 </div>
         </div>

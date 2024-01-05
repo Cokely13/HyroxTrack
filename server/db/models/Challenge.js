@@ -26,6 +26,9 @@ const Challenge = db.define('challenge', {
   champ: {
     type: Sequelize.INTEGER,
   },
+  description: {
+    type: Sequelize.TEXT,
+  }
 
 })
 
