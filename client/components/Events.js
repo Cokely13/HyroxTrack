@@ -17,6 +17,9 @@ function Events() {
   const [time, setTime] = useState()
   const [eventName, setEventName] = useState()
   const [addResult, setAddResult] = useState({})
+
+
+  const targets = user.targets? user.targets : null
   useEffect(() => {
     dispatch(fetchEvents())
   }, [])
@@ -28,7 +31,6 @@ function Events() {
 
   const handleUpdate =(event, zone) => {
     event.preventDefault()
-    console.log("zone", zone)
     setAdding("add")
     setEventName(zone.name)
     setAddResult({eventId: zone.id, userId: user.id, eventName: zone.name, userName: user.userName, time: ""})
@@ -71,7 +73,7 @@ function Events() {
           <h2 className="profile rounded text-center add" style={{ marginBottom: "15px", marginTop: "15px",  marginLeft: "auto", marginRight: "auto", width: "70%" }}>{zone.name}</h2>
 
           <h3 className="card-text">{zone.description}</h3>
-          <h3 className="card-text">Target Time: {zone.targetTime.slice(0,5)}</h3>
+          <h3 className="card-text">Target Time:{targets ? (<div> {targets.find(target => target.eventId === zone.id)?.duration|| zone.targetTime.slice(0,5)} </div>) : <div> {zone.targetTime.slice(0,5)}</div>}  </h3>
           <button className="btn btn-primary" onClick={e => handleUpdate(e, zone)} style={{width:"50%", marginLeft: "auto", marginBottom: "15px", marginRight:"auto"}}>Add Result</button>
           </div>
       )}) : <div>HEYYYY</div> }
