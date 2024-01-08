@@ -19,6 +19,9 @@ function MyResults() {
   const [reload, setReload] = useState(false);
   const [minutes, setMinutes] = useState('00');
   const [seconds, setSeconds] = useState('00');
+  const [sortColumn, setSortColumn] = useState('date');
+  const [sortOrder, setSortOrder] = useState('ascending');
+  const results = user.results? user.results : []
 
   useEffect(() => {
     dispatch(fetchSingleUser(id))
@@ -50,6 +53,27 @@ function MyResults() {
     setReload(!reload);
   }
 
+  const handleSortColumnChange = (event) => {
+    setSortColumn(event.target.value);
+  };
+
+  const handleSortOrderChange = (event) => {
+    setSortOrder(event.target.value);
+  };
+
+  const sortResults = (data) => {
+    return data.sort((a, b) => {
+      if (sortColumn === 'date') {
+        const dateA = new Date(a.date);
+        const dateB = new Date(b.date);
+        return dateA - dateB;
+      } else if (sortColumn === 'event') {
+        return a.eventName.localeCompare(b.eventName);
+      }
+      return 0;
+    });
+  };
+
   const handleEdit = (chosen) => {
     setSelectedEventId(chosen.id);
     setSelectedEvent(chosen);
@@ -77,6 +101,13 @@ function MyResults() {
   };
 
   console.log("challenges", challenges)
+
+  const sortedResults = sortResults([...results]);
+
+
+  if (sortOrder === 'descending') {
+    sortedResults.reverse();
+  }
 
   return (
     <div>
@@ -115,12 +146,25 @@ function MyResults() {
                   </div>
                   </div>
                 ) : <div>
-    {user.results ? <div style={{marginLeft: "35px", marginBottom: "35px"}}>
+    {user.results ? <div style={{ marginLeft: "35px", marginBottom: "35px"}}>
       <select onChange={handleChange} name="filterEvents" className='custom-select'>
               <option value="All">Filter by Event</option>
-              {user.results.map((({ eventName }) => eventName)).filter((item, i, ar) => ar.indexOf(item) === i).map((result) => <option key={result} value={result}>{result}</option>)}
+              {sortedResults.map((({ eventName }) => eventName)).filter((item, i, ar) => ar.indexOf(item) === i).map((result) => <option key={result} value={result}>{result}</option>)}
           <option value="All">ALL</option>
               </select>
+              <div style={{marginBottom: '35px', marginTop: "35px" }}>
+        <select onChange={handleSortColumnChange} value={sortColumn} style= {{marginRight: "10px"}}>
+          <option disabled value="SortBy">
+            Sort By
+          </option>
+          <option value="date">Date</option>
+          <option value="event">Event</option>
+        </select>
+        <select onChange={handleSortOrderChange} value={sortOrder}>
+          <option value="ascending">Ascending</option>
+          <option value="descending">Descending</option>
+        </select>
+      </div>
               </div> : <div></div>}
           {user.results ?
           <div style={{paddingLeft: "15px",paddingRight: "15px"}}>
@@ -137,8 +181,7 @@ function MyResults() {
     </tr>
   </thead>
   <tbody  style= {{fontSize:"20px"}}>
-  {selectedEventFilter !== "All" ? user.results.filter(result=>result.eventName == selectedEventFilter).map((result) => {
-    console.log("result", result)
+  {selectedEventFilter !== "All" ? sortedResults.filter(result=>result.eventName == selectedEventFilter).map((result) => {
               return (
 
                 <tr key={result.id} className="text-center">
@@ -156,7 +199,7 @@ function MyResults() {
               )
 
             }):
-            user.results.map((result) => {
+            sortedResults.map((result) => {
               return (
 
                 <tr key={result.id} className="text-center">

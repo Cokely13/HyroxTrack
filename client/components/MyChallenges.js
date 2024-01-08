@@ -29,6 +29,8 @@ function MyChallenges() {
   const [seconds, setSeconds] = useState('00');
   const [activeFilter, setActiveFilter] = useState("All");
   const [, forceUpdate] = useState();
+  const [sortColumn, setSortColumn] = useState('date');
+  const [sortOrder, setSortOrder] = useState('ascending');
 
   useEffect(() => {
     dispatch(fetchSingleUser(id))
@@ -61,13 +63,34 @@ function MyChallenges() {
   }
 
 
-// const handleResultAdded = () => {
-//   setAdd(false); // Hide AddResult component
-//   dispatch(fetchChallenges())
-//     .then(() => {
-//       forceUpdate({}); // Force re-render
-//     });
-// };
+
+const handleSortColumnChange = (event) => {
+  setSortColumn(event.target.value);
+};
+
+const handleSortOrderChange = (event) => {
+  setSortOrder(event.target.value);
+};
+
+const sortChallenges = (data) => {
+  return data.sort((a, b) => {
+    if (sortColumn === 'event') {
+      const nameA = a.eventName || a.description || '';
+      const nameB = b.eventName || b.description || '';
+      return nameA.localeCompare(nameB);
+    } else if (sortColumn === 'startDate') {
+      const startDateA = new Date(a.startDate);
+      const startDateB = new Date(b.startDate);
+      return startDateA - startDateB;
+    } else if (sortColumn === 'endDate') {
+      const endDateA = new Date(a.endDate);
+      const endDateB = new Date(b.endDate);
+      return endDateA - endDateB;
+    }
+    return 0;
+  });
+};
+
 
 
   const handleDelete =(event, result) => {
@@ -106,28 +129,21 @@ function MyChallenges() {
     setAdd(false)
     setMinutes('00');
     setSeconds('00');
-    // setReload(!reload);
   };
 
-  // const handleSubmit = () => {
-  //   const newTime = `${minutes}:${seconds}`;
-  //   selectedEvent.duration = newTime;
-  //   dispatch(updateSingleResult(selectedEvent));
-  //   setSelectedEventId(null);
-  //   setAdd(false);
-  //   setMinutes('00');
-  //   setSeconds('00');
-  //   setReload(!reload);
-
-  //   // Add this line to reload the page
-  //   window.location.reload();
-  // };
 
 
   const filteredChallenges = challenges.filter(challenge =>
     challenge.invites.includes(id) &&
     (activeFilter === "All" || challenge.active.toString() === activeFilter)
   );
+
+  const sortedChallenges = sortChallenges([...filteredChallenges]);
+
+
+  if (sortOrder === 'descending') {
+    sortedChallenges.reverse();
+  }
 
   return (
     <div>
@@ -182,6 +198,18 @@ function MyChallenges() {
                   <option value="false">Inactive Challenges</option>
               </select>
            </div> </div> : <div></div>}
+           <div style={{ marginLeft: "35px", marginBottom: '35px', marginTop: "35px" }}>
+           <select onChange={handleSortColumnChange} value={sortColumn} style= {{marginRight: "10px"}}>
+  <option value="SortBy">Sort By</option>
+  <option value="event">Event</option>
+  <option value="startDate">Start Date</option>
+  <option value="endDate">End Date</option>
+</select>
+        <select onChange={handleSortOrderChange} value={sortOrder}>
+          <option value="ascending">Ascending</option>
+          <option value="descending">Descending</option>
+        </select>
+      </div>
           {user.results ?
           <div style={{paddingLeft: "15px",paddingRight: "15px", paddingBottom: "15px", paddingTop: "15px"}}>
           <table className="table table-bordered  text-center profile rounded text-center add" style= {{backgroundColor:"rgb(211, 211, 211)"}}>
@@ -192,6 +220,7 @@ function MyChallenges() {
       <th scope="col">Challengers</th>
       <th scope="col">Results</th>
       <th scope="col">Start Date</th>
+      <th scope="col">End Date</th>
       <th scope="col">Event Name</th>
       <th scope="col">Time Left</th>
       <th scope="col">Add Result</th>
@@ -201,7 +230,7 @@ function MyChallenges() {
     </tr>
   </thead>
   <tbody  style= {{fontSize:"20px"}} >
-  {selectedEventFilter !== "All" ? filteredChallenges.filter(challenge=>challenge.eventId == selectedEventFilter).map((challenge) => {
+  {selectedEventFilter !== "All" ? sortedChallenges.filter(challenge=>challenge.eventId == selectedEventFilter).map((challenge) => {
 
               return (
 
@@ -212,6 +241,7 @@ function MyChallenges() {
                   <td çcope="row" style={{paddingLeft: "15px",paddingRight: "15px", paddingBottom: "15px", paddingTop: "25px"}}>{challenge.invites.length}</td>
                  {challenge.results ? <td scope="row" style={{paddingLeft: "15px",paddingRight: "15px", paddingBottom: "15px", paddingTop: "25px"}}>{challenge.results.length}</td> : <td scope="row" style={{paddingLeft: "15px",paddingRight: "15px", paddingBottom: "15px", paddingTop: "25px"}}></td>}
                   <td scope="row" style={{paddingLeft: "15px",paddingRight: "15px", paddingBottom: "15px", paddingTop: "25px"}}>{challenge.startDate.slice(0, 10)}</td>
+                  <td scope="row" style={{paddingLeft: "15px",paddingRight: "15px", paddingBottom: "15px", paddingTop: "25px"}}>{challenge.endDate.slice(0, 10)}</td>
                   {(events.find(event => event.id === challenge.eventId)?.name == 'Random') ? <td style={{paddingLeft: "15px",paddingRight: "15px", paddingBottom: "15px", paddingTop: "25px"}}> {challenge.description} </td> : <td><Link to={`/events/${challenge.eventId}`}>{events.find(event => event.id === challenge.eventId)?.name} </Link></td>}
                   <td scope="row" style={{paddingLeft: "15px",paddingRight: "15px", paddingBottom: "15px", paddingTop: "15px"}}>{!challenge.active ?  "" : <ChallengeTimer targetDate={challenge.endDate}  />}</td>
                   <td scope="row" style={{paddingLeft: "15px",paddingRight: "15px", paddingBottom: "15px", paddingTop: "25px"}}>{challenge.active && (challenge.results.find(result => result.userId === id)?.duration || 'Not Done') == 'Not Done'?<button  className="btn btn-primary" onClick={() => handleAdd(challenge)}>Add Result</button> : ""}</td>
@@ -252,7 +282,7 @@ function MyChallenges() {
 
             }):
 
-            filteredChallenges.map((challenge) => {
+            sortedChallenges.map((challenge) => {
               return (
 
                 <tr key={challenge.id} className="text-center" >
@@ -262,6 +292,7 @@ function MyChallenges() {
                   {challenge.results ? <td çcope="row" style={{paddingLeft: "15px",paddingRight: "15px", paddingBottom: "15px", paddingTop: "25px"}}>{challenge.invites.length}</td>: <td scope="row"></td>}
                   {challenge.results ? <td scope="row" style={{paddingLeft: "15px",paddingRight: "15px", paddingBottom: "15px", paddingTop: "25px"}}>{challenge.results.length}</td> : <td scope="row"></td>}
                   <td scope="row" style={{paddingLeft: "15px",paddingRight: "15px", paddingBottom: "15px", paddingTop: "25px"}}>{challenge.startDate.slice(0, 10)}</td>
+                  <td scope="row" style={{paddingLeft: "15px",paddingRight: "15px", paddingBottom: "15px", paddingTop: "25px"}}>{challenge.endDate.slice(0, 10)}</td>
                   {/* <td style={{paddingLeft: "15px",paddingRight: "15px", paddingBottom: "15px", paddingTop: "25px"}}>{<Link to={`/events/${challenge.eventId}`}>{events.find(event => event.id === challenge.eventId)?.name} </Link>} {challenge.description}</td> */}
                    {(events.find(event => event.id === challenge.eventId)?.name == 'Random') ? <td style={{paddingLeft: "15px",paddingRight: "15px", paddingBottom: "15px", paddingTop: "25px"}}> {challenge.description} </td> : <td><Link to={`/events/${challenge.eventId}`}>{events.find(event => event.id === challenge.eventId)?.name} </Link></td>}
                   <td scope="row" style={{paddingLeft: "15px",paddingRight: "15px", paddingBottom: "15px", paddingTop: "15px"}}>{!challenge.active ?  "" : <ChallengeTimer targetDate={challenge.endDate}  />}</td>

@@ -14,7 +14,7 @@ const ExpiredNotice = () => {
 
 const ChallengeTimer = ({ targetDate }) => {
 
-  console.log("target!", targetDate)
+
   const [days, hours, minutes, seconds] = useCountdown(targetDate);
 
   const ShowCounter = ({ days, hours, minutes, seconds }) => {
