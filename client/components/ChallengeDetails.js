@@ -50,21 +50,27 @@ function ChallengeDetails() {
   };
 
   return (
-    <div>
-      <h2>Challenge Details</h2>
+    <div >
+      <h1 className="profile rounded text-center add" style={{ marginBottom: "15px", marginTop: "15px",  marginLeft: "auto", marginRight: "auto", width: "35%" }}>
+      <b>Challenge Details</b>
+      </h1>
+      <div className="text-center" style={{ marginBottom: "15px", marginTop: "15px",  marginLeft: "auto", marginRight: "auto"}}>
       {challenge ? <div><p>{challenge.active}</p>
       <p>Champ: { challenge.champ ? getChampName(challenge.champ) : "no champ"}</p>
       <p>Number of Invites:{challenge.invites ? challenge.invites.length : ""}</p>
       <p>Invited Users: {challenge.invites ? getInvitedUserNames(challenge.invites): 'No invites'}</p>
                   <p>Number of Results: {challenge.results ?challenge.results.length : ""}</p>
                    <p>Start Date: {challenge.startDate ?challenge.startDate.slice(0, 10) : ""}</p></div> :
-                  <div>No Challenge Details Available</div>}
+                  <div>No Details</div>}
+                  <div>{challenge.description}</div>
+                  <div>Created By {getChampName(challenge.userId)}</div>
                   <td><ChallengeTimer targetDate={challenge.endDate} /></td>
 
           {id == challenge.userId ? <div> Hey</div> : <div>No</div>}
       <Link to={`/mychallenges`}>
         Back to My Challenges
         </Link>
+        </div>
     </div>
   );
 }
