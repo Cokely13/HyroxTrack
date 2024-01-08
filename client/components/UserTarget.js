@@ -79,6 +79,8 @@ function UserTarget() {
     setRefreshTargets(true)
   };
 
+  const filteredEvents= events.filter((event) => event.name !== "Random");
+
   return (
     <div style={{ paddingLeft: '15px', paddingRight: '15px' }}>
       <h1 className="profile rounded text-center add" style={{ marginBottom: "15px", marginTop: "15px",  marginLeft: "auto", marginRight: "auto", width: "35%" }}><b>Target Times</b></h1>
@@ -91,7 +93,7 @@ function UserTarget() {
           </tr>
         </thead>
         <tbody style= {{fontSize:"20px"}}>
-          {events.map((event) => (
+          {filteredEvents.map((event) => (
             <tr key={event.id}>
               <td>{event.name}</td>
               <td>
