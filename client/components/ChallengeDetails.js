@@ -4,13 +4,17 @@ import { Link, useParams } from 'react-router-dom';
 import { fetchChallenge } from '../store/singleChallengeStore';
 import { fetchUsers } from '../store/allUsersStore';
 import ChallengeTimer from './ChallengeTimer';
+import { updateSingleChallenge } from '../store/singleChallengeStore';
 
 function ChallengeDetails() {
   const dispatch = useDispatch();
   const challenge= useSelector((state) => state.singleChallenge);
+  const {id} = useSelector((state) => state.auth )
   const users= useSelector((state) => state.allUsers);
 
   const { challengeId } = useParams();
+
+  console.log("challenge", challenge)
 
   useEffect(() => {
     dispatch(fetchChallenge(challengeId));
@@ -56,6 +60,8 @@ function ChallengeDetails() {
                    <p>Start Date: {challenge.startDate ?challenge.startDate.slice(0, 10) : ""}</p></div> :
                   <div>No Challenge Details Available</div>}
                   <td><ChallengeTimer targetDate={challenge.endDate} /></td>
+
+          {id == challenge.userId ? <div> Hey</div> : <div>No</div>}
       <Link to={`/mychallenges`}>
         Back to My Challenges
         </Link>

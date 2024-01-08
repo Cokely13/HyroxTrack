@@ -21,9 +21,6 @@ function EditResult() {
   const handleChange = (event) => {
     event.preventDefault()
     setTime(event.target.value)
-    // setCreatedBy(id)
-    // console.log("HA", like)
-    // console.log("NAME", name)
   }
 
   const handleSubmit = (event) => {

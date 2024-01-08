@@ -31,6 +31,7 @@ import ChallengeDetails from './components/ChallengeDetails';
 import UpcomingChallenges from './components/UpcomingChallenges';
 import Medals from './components/Medals';
 
+
 /**
  * COMPONENT
  */
@@ -72,7 +73,6 @@ class Routes extends Component {
             <Route exact path="/medals" component={Medals} />
             <Route exact path="/createchallenge" component={CreateChallenge} />
             <Route exact path="/workouts/:workoutId" component={WorkoutDetail} />
-            <Route exact path="/results/edit/:resultId" component={EditResult} />
             <Redirect to="/home" />
           </Switch>
         ) : (
