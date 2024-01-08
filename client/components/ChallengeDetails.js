@@ -8,9 +8,16 @@ import { updateSingleChallenge } from '../store/singleChallengeStore';
 
 function ChallengeDetails() {
   const dispatch = useDispatch();
+  const currentDateTime = new Date().toISOString().slice(0, 16);
   const challenge= useSelector((state) => state.singleChallenge);
   const {id} = useSelector((state) => state.auth )
   const users= useSelector((state) => state.allUsers);
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [selectedUsers, setSelectedUsers] = useState([id.toString()]);
+  const [start, setStart] = useState(currentDateTime);
+  const [description, setDescription] = useState(challenge.description);
+  const [endDate, setEndDate] = useState(currentDateTime);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const { challengeId } = useParams();
 
@@ -38,6 +45,57 @@ function ChallengeDetails() {
     });
   };
 
+  useEffect(() => {
+    // Fetch challenge details and populate form fields if in edit mode
+    if (isEditMode) {
+      // Set form field states to challenge details
+    }
+  }, [isEditMode, challengeId, dispatch]);
+
+  const handleEditClick = () => {
+    setIsEditMode(true);
+  };
+
+  const handleCancelClick = () => {
+    setIsEditMode(false);
+  };
+
+  const handleCheckboxChange = (event) => {
+    const changedUserId = event.target.value;
+    const isChecked = event.target.checked;
+    setSelectedUsers(prevSelectedUsers => {
+      return isChecked
+        ? [...prevSelectedUsers, changedUserId]
+        : prevSelectedUsers.filter(userId => userId !== changedUserId);
+    });
+  };
+
+  const handleChange4 = (event) => {
+    setStart(event.target.value);
+  };
+
+  const handleChange5 = (event) => {
+    const newEndDate = event.target.value;
+    const currentDate = new Date().toISOString().slice(0, 16);
+    const selectedEndDate = new Date(newEndDate);
+    const selectedStartDate = new Date(start);
+
+    if (selectedEndDate < new Date(currentDate)) {
+      setErrorMessage('End date cannot be in the past.');
+      return;
+    } else if (selectedEndDate < selectedStartDate) {
+      setErrorMessage('End date cannot be earlier than start date.');
+      return;
+    }
+
+    setEndDate(newEndDate);
+    setErrorMessage('');
+  };
+
+  const handleDescriptionChange = (description) => {
+    setDescription(description.target.value)
+  }
+
   const getChampName = (champ) => {
       const user = users.find(user => user.id === champ);
       return (
@@ -49,6 +107,132 @@ function ChallengeDetails() {
       );
   };
 
+  const handleSaveClick = (e) => {
+    e.preventDefault();
+
+    const newChallenge = {
+      id: challenge.id,
+      eventId: challenge.eventId,
+      userId: id,
+      startDate: start,
+      endDate: endDate,
+      invites: selectedUsers,
+      description: description
+
+    }
+
+    console.log("HEY!!!!!", newChallenge)
+
+    dispatch(updateSingleChallenge(newChallenge))
+    // Implement logic to update challenge
+    // Dispatch update action to Redux store
+    setIsEditMode(false);
+  };
+
+  if (isEditMode) {
+    return (
+    <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '20px', width: '100%', marginLeft: 'auto', marginRight: 'auto' }}>
+    <h1 className="profile rounded text-center add" style={{ marginBottom: "15px", marginTop: "15px", marginLeft: "auto", marginRight: "auto", width: "35%" }}>
+      <b>Edit Challenge</b>
+    </h1>
+    <form>
+      {/* User Invites Container */}
+      <div className="user-invites-container" style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '80px', width: '35%', marginLeft: 'auto', marginRight: 'auto' }}>
+        {users.map((user) => (
+          <div className="profile rounded text-center add" key={user.id} style={{ textAlign: 'center', width: '120px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            {/* User image */}
+            <div style={{
+              width: '100px',
+              height: '100px',
+              borderRadius: '50%',
+              margin: 'auto',
+              marginTop: "5%",
+              backgroundImage: `url(${user.image})`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat',
+              border: '3px solid black'
+            }} />
+            {/* User name */}
+            <div style={{ margin: '10px 0' }}>{user.userName}</div>
+            {/* Checkbox */}
+            <div style={{ textAlign: 'center' }}>
+              <input
+                type="checkbox"
+                id={`checkbox-${user.id}`}
+                value={user.id}
+                checked={selectedUsers.includes(user.id.toString())}
+                onChange={handleCheckboxChange}
+              />
+              <label htmlFor={`checkbox-${user.id}`}></label>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Event Selection */}
+      {/* <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
+        <label htmlFor="event">Event:</label>
+        <select id="event" value={event.Id} onChange={handleEventChange}>
+          <option value=""> -- Select Event --</option>
+          {events.map((event) => (
+            <option key={event.id} value={event.id}>{event.name}</option>
+          ))}
+        </select>
+      </div> */}
+
+      {/* Event Description */}
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
+          <label htmlFor="event">Description:</label>
+          <input
+            type="text"
+            id="description"
+            value={description}
+            onChange={handleDescriptionChange}
+            placeholder={challenge.description}
+          />
+        </div>
+
+
+      {/* Date Selection */}
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+          <label><h2 htmlFor="start">Start Date:</h2></label>
+          <input
+            type="datetime-local"
+            id="startDateInput"
+            value={start}
+            onChange={handleChange4}
+          />
+        </div>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', }}>
+          <label><h2 htmlFor="end">End Date:</h2></label>
+          <input
+            type="datetime-local"
+            id="endDateInput"
+            value={endDate}
+            onChange={handleChange5}
+          />
+        </div>
+      </div>
+
+      {/* Error Message Display */}
+      {errorMessage && (
+        <div style={{ color: 'red', marginBottom: '10px', textAlign: 'center', width: '100%' }}>
+          {errorMessage}
+        </div>
+      )}
+    </form>
+
+    {/* Edit and Cancel Buttons */}
+    <div className="text-center" style={{ marginBottom: '20px' }}>
+      <button className="btn btn-primary" onClick={handleSaveClick}>Save Changes</button>
+      <button className="btn btn-secondary" onClick={handleCancelClick} style={{ marginLeft: '10px' }}>Cancel</button>
+    </div>
+  </div>
+);
+}
+
   return (
     <div >
       <h1 className="profile rounded text-center add" style={{ marginBottom: "15px", marginTop: "15px",  marginLeft: "auto", marginRight: "auto", width: "35%" }}>
@@ -56,20 +240,22 @@ function ChallengeDetails() {
       </h1>
       <div className="text-center" style={{ marginBottom: "15px", marginTop: "15px",  marginLeft: "auto", marginRight: "auto"}}>
       {challenge ? <div><p>{challenge.active}</p>
-      <p>Champ: { challenge.champ ? getChampName(challenge.champ) : "no champ"}</p>
-      <p>Number of Invites:{challenge.invites ? challenge.invites.length : ""}</p>
-      <p>Invited Users: {challenge.invites ? getInvitedUserNames(challenge.invites): 'No invites'}</p>
-                  <p>Number of Results: {challenge.results ?challenge.results.length : ""}</p>
-                   <p>Start Date: {challenge.startDate ?challenge.startDate.slice(0, 10) : ""}</p></div> :
+      <p><b style ={{fontSize: "25px"}}>Champ:</b> { challenge.champ ? getChampName(challenge.champ) : ""}</p>
+      <p><b style ={{fontSize: "25px"}}>Number of Invites:{challenge.invites ? challenge.invites.length : ""}</b></p>
+      <p><b style ={{fontSize: "25px"}}>Invited Users: {challenge.invites ? getInvitedUserNames(challenge.invites): 'No invites'}</b></p>
+                  <p><b style ={{fontSize: "25px"}}>Number of Results: {challenge.results ?challenge.results.length : ""}</b></p>
+                   <p><b style ={{fontSize: "25px"}}>Start Date: {challenge.startDate ?challenge.startDate.slice(0, 10) : ""}</b></p></div> :
                   <div>No Details</div>}
-                  <div>{challenge.description}</div>
-                  <div>Created By {getChampName(challenge.userId)}</div>
-                  <td><ChallengeTimer targetDate={challenge.endDate} /></td>
+                  <div><b style ={{fontSize: "25px"}}>Description:{challenge.description} </b></div>
+                  <div><b style ={{fontSize: "25px", marginTop: "15px"}}>Created By:  {getChampName(challenge.userId)}</b></div>
+                  <ChallengeTimer targetDate={challenge.endDate} />
 
-          {id == challenge.userId ? <div> Hey</div> : <div>No</div>}
+          {id == challenge.userId ? <div style={{marginTop: "15px"}}> <button className="btn btn-primary" onClick={handleEditClick}>Edit Challenge</button></div> : <div>No</div>}
+          <div style={{marginLeft: "auto", marginRight: "auto", marginTop: "15px"}}>
       <Link to={`/mychallenges`}>
         Back to My Challenges
         </Link>
+        </div>
         </div>
     </div>
   );

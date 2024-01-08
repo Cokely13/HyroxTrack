@@ -5,7 +5,7 @@ import DateTimeDisplay from './DateTimeDisplay';
 const ExpiredNotice = () => {
   return (
     <div className="expired-notice">
-      <div>Challenge Done</div>
+      <div><b>Challenge Done</b></div>
     </div>
   );
 };
