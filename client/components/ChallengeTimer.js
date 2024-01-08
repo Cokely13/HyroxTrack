@@ -5,7 +5,7 @@ import DateTimeDisplay from './DateTimeDisplay';
 const ExpiredNotice = () => {
   return (
     <div className="expired-notice">
-      <div><b>Challenge Done</b></div>
+      <div></div>
     </div>
   );
 };
@@ -13,6 +13,8 @@ const ExpiredNotice = () => {
 
 
 const ChallengeTimer = ({ targetDate }) => {
+
+  console.log("target!", targetDate)
   const [days, hours, minutes, seconds] = useCountdown(targetDate);
 
   const ShowCounter = ({ days, hours, minutes, seconds }) => {

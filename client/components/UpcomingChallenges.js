@@ -15,13 +15,29 @@ function UpcomingChallenges() {
     dispatch(fetchSingleUser(id));
   }, [dispatch, id]);
 
+  // const getNearestUpcomingChallenge = () => {
+  //   const now = new Date();
+  //   return challenges
+  //     .filter(challenge => challenge.active === true && challenge.invites.includes(id))
+  //     .reduce((nearestChallenge, currentChallenge) => {
+  //       const currentDate = new Date(currentChallenge.endDate);
+  //       if (!nearestChallenge || currentDate > now && currentDate < new Date(nearestChallenge.endDate)) {
+  //         return currentChallenge;
+  //       }
+  //       return nearestChallenge;
+  //     }, null);
+  // };
+
   const getNearestUpcomingChallenge = () => {
     const now = new Date();
     return challenges
-      .filter(challenge => challenge.active === true && challenge.invites.includes(id))
+      .filter(challenge =>
+        challenge.active === true &&
+        challenge.invites.includes(id) &&
+        new Date(challenge.endDate) > now) // Check if endDate is in the future
       .reduce((nearestChallenge, currentChallenge) => {
         const currentDate = new Date(currentChallenge.endDate);
-        if (!nearestChallenge || currentDate > now && currentDate < new Date(nearestChallenge.endDate)) {
+        if (!nearestChallenge || currentDate < new Date(nearestChallenge.endDate)) {
           return currentChallenge;
         }
         return nearestChallenge;
@@ -30,20 +46,22 @@ function UpcomingChallenges() {
 
   const nearestChallenge = getNearestUpcomingChallenge();
 
+  console.log("nearest", nearestChallenge)
+
+
   return (
     <div style={{ textAlign: 'center' }}>
-      <h1>Upcoming Challenges</h1>
-      {nearestChallenge ? (
-        <>
+      {/* <h1>Upcoming Challenges</h1> */}
+      {nearestChallenge ?
+        <div>
           <ul>
-            <li># of Challenges: <Link to={'/mychallenges'}> {challenges.filter((challenge) => challenge.active == true && challenge.invites.includes(id)).length}</Link></li>
+            <li><b># of Challenges:</b> <Link to={'/mychallenges'}> {challenges.filter((challenge) => challenge.active == true && challenge.invites.includes(id)).length}</Link></li>
           </ul>
-          <h2>Next Challenge Countdown</h2>
-          <ChallengeTimer targetDate={nearestChallenge.endDate} />
-        </>
-      ) : (
-        <p>No upcoming challenges.</p>
-      )}
+          <h2>Next Challenge Countdown: </h2>
+          <ChallengeTimer targetDate={nearestChallenge.endDate} /></div>
+          :
+        <p>No upcoming challenges</p> }
+
     </div>
   );
 }
