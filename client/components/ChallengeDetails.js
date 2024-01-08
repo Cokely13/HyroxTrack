@@ -21,7 +21,9 @@ function ChallengeDetails() {
 
   const { challengeId } = useParams();
 
-  console.log("challenge", challenge)
+  console.log("check", users)
+  console.log(users.map(user => user.image));
+
 
   useEffect(() => {
     dispatch(fetchChallenge(challengeId));
@@ -121,7 +123,7 @@ function ChallengeDetails() {
 
     }
 
-    console.log("HEY!!!!!", newChallenge)
+    console.log(users.map(user => user.image));
 
     dispatch(updateSingleChallenge(newChallenge))
     // Implement logic to update challenge
@@ -147,7 +149,7 @@ function ChallengeDetails() {
               borderRadius: '50%',
               margin: 'auto',
               marginTop: "5%",
-              backgroundImage: `url(${user.image})`,
+              backgroundImage: user.image ? `url(${user.image})` : `url('/path/to/default/image.jpg')`,
               backgroundSize: 'cover',
               backgroundPosition: 'center',
               backgroundRepeat: 'no-repeat',
@@ -250,7 +252,7 @@ function ChallengeDetails() {
                   <div><b style ={{fontSize: "25px", marginTop: "15px"}}>Created By:  {getChampName(challenge.userId)}</b></div>
                   <ChallengeTimer targetDate={challenge.endDate} />
 
-          {id == challenge.userId ? <div style={{marginTop: "15px"}}> <button className="btn btn-primary" onClick={handleEditClick}>Edit Challenge</button></div> : <div>No</div>}
+          {id == challenge.userId ? <div style={{marginTop: "15px"}}> <button className="btn btn-primary" onClick={handleEditClick}>Edit Challenge</button></div> : <div></div>}
           <div style={{marginLeft: "auto", marginRight: "auto", marginTop: "15px"}}>
       <Link to={`/mychallenges`}>
         Back to My Challenges

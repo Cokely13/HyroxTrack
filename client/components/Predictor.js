@@ -48,6 +48,7 @@ function Predictor() {
 
       const handleEventChange = (e) => {
         setEventName(e.target.value);
+        setErrorMessage("")
       };
 
     useEffect(() => {
@@ -104,6 +105,7 @@ function Predictor() {
 
     const handleDateChange = (e) => {
         setDate(e.target.value);
+        setErrorMessage("")
       };
 
       const handleMinutesChange = (e) => {
@@ -118,6 +120,10 @@ function Predictor() {
 
       const handleSubmit = (e) => {
         e.preventDefault();
+        if (!eventName) {
+          setErrorMessage('Please Select Event Name');
+          return;
+        }
 
 
         if (!date) {
@@ -206,7 +212,41 @@ function Predictor() {
 
     return (
         <div>
-              <div>
+              {/* <div>
+        <label htmlFor="event" style={{ marginRight: "10px" }}>Event:</label>
+        <select id="event" value={eventName} onChange={handleEventChange}>
+          <option value=""> -- Select Event --</option>
+          <option value="Rowing">Rowing</option>
+          <option value="SkiErg">SkiErg</option>
+          <option value="SledPush">SledPush</option>
+          <option value="SledPull">SledPull</option>
+          <option value="Burpee Broad Jumps">Burpee Broad Jumps</option>
+          <option value="Farmers Carry">Farmers Carry</option>
+          <option value="Burpee Broad Jumps">Burpee Broad Jumps</option>
+          <option value="Sandbag Lunges">Sandbag Lunges</option>
+          <option value="Wall Balls">Wall Balls</option>
+        </select>
+      </div>
+      {canPredict ? (
+                <button onClick={predictNext}>Predict Next {eventName} Time</button>
+            ) : eventName && (
+                <p>Not Enough {eventName} Results to Predict</p>
+            )}
+
+            {prediction && (
+                <div>
+                    <p>Predicted Time: {formatTime(prediction)}</p>
+                </div>
+            )} */}
+
+
+         <div className="profile rounded text-center add" style={{ backgroundColor: 'white', margin: '15px 50px 50px', textAlign: 'center', padding: '20px', fontSize: "25px"  }}>
+
+<h1 className="profile rounded text-center add" style={{ marginBottom: "15px", marginTop: "15px", marginLeft: "40%", marginRight: "40%"  }}><b>Add {eventName}  Result</b></h1>
+<form onSubmit={handleSubmit}>
+{errorMessage && <p style={{ color: "red"}}>{errorMessage}</p>}
+      {successMessage && <p>{successMessage}</p>}
+      <div>
         <label htmlFor="event" style={{ marginRight: "10px" }}>Event:</label>
         <select id="event" value={eventName} onChange={handleEventChange}>
           <option value=""> -- Select Event --</option>
@@ -232,14 +272,6 @@ function Predictor() {
                     <p>Predicted Time: {formatTime(prediction)}</p>
                 </div>
             )}
-
-
-         <div className="profile rounded text-center add" style={{ backgroundColor: 'white', margin: '15px 50px 50px', textAlign: 'center', padding: '20px', fontSize: "25px"  }}>
-
-<h1 className="profile rounded text-center add" style={{ marginBottom: "15px", marginTop: "15px", marginLeft: "40%", marginRight: "40%"  }}><b>Add {eventName}  Result</b></h1>
-<form onSubmit={handleSubmit}>
-{errorMessage && <p>{errorMessage}</p>}
-      {successMessage && <p>{successMessage}</p>}
 <div>
   <label htmlFor="date" style={{ marginRight: "10px" }}>Date:  </label>
   <input type="date" id="date" value={date} onChange={handleDateChange} />
