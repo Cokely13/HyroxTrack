@@ -144,7 +144,7 @@ function EventDetail() {
             {sortedResults.length > 0 ? (
               <table className="table table-bordered text-center profile rounded text-center add" style= {{backgroundColor:"rgb(211, 211, 211)"}}>
                 <thead>
-                  <tr style= {{fontSize:"30px"}}>
+                  <tr style={{ fontSize: "30px", backgroundColor: "rgb(150, 150, 150)" }} >
                     <th scope="col">Date</th>
                     <th scope="col">Name</th>
                     <th scope="col">Time</th>
@@ -153,7 +153,7 @@ function EventDetail() {
                 </thead>
                 <tbody style= {{fontSize:"20px"}}>
                   {sortedResults.map((result) => (
-                    <tr key={result.id}>
+                    <tr  key={result.id}>
                       <td>{result.date}</td>
                       <td>{result.userName}</td>
                       <td style={{ color: result.duration > event.targetTime ? 'red' : 'blue' }}>{result.duration}</td>
