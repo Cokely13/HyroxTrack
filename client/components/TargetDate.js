@@ -45,6 +45,7 @@ export default function TargetDate() {
   return (
     <div>
       <h1 className="profile rounded text-center add" style={{ marginBottom: "15px", marginLeft: "auto", marginRight: "auto", width: "35%" }}><b>Countdown To Hyrox!</b></h1>
+      {user.targetDate ? <h1 className="text-center" >{user.targetDate.slice(0, 10)}</h1> :<h1> </h1>}
       <CountdownTimer targetDate={user.targetDate} />
       <div className="text-center mb-3">
         {showDateSelection ? (
