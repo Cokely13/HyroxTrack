@@ -14,7 +14,7 @@ const Event = db.define('event', {
     type: Sequelize.TEXT,
   },
   targetTime: {
-      type: Sequelize.TIME,
+      type: Sequelize.STRING,
   }
 
 })

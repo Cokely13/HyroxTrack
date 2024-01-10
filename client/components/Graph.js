@@ -3,10 +3,43 @@ import { VictoryChart, VictoryScatter, VictoryLine, VictoryAxis, VictoryLegend, 
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { fetchUsers } from '../store/allUsersStore';
+import { fetchSingleUser } from '../store/singleUserStore';
 
 const convertTimeToSeconds = (time) => {
-  const [minutes, seconds] = time.split(':');
-  return parseInt(minutes, 10) * 60 + parseInt(seconds, 10);
+  if (!time) {
+    // Handle undefined or null input
+    return 0; // or another appropriate default value
+  }
+
+  const parts = time.split(':');
+  if (parts.length === 2) {
+    // Proper format "MM:SS"
+    return parseInt(parts[0], 10) * 60 + parseInt(parts[1], 10);
+  } else {
+    // Handle other formats or return a default value
+    return 0;
+  }
+};
+
+// const convertTimeToSeconds = (time) => {
+//   if (!time) return 0; // Return 0 or some default value if time is undefined
+
+//   const [minutes, seconds] = time.split(':');
+//   // const seconds = parseInt(parts[parts.length - 1], 10); // Always parses seconds
+//   // const minutes = parts.length > 1 ? parseInt(parts[parts.length - 2], 10) : 0; // Parses minutes if available
+//   // const hours = parts.length > 2 ? parseInt(parts[parts.length - 3], 10) : 0; // Parses hours if available
+
+//   return parseInt(minutes, 10) * 60 + parseInt(seconds, 10);
+// };
+
+const getFormattedDuration = (duration) => {
+  if (!duration) return duration; // return as is if undefined or null
+  const parts = duration.split(":");
+  if (parts.length === 2) {
+    // If duration is in the format MM:SS
+    return `00:${parts[0].padStart(2, '0')}:${parts[1].padStart(2, '0')}`;
+  }
+  return duration; // return the original duration if it's already in the correct format
 };
 
 const usernameColors = {
@@ -18,22 +51,34 @@ const usernameColors = {
 function Graph({ event }) {
   const { id } = useSelector((state) => state.auth);
   const users = useSelector((state) => state.allUsers);
+  const user = useSelector((state) => state.singleUser )
   const dispatch = useDispatch();
   const data = event.results || [];
-  const targetTime = event.targetTime || '00:00';
+  const check = user?.targets?.find(target => target.eventId === event?.id)?.duration || event?.targetTime
+  const test = convertTimeToSeconds(check)
+  const targetTime = event?.targetTime|| "00:00";
+
+console.log('check', check)
+console.log('target', targetTime)
 
   useEffect(() => {
     dispatch(fetchUsers());
   }, [dispatch]);
 
-  console.log('users', users);
-  console.log('data', data)
+  useEffect(() => {
+    dispatch(fetchSingleUser(id))
+    // Safe to add dispatch to the dependencies array
+  }, [dispatch,])
+
+  console.log('user', user);
+  // console.log('data', data)
 
   const userNames = ['All', ...new Set(data.map((result) => result.userName))];
 
   const [selectedUser, setSelectedUser] = useState('All');
 
-  const targetTimeInSeconds = convertTimeToSeconds(targetTime);
+  const targetTimeInSeconds = convertTimeToSeconds(check);
+
 
   const filteredData = data.filter((result) => selectedUser === 'All' || result.userName === selectedUser);
 

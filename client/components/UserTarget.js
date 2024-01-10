@@ -5,6 +5,7 @@ import { fetchSingleUser } from '../store/singleUserStore'
 import { fetchTargets } from '../store/allTargetsStore';
 import {createTarget} from '../store/allTargetsStore'
 import {updateSingleTarget} from '../store/singleTargetStore'
+import { Link,  } from 'react-router-dom'
 
 function UserTarget() {
   const dispatch = useDispatch();
@@ -95,7 +96,7 @@ function UserTarget() {
         <tbody style= {{fontSize:"20px"}}>
           {filteredEvents.map((event) => (
             <tr key={event.id}>
-              <td>{event.name}</td>
+              <td><Link to={`/events/${event.id}`}>{event.name}</Link></td>
               <td>
                 {selectedEventId == event.id ? (
                   <div>

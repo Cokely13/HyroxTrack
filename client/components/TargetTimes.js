@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchEvents } from '../store/allEventsStore';
 import { updateSingleEvent } from '../store/singleEventStore';
+import { Link, useHistory } from 'react-router-dom'
 
 function TargetTimes() {
   const dispatch = useDispatch();
@@ -55,7 +56,7 @@ function TargetTimes() {
         <tbody style= {{fontSize:"20px"}}>
           {filteredEvents.map((event) => (
             <tr key={event.id}>
-              <td>{event.name}</td>
+              <td><Link to={`/events/${event.id}`}>{event.name}</Link></td>
               <td>
                 {selectedEventId == event.id ? (
                   <div>
