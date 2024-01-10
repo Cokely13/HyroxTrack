@@ -9,6 +9,7 @@ import { fetchEvents } from '../store/allEventsStore';
 import { updateSingleAverage } from '../store/singleAverageStore';
 import { createAverage } from '../store/allAveragesStore';
 import { fetchAverages } from '../store/allAveragesStore';
+import { Link } from 'react-router-dom'
 
 
 function Predictor() {
@@ -27,6 +28,8 @@ function Predictor() {
   const user = useSelector((state) => state.singleUser )
   const events = useSelector((state) => state.allEvents )
   const averages = useSelector((state) => state.allAverages);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
 
     // Convert duration string to seconds
     const durationToSeconds = (duration) => {
@@ -49,6 +52,7 @@ function Predictor() {
       const handleEventChange = (e) => {
         setEventName(e.target.value);
         setErrorMessage("")
+        setSuccessMessage("")
       };
 
     useEffect(() => {
@@ -136,10 +140,6 @@ function Predictor() {
           return;
         }
 
-      //  const formattedMinutes = handleMinutesChange(minutes)
-      //  const formattedSeconds = handleSecondsChange(seconds)
-
-        // Create a new result object with the input values
         const newResult = {
           userId: id,
           userName: user.userName,
@@ -186,11 +186,13 @@ function Predictor() {
 
         dispatch(createResult(newResult));
         setSuccessMessage('Result Added Successfully!');
+        setIsSubmitted(true)
         setEventName('');
         setDate('');
         setMinutes('');
         setSeconds('');
         setErrorMessage('');
+        setPrediction('')
       }
 
     const predictNext = async () => {
@@ -245,7 +247,6 @@ function Predictor() {
 <h1 className="profile rounded text-center add" style={{ marginBottom: "15px", marginTop: "15px", marginLeft: "40%", marginRight: "40%"  }}><b>Add {eventName}  Result</b></h1>
 <form onSubmit={handleSubmit}>
 {errorMessage && <p style={{ color: "red"}}>{errorMessage}</p>}
-      {successMessage && <p>{successMessage}</p>}
       <div>
         <label htmlFor="event" style={{ marginRight: "10px" }}>Event:</label>
         <select id="event" value={eventName} onChange={handleEventChange}>
@@ -269,7 +270,7 @@ function Predictor() {
 
             {prediction && (
                 <div>
-                    <p>Predicted Time: {formatTime(prediction)}</p>
+                    <p>Predicted Time: {formatTime(prediction).slice(0,5)}</p>
                 </div>
             )}
 <div>
@@ -296,6 +297,12 @@ function Predictor() {
 </div>
 <button className="btn btn-primary"  type="submit">Add Result</button>
 </form>
+{isSubmitted && (
+      <div>
+        <p>{successMessage}</p>
+        <Link to="/myresults">Go to My Results</Link>
+      </div>
+    )}
 </div>
         </div>
     );

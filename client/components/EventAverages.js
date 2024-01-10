@@ -8,7 +8,6 @@ import { fetchEvents } from '../store/allEventsStore';
 import { fetchWorkouts } from '../store/allWorkoutsStore';
 import { fetchSingleUser } from '../store/singleUserStore';
 import { fetchResults } from '../store/allResultsStore';
-import AddResult from './AddResult';
 import Predictor from './Predictor';
 
 const EventAverages = () => {
