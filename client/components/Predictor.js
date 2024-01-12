@@ -247,21 +247,15 @@ function Predictor() {
 <h1 className="profile rounded text-center add" style={{ marginBottom: "15px", marginTop: "15px", marginLeft: "40%", marginRight: "40%"  }}><b>Add {eventName}  Result</b></h1>
 <form onSubmit={handleSubmit}>
 {errorMessage && <p style={{ color: "red"}}>{errorMessage}</p>}
-      <div>
-        <label htmlFor="event" style={{ marginRight: "10px" }}>Event:</label>
-        <select id="event" value={eventName} onChange={handleEventChange}>
-          <option value=""> -- Select Event --</option>
-          <option value="Rowing">Rowing</option>
-          <option value="SkiErg">SkiErg</option>
-          <option value="SledPush">SledPush</option>
-          <option value="SledPull">SledPull</option>
-          <option value="Burpee Broad Jumps">Burpee Broad Jumps</option>
-          <option value="Farmers Carry">Farmers Carry</option>
-          <option value="Burpee Broad Jumps">Burpee Broad Jumps</option>
-          <option value="Sandbag Lunges">Sandbag Lunges</option>
-          <option value="Wall Balls">Wall Balls</option>
-        </select>
-      </div>
+<div>
+  <label htmlFor="event" style={{ marginRight: "10px" }}>Event:</label>
+  <select id="event" value={eventName} onChange={handleEventChange}>
+    <option value=""> -- Select Event --</option>
+    {events.map((event, index) => (
+      <option key={index} value={event.name}>{event.name}</option>
+    ))}
+  </select>
+</div>
       {canPredict ? (
                 <button onClick={predictNext}>Predict Next {eventName} Time</button>
             ) : eventName && (

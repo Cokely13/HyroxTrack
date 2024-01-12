@@ -26,8 +26,6 @@ function UserPage() {
 
   }
 
-  console.log("user", user.image)
-
   return (
     <div>
          <div  style={{ marginBottom: "15px", marginTop: "25px", marginLeft: "auto", marginRight: "auto", width: "15%" }}>
