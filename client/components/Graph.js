@@ -172,7 +172,7 @@ console.log('target', targetTime)
   const scatterColor = filteredUserNames.length > 0 ? 'yellow' : 'none'; // Hide scatter plots when no filtered users
 
   return (
-    <div className="profile rounded text-center add" style={{ backgroundColor: 'white', margin: '50px 150px 150px', textAlign: 'center', padding: '50px',  fontSize: "25px"  }}>
+    <div style={{ textAlign: 'center', padding: '10%', }} >
       {/* <h1 className="text-center">Graph</h1> */}
       <select style={{ fontSize: "25px",  marginBottom: "0px",  marginRight: "75%", marginTop: "25px"}} value={selectedUser} onChange={(e) => setSelectedUser(e.target.value)}>
         {userNames.map((userName) => (

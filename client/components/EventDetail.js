@@ -103,10 +103,10 @@ function EventDetail() {
     <div>
         <div>
           <h1 className="profile rounded text-center add" style={{ marginBottom: "15px", marginTop: "15px",  marginLeft: "auto", marginRight: "auto", width: "35%" }}><b>{event.name}</b></h1>
-        <button onClick={handleToggleShowGraph} className="btn btn-secondary" style={{ position: 'absolute', left: '50px' }} >{showGraph ? 'Show Results' : 'Show Graph'}</button>
-        <Link className="btn btn-info" to={`/workouts/${event.id}`} style={{ position: 'absolute', right: '50px' }} >Go to Workouts</Link>
+        <button onClick={handleToggleShowGraph} className="btn btn-secondary" style={{ position: 'absolute', left: '10%' }} >{showGraph ? 'Show Results' : 'Show Graph'}</button>
+        <Link className="btn btn-info" to={`/workouts/${event.id}`} style={{ position: 'absolute', right: '10%' }} >Go to Workouts</Link>
           {showGraph ? (
-          <div style= {{width: "90%", marginLeft: "auto", marginRight: "auto" }}>
+          <div className="graph-container" >
           <Graph event={event} />
           </div>
             ) :  (
@@ -142,7 +142,7 @@ function EventDetail() {
               </div>
             </div>
             {sortedResults.length > 0 ? (
-              <table className="table table-bordered text-center profile rounded text-center add" style= {{backgroundColor:"rgb(211, 211, 211)"}}>
+              <table className="table table-bordered text-center my-results-table" style= {{backgroundColor:"rgb(211, 211, 211)"}}>
                 <thead>
                   <tr style={{ fontSize: "30px", backgroundColor: "rgb(150, 150, 150)" }} >
                     <th scope="col">Date</th>

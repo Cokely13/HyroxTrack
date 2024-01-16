@@ -85,7 +85,7 @@ function UserTarget() {
   return (
     <div style={{ paddingLeft: '15px', paddingRight: '15px' }}>
       <h1 className="profile rounded text-center add" style={{ marginBottom: "15px", marginTop: "15px",  marginLeft: "auto", marginRight: "auto", width: "35%" }}><b>Target Times</b></h1>
-      <table className="table table-bordered text-center profile rounded text-center add" style= {{backgroundColor:"rgb(211, 211, 211)"}}>
+      <table className="table table-bordered text-center target-table" style= {{backgroundColor:"rgb(211, 211, 211)"}}>
         <thead>
           <tr  style={{ fontSize: "30px", backgroundColor: "rgb(150, 150, 150)" }}>
             <th>Event Name</th>

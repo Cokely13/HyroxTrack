@@ -67,10 +67,10 @@ function Events() {
     :
     <div >
     <h1 className="profile rounded text-center add" style={{ marginBottom: "15px", marginTop: "15px",  marginLeft: "auto", marginRight: "auto", width: "35%" }}><b>Events</b></h1>
-    <div className="row text-center" style={{marginLeft: "auto",marginTop: "15px", marginRight:"auto"}}>
+    <div className="events-container" style={{marginLeft: "auto",marginTop: "15px", marginRight:"auto"}}>
       {events.length ? filteredEvents.map((zone) => {
         return (
-          <div className="profile rounded text-center add" key={zone.id} style={{width:"30rem", marginLeft: "15%",marginBottom: "40px",marginTop: "40px", }}>
+          <div className="event-card" key={zone.id} style={{width:"30rem", marginBottom: "40px",marginTop: "40px", }}>
             <Link to={`/events/${zone.id}`}><img className="card-img-top border border-dark rounded" src={zone.image} style={{height:"20rem", marginLeft: "auto",marginTop: "15px", marginRight:"auto"}} alt="Card image cap"></img></Link>
           <h2 className="profile rounded text-center add" style={{ marginBottom: "15px", marginTop: "15px",  marginLeft: "auto", marginRight: "auto", width: "70%" }}>{zone.name}</h2>
 

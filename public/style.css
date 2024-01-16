@@ -411,3 +411,111 @@ tr:hover {
     font-size: calc(0.8rem + 1vw);
   }
 }
+
+.medals-table {
+  width: 100%;
+  margin: 0 auto;
+  border-collapse: collapse;
+  border: 1px solid #ddd;
+  box-sizing: border-box;
+}
+
+.medals-table th,
+.medals-table td {
+  text-align: center;
+  font-size: calc(1rem + 0.5vw);
+}
+
+@media screen and (max-width: 600px) {
+  .medals-table {
+    font-size: calc(0.8rem + 1vw);
+  }
+}
+
+.my-results-table {
+  width: 100%;
+  margin: 0 auto;
+  border-collapse: collapse;
+  border: 1px solid #ddd;
+  box-sizing: border-box;
+}
+
+.my-results-table th,
+.my-results-table td {
+  text-align: center;
+  font-size: calc(1rem + 0.5vw);
+}
+
+@media screen and (max-width: 600px) {
+  .my-results-table {
+    font-size: calc(0.8rem + 1vw);
+  }
+}
+
+.target-table {
+  width: 100%;
+  margin: 0 auto;
+  border-collapse: collapse;
+  border: 1px solid #ddd;
+  box-sizing: border-box;
+}
+
+.target-table th,
+.target-table td {
+  text-align: center;
+  font-size: calc(1rem + 0.5vw);
+}
+
+@media screen and (max-width: 600px) {
+  .target-table {
+    font-size: calc(0.8rem + 1vw);
+  }
+}
+
+.events-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around; /* Adjust as needed */
+}
+
+.event-card {
+  width: 30%; /* Adjust width for three cards per row */
+  margin: 1%; /* Optional margin */
+  justify-content: center;
+  /* border: 1px solid #ddd; */
+  padding: 10px;
+  box-sizing: border-box;
+  border-color: darkgray;
+  border-style: solid;
+  border-width: 5px;
+  text-align: center;
+  /* other styles */
+}
+
+/* Media query for smaller screens (e.g., max-width 600px) */
+@media screen and (max-width: 600px) {
+  .event-card {
+    width: 100%; /* Full width for mobile */
+    margin: 1% 0; /* Adjust margin for top and bottom only */
+  }}
+
+  .graph-container {
+    width: 100%;
+    /* margin-top: 10%; */
+    margin: auto;
+    /* Additional styles here if needed */
+  }
+
+  @media (min-width: 768px) { /* Adjust width for medium devices like tablets */
+    .graph-container {
+      width: 75%; /* Larger width on medium screens */
+      /* Additional styles here if needed */
+    }
+  }
+
+  @media (min-width: 992px) { /* Adjust width for large devices like desktops */
+    .graph-container {
+      width: 75%; /* Even larger width on large screens */
+      /* Additional styles here if needed */
+    }
+  }
