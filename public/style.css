@@ -555,3 +555,50 @@ tr:hover {
       font-size: 14px; /* Smaller font size for mobile */
     }
   }
+
+  .user-image-container {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    margin: auto;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border: 3px solid black;
+  }
+
+  .change-photo-button-container {
+    margin-top: 10%;
+    margin-bottom: 10%;/* Adjust as needed */
+  }
+
+  /* Ensure the image container is centered on mobile devices */
+  @media screen and (max-width: 600px) {
+    .user-image-container {
+      width: 150px; /* Smaller size for mobile */
+      height: 150px;
+    }
+  }
+
+  .addresult {
+    background-color: white;
+    margin: 15px auto;
+    text-align: center;
+    padding: 20px;
+    font-size: 25px;
+    width: 80%; /* Adjust width as needed */
+    border-radius: 10px;
+  }
+
+  /* Responsive adjustments */
+  @media screen and (max-width: 768px) {
+    .addresult {
+      width: 90%; /* Wider for smaller screens */
+    }
+  }
+
+  @media screen and (max-width: 600px) {
+    .addresult {
+      width: 100%; /* Full width for very small screens */
+    }
+  }

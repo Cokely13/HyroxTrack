@@ -27,6 +27,7 @@ return (
         {user.image && (
            <div className="profile-image" style={{
             backgroundImage: `url(${user.image})`,
+            border: '3px solid black'
           }}> </div>
         )}
         <div style={{ marginTop: "15%"}} >

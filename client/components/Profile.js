@@ -101,8 +101,8 @@ const handleUpload = async () => {
     <h1 className="profile rounded text-center add" style={{ marginBottom: "15px", marginTop: "25px",  marginLeft: "auto", marginRight: "auto", width: "35%" }}><b>{user.userName}'s Profile</b></h1>
 
     {user.image && (
-    <div  style={{ marginBottom: "15px", marginTop: "25px",  marginLeft: "auto", marginRight: "auto", width: "15%" }}>
-       <div style={{
+    <div   >
+       <div className="user-image-container" style={{
               width: '200px',
               height: '200px',
               borderRadius: '50%',
@@ -129,11 +129,11 @@ const handleUpload = async () => {
         <input type="file" onChange={handleFileChange} />
         <button class="btn btn-success"onClick={handleUpload}>Upload Photo</button>
         {previewUrl && (
-          <div style={{ marginTop: '20px' }}>
+          <div className="change-photo-button-container">
             <img src={previewUrl} alt="Preview" style={{ maxWidth: '20%', height: 'auto' }} />
           </div>
         )}
-      </div> : <div style={{ marginTop: '20px' }}><button class="btn btn-secondary" onClick={() => setNewPhoto(true)}>Change Photo</button></div>}
+      </div> : <div className="change-photo-button-container"><button class="btn btn-secondary" onClick={() => setNewPhoto(true)}>Change Photo</button></div>}
     </div>
   )
 }

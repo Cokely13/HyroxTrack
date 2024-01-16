@@ -55,7 +55,7 @@ function UserPage() {
               </div> : <div></div>}
           {user.results ?
           <div style={{paddingLeft: "15px",paddingRight: "15px"}}>
-          <table className="table table-bordered text-center profile rounded text-center add" style= {{backgroundColor:"rgb(211, 211, 211)"}}>
+          <table className="table table-bordered text-center my-challenges-table" style= {{backgroundColor:"rgb(211, 211, 211)"}}>
   <thead>
     <tr style={{ fontSize: "30px", backgroundColor: "rgb(150, 150, 150)" }}>
       <th scope="col">#</th>
@@ -72,7 +72,7 @@ function UserPage() {
                 <tr key={result.id}>
                   <td >{result.id}</td>
                   <td >{result.date}</td>
-                  <td>{result.eventName}</td>
+                  <td><Link to={`/events/${result.eventId}`}>{result.eventName}</Link></td>
                   <td>{result.duration}</td>
                 </tr>
               )
