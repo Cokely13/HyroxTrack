@@ -602,3 +602,45 @@ tr:hover {
       width: 100%; /* Full width for very small screens */
     }
   }
+
+  .addworkout {
+    text-align: center;
+    margin-bottom: 15px;
+    margin-top: 15px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 60%; /* Adjust for desktop */
+    border-radius: 10px;
+  }
+
+  /* Responsive design for mobile */
+  @media screen and (max-width: 600px) {
+    .addworkout {
+      width: 90%; /* Wider for smaller screens */
+    }
+  }
+
+  .addworkout input[type="text"] {
+    margin-top: 40px;
+    width: 75%; /* Adjust width as needed */
+  }
+
+  .addworkout button {
+    margin-top: 40px;
+    margin-bottom: 10px;
+  }
+
+  .btn-edit,
+.btn-delete {
+  margin-right: 5px;
+}
+
+/* Responsive styles for mobile devices */
+@media screen and (max-width: 600px) {
+  .btn-edit,
+  .btn-delete {
+    font-size: 12px; /* Smaller font size */
+    padding: 5px 10px; /* Smaller padding */
+    margin-bottom: 10px; /* Space between buttons */
+  }
+}

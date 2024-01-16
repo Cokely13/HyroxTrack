@@ -120,7 +120,7 @@ function WorkoutDetail() {
         <b>{event.name} Workouts</b>
       </h1>
       {adding ? (
-        <div className="profile rounded text-center add" style={{ marginBottom: '15px', marginTop: '15px', marginLeft: 'auto', marginRight: 'auto', width: '35%' }}>
+        <div className="addworkout">
           <h1><b>New Workout</b></h1>
           <div>
             <h1>
@@ -182,10 +182,10 @@ function WorkoutDetail() {
                             </>
                           ) : (
                             <>
-                              <button className="btn btn-warning" onClick={() => handleEditWorkout(workout.id)} style={{ marginRight: '5px' }}>
+                              <button className="btn btn-warning btn-edit" onClick={() => handleEditWorkout(workout.id)} style={{ marginRight: '5px' }}>
                                 Edit Workout
                               </button>
-                              <button className="btn btn-danger" onClick={() => handleDeleteWorkout(workout.id)}>
+                              <button className="btn btn-danger btn-delete" onClick={() => handleDeleteWorkout(workout.id)}>
                                 Delete Workout
                               </button>
                             </>
