@@ -123,15 +123,15 @@ function UserTarget() {
               <td>
                 {selectedEventId == event.id ? (
                   <div>
-                    <button className="btn btn-primary" style={{marginRight: "10px"}} onClick={handleSubmit}>
+                    <button className="btn btn-primary btn-edit" style={{marginRight: "10px"}} onClick={handleSubmit}>
                       Submit
                     </button>
-                    <button className="btn btn-secondary" onClick={handleCancel}>
+                    <button className="btn btn-secondary btn-edit" onClick={handleCancel}>
                       Cancel
                     </button>
                   </div>
                 ) : (
-                  <button className="btn btn-primary" onClick={() => handleEdit(event)}>
+                  <button className="btn btn-primary btn-edit" onClick={() => handleEdit(event)}>
                     Edit Time
                   </button>
                 )}
