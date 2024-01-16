@@ -212,7 +212,7 @@ const sortChallenges = (data) => {
       </div>
           {user.results ?
           <div style={{paddingLeft: "15px",paddingRight: "15px", paddingBottom: "15px", paddingTop: "15px"}}>
-          <table className="table table-bordered  text-center profile rounded text-center add" style= {{backgroundColor:"rgb(211, 211, 211)"}}>
+          <table className="table table-bordered text-center my-challenges-table" style= {{backgroundColor:"rgb(211, 211, 211)"}}>
   <thead>
     <tr style={{ fontSize: "30px", backgroundColor: "rgb(150, 150, 150)" }}>
     <th scope="col">ID</th>

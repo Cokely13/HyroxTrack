@@ -23,7 +23,7 @@ function Medals() {
     <h1 className="profile rounded text-center add" style={{ marginBottom: "15px", marginTop: "15px",  marginLeft: "auto", marginRight: "auto", width: "35%" }}><b> Medals</b></h1>
           {users?
           <div style={{paddingLeft: "15px",paddingRight: "15px"}}>
-          <table className="table table-bordered  text-center profile rounded text-center add">
+          <table className="table table-bordered  text-center medals-table">
   <thead>
     <tr style={{ fontSize: "30px", backgroundColor: "rgb(150, 150, 150)" }}>
     <th scope="col">UserName</th>

@@ -272,16 +272,40 @@ th, td {
 }
 
 
-.results-table th:first-child, .results-table td:first-child {
+/* .results-table th:first-child, .results-table td:first-child {
   background-color: green; /* or your desired color */
   /* other styles */
+
+
+.results-table {
+  width: 100%;
+  margin: 0 auto;
+  border-collapse: collapse;
+  border: 1px solid #ddd;
+  box-sizing: border-box;
+}
+
+/* Responsive font size and padding for table cells */
+.results-table th,
+.results-table td {
+  padding: 10px;
+  text-align: center;
+  font-size: calc(1rem + 0.5vw); /* Adjust based on preference */
+}
+
+/* Adjustments for smaller screens */
+@media screen and (max-width: 600px) {
+  .results-table {
+    font-size: calc(0.8rem + 1vw); /* Smaller font size for mobile */
+  }
 }
 
 
-th {
+
+/* th {
   background-color: #4CAF50;
   color: #fff;
-}
+} */
 
 
 
@@ -356,6 +380,7 @@ tr:hover {
   .profile {
     /* width: 50%; 2 columns on medium screens */
     max-width: 90%;
+
     /* font-size: 4vw; */
     /* font-size: 12px */
   }
@@ -364,5 +389,25 @@ tr:hover {
 @media (min-width: 992px) {
   .profile {
     width: 25%; /* 4 columns on large screens */
+  }
+}
+
+.my-challenges-table {
+  width: 100%;
+  margin: 0 auto;
+  border-collapse: collapse;
+  border: 1px solid #ddd;
+  box-sizing: border-box;
+}
+
+.my-challenges-table th,
+.my-challenges-table td {
+  text-align: center;
+  font-size: calc(1rem + 0.5vw);
+}
+
+@media screen and (max-width: 600px) {
+  .my-challenges-table {
+    font-size: calc(0.8rem + 1vw);
   }
 }

@@ -86,7 +86,7 @@ function Results() {
       </div>
       {results ? (
         <div style={{ paddingLeft: '15px', paddingRight: '15px' }}>
-          <table className="table table-bordered text-center profile rounded text-center add"  >
+          <table className="table table-bordered text-center results-table"  >
             <thead>
               <tr style={{ fontSize: "30px", backgroundColor: "rgb(150, 150, 150)" }} >
                 <th scope="col">#</th>
