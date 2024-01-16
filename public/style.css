@@ -311,11 +311,21 @@ tr:hover {
 .profile {
   width: 100%; /* Full width on small screens */
   margin-bottom: 15px;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 35%;
+  text-align: center;
   margin-top: 25px;
   display: flex; /* Flex container */
   flex-direction: column; /* Stack children vertically */
   align-items: center; /* Align children (including image and text) to the center */
-  justify-content: center; /*
+  justify-content: center;
+  /* border: 1px solid #ddd; */
+  padding: 10px;
+  box-sizing: border-box;
+  border-color: darkgray;
+  border-style: solid;
+  border-width: 5px;
 }
 
 .profile.rounded.text-center.add {
@@ -338,11 +348,14 @@ tr:hover {
   background-repeat: no-repeat;
   border-bottom: #000;
   border-width: 3px;
+
 }
 
 @media (min-width: 600px) {
   .profile {
-    width: 50%; /* 2 columns on medium screens */
+    /* width: 50%; 2 columns on medium screens */
+    max-width: 90%;
+    font-size: 4vw;
   }
 }
 
