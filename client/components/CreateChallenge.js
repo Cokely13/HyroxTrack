@@ -122,7 +122,7 @@ export default function CreateChallenge() {
 
   <div className="user-invites-container" style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '80px', width: '35%', marginLeft: 'auto', marginRight: 'auto' }}>
                {users.map((user) => (
-            <div className="profile rounded text-center add" key={user.id} style={{ textAlign: 'center', width: '120px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <div className="user-challenge" key={user.id} >
               {/* User image */}
               <div style={{
                 width: '100px',
@@ -137,7 +137,7 @@ export default function CreateChallenge() {
                 border: '3px solid black'
               }} />
               {/* User name */}
-              <div style={{ margin: '10px 0' }}>{user.userName}</div>
+              <div  className="user-challenge-name">{user.userName}</div>
               {/* Checkbox */}
               <div style={{ textAlign: 'center' }}>
                 <input

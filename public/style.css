@@ -519,3 +519,39 @@ tr:hover {
       /* Additional styles here if needed */
     }
   }
+
+  .user-challenge {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 5px solid darkgray; /* Border size */
+  padding: 15px; /* Space between content and border */
+  margin-bottom: 20px; /* Space below each user-challenge */
+  width: 150px; /* Adjust width as needed */
+  border-radius: 10px; /* Optional, for rounded corners */
+  }
+
+  .user-challenge img {
+    width: 100px; /* Adjust as needed */
+    height: 100px; /* Adjust as needed */
+    border-radius: 50%;
+    /* other styles */
+  }
+
+  .user-challenge-name {
+    text-align: center;
+    margin-top: 10px; /* Adjust as needed */
+  }
+
+  /* Responsive adjustments */
+  @media screen and (max-width: 600px) {
+    .user-challenge img {
+      width: 80px; /* Smaller size for mobile */
+      height: 80px;
+    }
+
+    .user-challenge-name {
+      font-size: 14px; /* Smaller font size for mobile */
+    }
+  }
