@@ -218,11 +218,11 @@ function Predictor() {
 
          <div className="addresult">
 
-<h1 className="profile rounded text-center add" style={{ marginBottom: "15px", marginTop: "15px", marginLeft: "40%", marginRight: "40%"  }}><b>Add {eventName}  Result</b></h1>
+<h1 className="profile rounded text-center add"><b>Add {eventName}  Result</b></h1>
 <form onSubmit={handleSubmit}>
 {errorMessage && <p style={{ color: "red"}}>{errorMessage}</p>}
 <div>
-  <label htmlFor="event" style={{ marginRight: "10px" }}>Event:</label>
+  <label htmlFor="event" >Event:</label>
   <select id="event" value={eventName} onChange={handleEventChange}>
     <option value=""> -- Select Event --</option>
     {events.map((event, index) => (
@@ -242,7 +242,7 @@ function Predictor() {
                 </div>
             )}
 <div>
-  <label htmlFor="date" style={{ marginRight: "10px" }}>Date:  </label>
+  <label htmlFor="date" >Date:  </label>
   <input type="date" id="date" value={date} onChange={handleDateChange} />
 </div>
 <div>

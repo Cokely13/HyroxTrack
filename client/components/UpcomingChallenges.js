@@ -46,7 +46,7 @@ function UpcomingChallenges() {
 
   const nearestChallenge = getNearestUpcomingChallenge();
 
-  console.log("nearest", nearestChallenge)
+
 
 
   return (
@@ -55,7 +55,7 @@ function UpcomingChallenges() {
       {nearestChallenge ?
         <div>
           <ul>
-            <li><b># of Challenges:</b> <Link to={'/mychallenges'}> {challenges.filter((challenge) => challenge.active == true && challenge.invites.includes(id)).length}</Link></li>
+            <b># of Challenges:</b> <Link to={'/mychallenges'}> {challenges.filter((challenge) => challenge.active == true && challenge.invites.includes(id)).length}</Link>
           </ul>
           <h2>Next Challenge Countdown: </h2>
           <ChallengeTimer targetDate={nearestChallenge.endDate} /></div>
