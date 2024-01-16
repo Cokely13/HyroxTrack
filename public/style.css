@@ -315,6 +315,7 @@ tr:hover {
   margin-right: auto;
   max-width: 35%;
   text-align: center;
+  font-size: 4vw;
   margin-top: 25px;
   display: flex; /* Flex container */
   flex-direction: column; /* Stack children vertically */
@@ -355,7 +356,8 @@ tr:hover {
   .profile {
     /* width: 50%; 2 columns on medium screens */
     max-width: 90%;
-    font-size: 4vw;
+    /* font-size: 4vw; */
+    /* font-size: 12px */
   }
 }
 
