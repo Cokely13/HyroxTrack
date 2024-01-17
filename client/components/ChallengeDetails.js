@@ -18,6 +18,7 @@ function ChallengeDetails() {
   const [description, setDescription] = useState(challenge.description);
   const [endDate, setEndDate] = useState(currentDateTime);
   const [errorMessage, setErrorMessage] = useState('');
+  const [showNoResultsModal, setShowNoResultsModal] = useState(false);
 
   const { challengeId } = useParams();
 
@@ -74,11 +75,16 @@ function ChallengeDetails() {
           // Determine the champ (user with the shortest duration)
           const champ = results[0].userId;
 
+          const rankUpdates = results.map((result, index) => {
+            return { id: result.id, rank: index + 1 };
+          });
+
           // Prepare updated challenge data
           const updatedChallenge = {
             ...challenge,
             active: false, // Set the challenge as inactive
             champ: champ, // Update the champ of the challenge
+            rankUpdates: rankUpdates,
           };
 
           // Dispatch the update action to Redux store
@@ -87,7 +93,8 @@ function ChallengeDetails() {
           // Optionally, you can navigate the user away or give some feedback
           console.log('Challenge closed successfully.');
         } else {
-          console.log('No results found for the challenge.');
+          console.log("hey!!!")
+          setShowNoResultsModal(true);
         }
       } catch (error) {
         console.error('Error closing the challenge:', error);
@@ -97,6 +104,15 @@ function ChallengeDetails() {
   const handleCancelClick = () => {
     setIsEditMode(false);
   };
+
+  const handleCloseModal = () => {
+    setShowNoResultsModal(false);
+  };
+
+
+
+
+
 
   const handleCheckboxChange = (event) => {
     const changedUserId = event.target.value;
@@ -134,6 +150,16 @@ function ChallengeDetails() {
     setDescription(description.target.value)
   }
 
+
+
+  const SimpleModal = () => (
+    <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', backgroundColor: 'white', padding: '20px', zIndex: 1000, border: '3px solid black', width: "50%" }}>
+      <p>There are no results for this challenge yet.</p>
+      <button onClick={handleCloseModal}>Close</button>
+    </div>
+  );
+
+
   const getChampName = (champ) => {
       const user = users.find(user => user.id === champ);
       return (
@@ -158,8 +184,6 @@ function ChallengeDetails() {
       description: description
 
     }
-
-    console.log(users.map(user => user.image));
 
     dispatch(updateSingleChallenge(newChallenge))
     // Implement logic to update challenge
@@ -268,6 +292,8 @@ function ChallengeDetails() {
       <b>Challenge Details</b>
       </h1>
       <div className="text-center" style={{ marginBottom: "15px", marginTop: "15px",  marginLeft: "auto", marginRight: "auto"}}>
+      {showNoResultsModal && <SimpleModal/>}
+
       {challenge ? <div><p>{challenge.active}</p>
       <p><b style ={{fontSize: "25px"}}>Champ:</b>
       {challenge.champ ?<div><div style={{

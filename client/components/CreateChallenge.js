@@ -45,7 +45,6 @@ export default function CreateChallenge() {
     setErrorMessage('');}
   };
 
-  console.log("check", users)
 
   const handleCheckboxChange = (event) => {
     const changedUserId = event.target.value;
@@ -65,7 +64,6 @@ export default function CreateChallenge() {
     setStart(event.target.value);
   };
 
-  console.log(users.map(user => user.image));
 
   const handleChange5 = (event) => {
     const newEndDate = event.target.value;
