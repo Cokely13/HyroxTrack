@@ -177,7 +177,7 @@ function ChallengeDetails() {
       {/* User Invites Container */}
       <div className="user-invites-container" style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '80px', width: '35%', marginLeft: 'auto', marginRight: 'auto' }}>
         {users.map((user) => (
-          <div className="profile rounded text-center add" key={user.id} style={{ textAlign: 'center', width: '120px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <div className="user-challenge"key={user.id} >
             {/* User image */}
             <div style={{
               width: '100px',
@@ -208,16 +208,7 @@ function ChallengeDetails() {
         ))}
       </div>
 
-      {/* Event Selection */}
-      {/* <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
-        <label htmlFor="event">Event:</label>
-        <select id="event" value={event.Id} onChange={handleEventChange}>
-          <option value=""> -- Select Event --</option>
-          {events.map((event) => (
-            <option key={event.id} value={event.id}>{event.name}</option>
-          ))}
-        </select>
-      </div> */}
+
 
       {/* Event Description */}
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
