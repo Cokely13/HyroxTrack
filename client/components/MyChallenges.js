@@ -265,7 +265,7 @@ const sortChallenges = (data) => {
 :
 <td scope="row" style={{ paddingLeft: "15px", paddingRight: "15px", paddingBottom: "15px", paddingTop: "25px" }}></td>
 }
-                  <td scope="row" ><Link to={`/users/${challenge.champ}`}>{users.find(user => user.id === challenge.champ) ? <div style={{
+                  <td scope="row" ><Link to={`/users/${challenge.champ}`}>{users.find(user => user.id === challenge.champ) ? <div><div style={{
                     width: '100px',
                     height: '100px',
                     borderRadius: '50%',
@@ -275,7 +275,7 @@ const sortChallenges = (data) => {
                     backgroundPosition: 'center',
                     backgroundRepeat: 'no-repeat',
                     border: '3px solid black'
-                  }}> </div> :"" }</Link></td>
+                  }}> </div>{users.find(user => user.id === challenge.champ).userName}</div> :"" } </Link></td>
                 </tr>
 
               )
@@ -316,7 +316,7 @@ const sortChallenges = (data) => {
 :
 <td scope="row" style={{ paddingLeft: "15px", paddingRight: "15px", paddingBottom: "15px", paddingTop: "25px" }}></td>
 }
-                  {challenge.results ? <td scope="row" ><Link to={`/users/${challenge.champ}`}>{users.find(user => user.id === challenge.champ) ?    <div style={{
+                  {challenge.results ? <td scope="row" ><Link to={`/users/${challenge.champ}`}>{users.find(user => user.id === challenge.champ) ?    <div><div style={{
                     width: '100px',
                     height: '100px',
                     borderRadius: '50%',
@@ -326,7 +326,7 @@ const sortChallenges = (data) => {
                     backgroundPosition: 'center',
                     backgroundRepeat: 'no-repeat',
                     border: '3px solid black'
-                  }}> </div> :"" }</Link></td>: <td scope="row" style={{paddingLeft: "15px",paddingRight: "15px", paddingBottom: "15px", paddingTop: "25px"}}></td>}
+                  }}> </div>{users.find(user => user.id === challenge.champ).userName}</div>  :"" }</Link></td>: <td scope="row" style={{paddingLeft: "15px",paddingRight: "15px", paddingBottom: "15px", paddingTop: "25px"}}></td>}
                 </tr>
 
               )
