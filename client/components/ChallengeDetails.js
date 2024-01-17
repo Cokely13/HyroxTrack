@@ -278,7 +278,19 @@ function ChallengeDetails() {
       </h1>
       <div className="text-center" style={{ marginBottom: "15px", marginTop: "15px",  marginLeft: "auto", marginRight: "auto"}}>
       {challenge ? <div><p>{challenge.active}</p>
-      <p><b style ={{fontSize: "25px"}}>Champ:</b> { challenge.champ ? getChampName(challenge.champ) : ""}</p>
+      <p><b style ={{fontSize: "25px"}}>Champ:</b>
+      {challenge.champ ?<div><div style={{
+                    width: '100px',
+                    height: '100px',
+                    borderRadius: '50%',
+                    margin: 'auto',
+                    backgroundImage: `url(${users.find(user => user.id === challenge.champ).image})`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                    backgroundRepeat: 'no-repeat',
+                    border: '3px solid black'
+                  }}></div>{getChampName(challenge.champ)}  </div> : <div></div>}
+                  </p>
       <p><b style ={{fontSize: "25px"}}>Number of Invites:{challenge.invites ? challenge.invites.length : ""}</b></p>
       <p><b style ={{fontSize: "25px"}}>Invited Users: {challenge.invites ? getInvitedUserNames(challenge.invites): 'No invites'}</b></p>
                   <p><b style ={{fontSize: "25px"}}>Number of Results: {challenge.results ?challenge.results.length : ""}</b></p>
