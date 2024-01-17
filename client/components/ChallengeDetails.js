@@ -21,8 +21,7 @@ function ChallengeDetails() {
 
   const { challengeId } = useParams();
 
-  console.log("check", users)
-  console.log(users.map(user => user.image));
+
 
 
   useEffect(() => {
@@ -56,6 +55,43 @@ function ChallengeDetails() {
 
   const handleEditClick = () => {
     setIsEditMode(true);
+  };
+
+  const  durationToSeconds = (duration) => {
+    const [minutes, seconds] = duration.split(':').map(Number);
+    return minutes * 60 + seconds;
+  }
+
+  const handleUpdateClick = () => {
+      try {
+        // Fetch results of the challenge
+        const results = challenge.results;
+
+        if (results.length > 0) {
+          // Sort results by duration in seconds
+          results.sort((a, b) => durationToSeconds(a.duration) - durationToSeconds(b.duration));
+
+          // Determine the champ (user with the shortest duration)
+          const champ = results[0].userId;
+
+          // Prepare updated challenge data
+          const updatedChallenge = {
+            ...challenge,
+            active: false, // Set the challenge as inactive
+            champ: champ, // Update the champ of the challenge
+          };
+
+          // Dispatch the update action to Redux store
+          dispatch(updateSingleChallenge(updatedChallenge));
+
+          // Optionally, you can navigate the user away or give some feedback
+          console.log('Challenge closed successfully.');
+        } else {
+          console.log('No results found for the challenge.');
+        }
+      } catch (error) {
+        console.error('Error closing the challenge:', error);
+      }
   };
 
   const handleCancelClick = () => {
@@ -252,7 +288,7 @@ function ChallengeDetails() {
                   <div><b style ={{fontSize: "25px", marginTop: "15px"}}>Created By:  {getChampName(challenge.userId)}</b></div>
                   <ChallengeTimer targetDate={challenge.endDate} />
 
-          {id == challenge.userId ? <div style={{marginTop: "15px"}}> <button className="btn btn-primary" onClick={handleEditClick}>Edit Challenge</button></div> : <div></div>}
+          {id == challenge.userId && challenge.active == true  ? <div> <div style={{marginTop: "15px"}}> <button className="btn btn-primary" onClick={handleEditClick}>Edit Challenge</button></div> <div style={{marginTop: "15px"}}> <button className="btn btn-warning" onClick={handleUpdateClick}>Close Challenge</button></div> </div>: <div></div>}
           <div style={{marginLeft: "auto", marginRight: "auto", marginTop: "15px"}}>
       <Link to={`/mychallenges`}>
         Back to My Challenges

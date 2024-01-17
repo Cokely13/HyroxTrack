@@ -74,6 +74,11 @@ function MyResults() {
     });
   };
 
+  const  durationToSeconds = (duration) => {
+    const [minutes, seconds] = duration.split(':').map(Number);
+    return minutes * 60 + seconds;
+  }
+
   const handleEdit = (chosen) => {
     setSelectedEventId(chosen.id);
     setSelectedEvent(chosen);
@@ -100,7 +105,6 @@ function MyResults() {
     setReload(!reload);
   };
 
-  console.log("challenges", challenges)
 
   const sortedResults = sortResults([...results]);
 
@@ -187,7 +191,7 @@ function MyResults() {
                 <tr key={result.id} className="text-center">
                   <td >{result.id}</td>
                   <td>{result.date}</td>
-                  <td>{ result.eventName == "Random" ? challenges.find(challenge => challenge.id == result.challengeId)?.description : result.eventName}</td>
+                  <td><Link to={`/events/${result.eventId}`}>{ result.eventName == "Random" ? challenges.find(challenge => challenge.id == result.challengeId)?.description : result.eventName}</Link></td>
                   <td>{result.duration}</td>
                   <td>
                   <button className="btn btn-primary" onClick={() => handleEdit(result)}>Edit Result</button>
@@ -205,7 +209,7 @@ function MyResults() {
                 <tr key={result.id} className="text-center">
                   <td>{result.id}</td>
                   <td>{result.date}</td>
-                  <td>{ result.eventName == "Random" ? challenges.find(challenge => challenge.id == result.challengeId)?.description : result.eventName}</td>
+                  <td><Link to={`/events/${result.eventId}`}>{ result.eventName == "Random" ? challenges.find(challenge => challenge.id == result.challengeId)?.description : result.eventName}</Link></td>
                   <td>{result.duration}</td>
                   <td>
                   <div className="btn btn-primary" onClick={() => handleEdit(result)} >Edit Result</div>
