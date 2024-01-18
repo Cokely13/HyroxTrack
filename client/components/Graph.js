@@ -58,8 +58,7 @@ function Graph({ event }) {
   const test = convertTimeToSeconds(check)
   const targetTime = event?.targetTime|| "00:00";
 
-console.log('check', check)
-console.log('target', targetTime)
+
 
   useEffect(() => {
     dispatch(fetchUsers());
@@ -70,8 +69,7 @@ console.log('target', targetTime)
     // Safe to add dispatch to the dependencies array
   }, [dispatch,])
 
-  console.log('user', user);
-  // console.log('data', data)
+
 
   const userNames = ['All', ...new Set(data.map((result) => result.userName))];
 

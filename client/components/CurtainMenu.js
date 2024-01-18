@@ -1,206 +1,127 @@
-import React, {useEffect, useState}  from 'react'
+import React, { useEffect, useState, useRef } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { fetchEvents } from '../store/allEventsStore';
 import { fetchWorkouts } from '../store/allWorkoutsStore';
 import { fetchUsers } from '../store/allUsersStore'
-import { useSelector, useDispatch } from 'react-redux';
+
 
 export default function CurtainMenu() {
   const dispatch = useDispatch();
   const events = useSelector((state) => state.allEvents);
   const workouts = useSelector((state) => state.allWorkouts);
-  const { id } = useSelector((state) => state.auth);
   const users = useSelector((state) => state.allUsers);
+  const { id } = useSelector((state) => state.auth);
   const [toggleNav, setToggleNav] = useState(false);
-
-  const [checkWidth, setCheckWidth] = useState(window.innerWidth);
-
-  const uniqueWorkouts = [...new Map(workouts.map((workout) => [workout.name, workout])).values()];
+  const navRef = useRef();
 
   useEffect(() => {
     dispatch(fetchEvents());
-    dispatch(fetchWorkouts())
+    dispatch(fetchWorkouts());
     dispatch(fetchUsers());
   }, [dispatch]);
 
-  const checkFunc = () => {
-    console.log(checkWidth);
-    setCheckWidth(window.innerWidth);
-  };
-
   useEffect(() => {
-    window.addEventListener("resize", checkFunc);
+    document.addEventListener('mousedown', handleDocumentClick);
 
     return () => {
-      window.removeEventListener("resize", checkFunc);
+      document.removeEventListener('mousedown', handleDocumentClick); // Cleanup the event listener
     };
-  }, []);
+  }, [toggleNav]);
 
   const toggleNavFunc = () => {
-    console.log("toggle", toggleNav)
     setToggleNav(!toggleNav);
+    setShowEventsDropdown(false);
+  setShowWorkoutsDropdown(false);
+  setShowUsersDropdown(false);
   };
+
+  const [showEventsDropdown, setShowEventsDropdown] = useState(false);
+  const [showWorkoutsDropdown, setShowWorkoutsDropdown] = useState(false);
+  const [showUsersDropdown, setShowUsersDropdown] = useState(false);
+
+  const uniqueWorkouts = [...new Map(workouts.map((workout) => [workout.name, workout])).values()];
+
+
+  const toggleDropdown = (dropdownName) => {
+    if (dropdownName === 'events') {
+        setShowEventsDropdown(!showEventsDropdown);
+        setShowWorkoutsDropdown(false);
+        setShowUsersDropdown(false);
+    } else if (dropdownName === 'workouts') {
+        setShowWorkoutsDropdown(!showWorkoutsDropdown);
+        setShowEventsDropdown(false);
+            setShowUsersDropdown(false);
+    } else if (dropdownName === 'users') {
+        setShowUsersDropdown(!showUsersDropdown);
+        setShowEventsDropdown(false);
+        setShowWorkoutsDropdown(false);
+    }
+};
+
+const closeAllDropdowns = () => {
+  setShowEventsDropdown(false);
+  setShowWorkoutsDropdown(false);
+  setShowUsersDropdown(false);
+  setToggleNav(false); // Also close the entire nav when close button is clicked
+}
+
+const handleDocumentClick = (e) => {
+  if (toggleNav && navRef.current && !navRef.current.contains(e.target)) {
+    closeAllDropdowns(); // Close the menu if click is outside
+  }
+};
 
   return (
     <>
-      {checkWidth < 900 && (
-        <button onClick={toggleNavFunc} className="floating-btn">
-          hey
+    {!toggleNav ?  <button onClick={toggleNavFunc} className="floating-btn fas fa-plus-square" style={{fontSize: "48px"}}>
+
+      </button> : <div></div>}
+
+      <nav className={toggleNav ? "active" : ""} ref={navRef}>
+        <button onClick={closeAllDropdowns} className="close-curtain">
+          X
         </button>
-      )}
-
-      <nav className={toggleNav ? "active" : ""}>
-
-       <div style={{marginBottom: "20px"}}> {checkWidth < 900 && (
-          <button
-          onClick={toggleNavFunc} className="close-curtain">
-            X
-          </button>
-        )}
+        <div className="nav-item">
+                    <button onClick={() => toggleDropdown('events')} className="nav-link">
+                        Events
+                    </button>
+                    <div className={`dropdown-menu ${showEventsDropdown ? 'show' : ''}`}>
+            <Link className="dropdown-item fw-bolder" to="/events">All</Link>
+            {events.map((event) => (
+              <Link className="dropdown-item fw-bolder" to={`/events/${event.id}`} key={event.id}>
+                {event.name}
+              </Link>
+            ))}
+          </div>
         </div>
-        {/* <div style={{marginBottom: "80px"}}>
-           <ul className="nav-item dropdown">
-                <a
-                  className="nav-link dropdown-toggle"
-                  href="/events"
-                  id="navbarDropdown"
-                  role="button"
-                  data-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                >
-                  Events
-                </a>
-                <div className="dropdown-menu fw-bolder" aria-labelledby="navbarDropdown">
-                  <a className="dropdown-item fw-bolder" href="/events">
-                    All
-                  </a>
-                  {events.map((event) => (
-                    <a className="dropdown-item fw-bolder" href={`/events/${event.id}`} key={event.id}>
-                      {event.name}
-                    </a>
-                  ))}
-                </div>
-
-              </ul>
- <ul className="nav-item dropdown">
-                <a
-                  className="nav-link dropdown-toggle"
-                  href="/events"
-                  id="navbarDropdown"
-                  role="button"
-                  data-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                >
-                  Users
-                </a>
-                <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <a className="dropdown-item fw-bolder" href="/users">
-                    All
-                  </a>
-                  {users.map((user) => (
-                    <a className="dropdown-item fw-bolder" href={`/users/${user.id}`} key={user.id}>
-                      {user.userName}
-                    </a>
-                  ))}
-                </div>
-              </ul>
-              <ul className="nav-item dropdown">
-                <a
-                  className="nav-link dropdown-toggle"
-                  href="/events"
-                  id="navbarDropdown"
-                  role="button"
-                  data-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                >
-                  Workouts
-                </a>
-                <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <a className="dropdown-item fw-bolder" href="/workouts">
-                    All
-                  </a>
-                  {uniqueWorkouts.map((workout) => (
-                    <a className="dropdown-item fw-bolder" href={`/workouts/${workout.eventId}`} key={workout.id}>
-                      {workout.name}
-                    </a>
-                  ))}
-                </div>
-              </ul>
-              </div> */}
-        <a> <ul className="nav-item dropdown">
-                <a
-                  className="nav-link dropdown-toggle"
-                  href="/events"
-                  id="navbarDropdown"
-                  role="button"
-                  data-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                >
-                  Events
-                </a>
-                <div className="dropdown-menu fw-bolder" aria-labelledby="navbarDropdown">
-                  <a className="dropdown-item fw-bolder" href="/events">
-                    All
-                  </a>
-                  {events.map((event) => (
-                    <a className="dropdown-item fw-bolder" href={`/events/${event.id}`} key={event.id}>
-                      {event.name}
-                    </a>
-                  ))}
-                </div>
-
-              </ul>
-              </a>
-        <a >   <ul className="nav-item dropdown">
-                <a
-                  className="nav-link dropdown-toggle"
-                  href="/events"
-                  id="navbarDropdown"
-                  role="button"
-                  data-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                >
-                  Workouts
-                </a>
-                <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <a className="dropdown-item fw-bolder" href="/workouts">
-                    All
-                  </a>
-                  {uniqueWorkouts.map((workout) => (
-                    <a className="dropdown-item fw-bolder" href={`/workouts/${workout.eventId}`} key={workout.id}>
-                      {workout.name}
-                    </a>
-                  ))}
-                </div>
-              </ul></a>
-        <a><ul className="nav-item dropdown">
-                <a
-                  className="nav-link dropdown-toggle"
-                  href="/events"
-                  id="navbarDropdown"
-                  role="button"
-                  data-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                >
-                  Users
-                </a>
-                <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <a className="dropdown-item fw-bolder" href="/users">
-                    All
-                  </a>
-                  {users.map((user) => (
-                    <a className="dropdown-item fw-bolder" href={`/users/${user.id}`} key={user.id}>
-                      {user.userName}
-                    </a>
-                  ))}
-                </div>
-              </ul></a>
-        </nav>
+        <div className="nav-item">
+                    <button onClick={() => toggleDropdown('workouts')} className="nav-link">
+                        Workouts
+                    </button>
+                    <div className={`dropdown-menu ${showWorkoutsDropdown ? 'show' : ''}`}>
+            <Link className="dropdown-item fw-bolder" to="/workouts">All</Link>
+            {uniqueWorkouts.map((workout) => (
+              <Link className="dropdown-item fw-bolder" to={`/workouts/${workout.eventId}`} key={workout.id}>
+                {workout.name}
+              </Link>
+            ))}
+          </div>
+        </div>
+        <div className="nav-item">
+                    <button onClick={() => toggleDropdown('users')} className="nav-link">
+                        Users
+                    </button>
+                    <div className={`dropdown-menu ${showUsersDropdown ? 'show' : ''}`}>
+            <Link className="dropdown-item fw-bolder" to="/users">All</Link>
+            {users.map((zone) => (
+              <Link className="dropdown-item fw-bolder" to={`/users/${zone.id}`} key={zone.id}>
+                {zone.userName}
+              </Link>
+            ))}
+          </div>
+        </div>
+      </nav>
     </>
   );
 }
