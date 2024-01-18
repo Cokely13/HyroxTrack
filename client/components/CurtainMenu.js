@@ -36,6 +36,7 @@ export default function CurtainMenu() {
   }, []);
 
   const toggleNavFunc = () => {
+    console.log("toggle", toggleNav)
     setToggleNav(!toggleNav);
   };
 
@@ -49,13 +50,39 @@ export default function CurtainMenu() {
 
       <nav className={toggleNav ? "active" : ""}>
 
-        {checkWidth < 900 && (
+       <div style={{marginBottom: "20px"}}> {checkWidth < 900 && (
           <button
           onClick={toggleNavFunc} className="close-curtain">
             X
           </button>
         )}
- <li className="nav-item dropdown">
+        </div>
+        {/* <div style={{marginBottom: "80px"}}>
+           <ul className="nav-item dropdown">
+                <a
+                  className="nav-link dropdown-toggle"
+                  href="/events"
+                  id="navbarDropdown"
+                  role="button"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  Events
+                </a>
+                <div className="dropdown-menu fw-bolder" aria-labelledby="navbarDropdown">
+                  <a className="dropdown-item fw-bolder" href="/events">
+                    All
+                  </a>
+                  {events.map((event) => (
+                    <a className="dropdown-item fw-bolder" href={`/events/${event.id}`} key={event.id}>
+                      {event.name}
+                    </a>
+                  ))}
+                </div>
+
+              </ul>
+ <ul className="nav-item dropdown">
                 <a
                   className="nav-link dropdown-toggle"
                   href="/events"
@@ -77,11 +104,103 @@ export default function CurtainMenu() {
                     </a>
                   ))}
                 </div>
-              </li>
-        <a href="#">HOME</a>
-        <a href="#">SERVICES</a>
-        <a href="#">CONTACT</a>
-      </nav>
+              </ul>
+              <ul className="nav-item dropdown">
+                <a
+                  className="nav-link dropdown-toggle"
+                  href="/events"
+                  id="navbarDropdown"
+                  role="button"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  Workouts
+                </a>
+                <div className="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <a className="dropdown-item fw-bolder" href="/workouts">
+                    All
+                  </a>
+                  {uniqueWorkouts.map((workout) => (
+                    <a className="dropdown-item fw-bolder" href={`/workouts/${workout.eventId}`} key={workout.id}>
+                      {workout.name}
+                    </a>
+                  ))}
+                </div>
+              </ul>
+              </div> */}
+        <a> <ul className="nav-item dropdown">
+                <a
+                  className="nav-link dropdown-toggle"
+                  href="/events"
+                  id="navbarDropdown"
+                  role="button"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  Events
+                </a>
+                <div className="dropdown-menu fw-bolder" aria-labelledby="navbarDropdown">
+                  <a className="dropdown-item fw-bolder" href="/events">
+                    All
+                  </a>
+                  {events.map((event) => (
+                    <a className="dropdown-item fw-bolder" href={`/events/${event.id}`} key={event.id}>
+                      {event.name}
+                    </a>
+                  ))}
+                </div>
+
+              </ul>
+              </a>
+        <a >   <ul className="nav-item dropdown">
+                <a
+                  className="nav-link dropdown-toggle"
+                  href="/events"
+                  id="navbarDropdown"
+                  role="button"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  Workouts
+                </a>
+                <div className="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <a className="dropdown-item fw-bolder" href="/workouts">
+                    All
+                  </a>
+                  {uniqueWorkouts.map((workout) => (
+                    <a className="dropdown-item fw-bolder" href={`/workouts/${workout.eventId}`} key={workout.id}>
+                      {workout.name}
+                    </a>
+                  ))}
+                </div>
+              </ul></a>
+        <a><ul className="nav-item dropdown">
+                <a
+                  className="nav-link dropdown-toggle"
+                  href="/events"
+                  id="navbarDropdown"
+                  role="button"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  Users
+                </a>
+                <div className="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <a className="dropdown-item fw-bolder" href="/users">
+                    All
+                  </a>
+                  {users.map((user) => (
+                    <a className="dropdown-item fw-bolder" href={`/users/${user.id}`} key={user.id}>
+                      {user.userName}
+                    </a>
+                  ))}
+                </div>
+              </ul></a>
+        </nav>
     </>
   );
 }
