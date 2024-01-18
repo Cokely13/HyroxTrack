@@ -6,7 +6,8 @@ const BottomBar = () => {
     <div className="bottom-bar">
       <Link to="/home" className="bottom">Home</Link>
       <Link to="/profile" className="bottom">Profile</Link>
-      <Link to="/settings" className="bottom">Settings</Link>
+      <Link to="/results" className="bottom">Results</Link>
+      <Link  to="/mychallenges" className="bottom"><span className='fas fa-plus-square'>Challenges</span></Link>
       <Link to="/logout" className="bottom">Logout</Link>
     </div>
   );
