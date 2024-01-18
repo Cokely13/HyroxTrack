@@ -124,6 +124,9 @@ const handleUpload = async () => {
     : 0}</div>
     <div><b>Most Recent Result: </b>{recentResult()} </div>
     <div><b>Most Recent Workout: </b>{recentWorkout()} </div>
+    <div><Link to={`/medals`}>Medals</Link></div>
+    <div><Link to={`/myresults`}>MyResults</Link></div>
+    <div><Link to={`/target`}>TargetTimes</Link></div>
     </div>
     {newPhoto ? <div style={{ margin: '20px 0' }}>
         <input type="file" onChange={handleFileChange} />

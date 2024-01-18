@@ -83,9 +83,9 @@ const Navbar = ({handleClick, isLoggedIn}) => {
                   ))}
                 </div>
               </li>
-      <li className="nav-item">
+      {/* <li className="nav-item">
         <a className="nav-link" href="/results">Results</a>
-      </li>
+      </li> */}
       <li className="nav-item dropdown">
                 <a
                   className="nav-link dropdown-toggle"
@@ -109,7 +109,7 @@ const Navbar = ({handleClick, isLoggedIn}) => {
                   ))}
                 </div>
               </li>
-      <li className="nav-item">
+      {/* <li className="nav-item">
         <a className="nav-link" href="/target">Target Times</a>
       </li>
       <li className="nav-item">
@@ -120,7 +120,7 @@ const Navbar = ({handleClick, isLoggedIn}) => {
       </li>
       <li className="nav-item">
         <a className="nav-link" href="/createchallenge">Create Challenge</a>
-      </li>
+      </li> */}
       <li className="nav-item dropdown">
                 <a
                   className="nav-link dropdown-toggle"
@@ -144,7 +144,7 @@ const Navbar = ({handleClick, isLoggedIn}) => {
                   ))}
                 </div>
               </li>
-      <li className="nav-item">
+      {/* <li className="nav-item">
         <a className="nav-link" href="/myresults">MyResults</a>
       </li>
       <li className="nav-item">
@@ -154,7 +154,7 @@ const Navbar = ({handleClick, isLoggedIn}) => {
       <a className="nav-link" href="#" onClick={handleClick}>
             Logout
           </a>
-          </li>
+          </li> */}
       </ul>
         </div>
       ) : (

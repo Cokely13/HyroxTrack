@@ -337,6 +337,8 @@ const sortChallenges = (data) => {
 
     </div>}
     </div>}
+    <div style={{textAlign: "center"}}>
+    <Link  to={`/createchallenge`}><button className="btn btn-primary btn-edit" style={{ marginBottom: '20px' }} >Create Challenge</button></Link></div>
     </div>
   )
 }
