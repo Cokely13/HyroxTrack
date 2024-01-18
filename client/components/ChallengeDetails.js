@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useHistory } from 'react-router-dom';
 import { fetchChallenge } from '../store/singleChallengeStore';
 import { fetchUsers } from '../store/allUsersStore';
 import ChallengeTimer from './ChallengeTimer';
 import { updateSingleChallenge } from '../store/singleChallengeStore';
+import { deleteChallenge } from '../store/allChallengesStore';
 
 function ChallengeDetails() {
   const dispatch = useDispatch();
+  let history = useHistory();
   const currentDateTime = new Date().toISOString().slice(0, 16);
   const challenge= useSelector((state) => state.singleChallenge);
   const {id} = useSelector((state) => state.auth )
@@ -19,6 +21,7 @@ function ChallengeDetails() {
   const [endDate, setEndDate] = useState(currentDateTime);
   const [errorMessage, setErrorMessage] = useState('');
   const [showNoResultsModal, setShowNoResultsModal] = useState(false);
+  const [showDeleteConfirmModal, setShowDeleteConfirmModal] = useState(false);
 
   const { challengeId } = useParams();
 
@@ -105,13 +108,35 @@ function ChallengeDetails() {
     setIsEditMode(false);
   };
 
+  const handleConfirmDelete = () => {
+    dispatch(deleteChallenge(challenge.id)); // Dispatch delete action
+    history.push('/mychallenges'); // Redirect
+    setShowDeleteConfirmModal(false); // Close modal
+  };
+
+
   const handleCloseModal = () => {
     setShowNoResultsModal(false);
   };
 
+  const handleDeleteClick = () => {
+    setShowDeleteConfirmModal(true); // Show confirmation modal instead of immediate deletion
+  };
 
+  const handleCancelDelete = () => {
+    setShowDeleteConfirmModal(false); // Close modal without deleting
+  };
 
-
+  const DeleteConfirmModal = () => (
+    <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', backgroundColor: 'white', padding: '20px', zIndex: 1000, border: '3px solid black', width: "50%", height: "50%", textAlign: "center", display: 'flex', // Enable flexbox
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',  }}>
+      <div style={{ marginBottom: '20px' }}>Are you sure you want to delete this challenge?</div>
+      <button className="btn btn-danger btn-edit" style={{ marginBottom: '20px' }} onClick={handleConfirmDelete}>Delete</button>
+      <button className="btn btn-secondary btn-edit" onClick={handleCancelDelete}>Cancel</button>
+    </div>
+  );
 
 
   const handleCheckboxChange = (event) => {
@@ -293,9 +318,9 @@ function ChallengeDetails() {
       </h1>
       <div className="text-center" style={{ marginBottom: "15px", marginTop: "15px",  marginLeft: "auto", marginRight: "auto"}}>
       {showNoResultsModal && <SimpleModal/>}
-
+      {showDeleteConfirmModal && <DeleteConfirmModal/>}
       {challenge ? <div><p>{challenge.active}</p>
-      <p><b style ={{fontSize: "25px"}}>Champ:</b>
+      <b style ={{fontSize: "25px"}}>Champ:</b>
       {challenge.champ ?<div><div style={{
                     width: '100px',
                     height: '100px',
@@ -307,7 +332,7 @@ function ChallengeDetails() {
                     backgroundRepeat: 'no-repeat',
                     border: '3px solid black'
                   }}></div>{getChampName(challenge.champ)}  </div> : <div></div>}
-                  </p>
+
       <p><b style ={{fontSize: "25px"}}>Number of Invites:{challenge.invites ? challenge.invites.length : ""}</b></p>
       <p><b style ={{fontSize: "25px"}}>Invited Users: {challenge.invites ? getInvitedUserNames(challenge.invites): 'No invites'}</b></p>
                   <p><b style ={{fontSize: "25px"}}>Number of Results: {challenge.results ?challenge.results.length : ""}</b></p>
@@ -318,7 +343,10 @@ function ChallengeDetails() {
                   <ChallengeTimer targetDate={challenge.endDate} />
 
           {id == challenge.userId && challenge.active == true  ? <div> <div style={{marginTop: "15px"}}> <button className="btn btn-primary" onClick={handleEditClick}>Edit Challenge</button></div> <div style={{marginTop: "15px"}}> <button className="btn btn-warning" onClick={handleUpdateClick}>Close Challenge</button></div> </div>: <div></div>}
-          <div style={{marginLeft: "auto", marginRight: "auto", marginTop: "15px"}}>
+          {id == challenge.userId && challenge.active !== true  ? <div> <div style={{marginTop: "15px"}}> <button className="btn btn-danger" onClick={handleDeleteClick}>Delete Challenge</button></div></div> : <div></div>}
+          <div style={{marginLeft: "auto", marginRight: "auto", marginTop: "15px"}}
+         >
+
       <Link to={`/mychallenges`}>
         Back to My Challenges
         </Link>
