@@ -792,6 +792,7 @@ nav {
   align-items: center;
   border: 3px solid darkgray;
   border-radius: 10px;
+  z-index: 1000;
 }
 
 nav.active {
@@ -826,12 +827,33 @@ nav a:first-of-type{
   }
 }
 
-.dropdown-menu {
-  display: none; /* Initially, dropdown content is not displayed */
+/* .dropdown-menu {
+  display: none;
   border: 3px solid darkgray;
     border-radius: 10px;
     width: 300px;
-}
+    text-align: start;
+    min-width: 150px; Set a minimum width
+    white-space: nowrap; Prevent text from wrapping
+    padding: 0 10px;
+  }  */
+
+  .dropdown-menu {
+    display: none;
+    border: 3px solid darkgray;
+    border-radius: 10px;
+    text-align: start;
+    min-width: 150px;
+    max-width: 500px; /* Adjust based on your preference */
+    white-space: nowrap;
+    max-height: 80vh; /* 50% of the viewport height */
+    overflow-y: auto;
+    padding: 10px;
+    box-sizing: border-box; /* Ensures padding is included in width */
+    background: #fff; /* Ensures dropdown background is solid */
+    z-index: 1000; /* Adjust as needed to be higher than other elements */
+  }
+
 
 .dropdown-menu.show {
   display: block; /* When dropdown is active, display the content */
@@ -841,11 +863,8 @@ nav a:first-of-type{
   margin-top: 100px; /* Adjust as needed to place menu items below the close button */
 
   .dropdown-item {
-    /* existing styles */
-    display: block;
-    width: 100%; /* Makes sure the link uses the full width of the dropdown */
-    padding: 10px; /* Adjust as needed */
-    box-sizing: border-box; /* Ensures padding doesn't add to the width */
+    display: block; /* Ensures item fills the width of dropdown-menu */
+    white-space: nowrap
   }
 
   .nav-item {
@@ -856,5 +875,7 @@ nav a:first-of-type{
 
   .dropdown-item:hover {
     background-color: #f1f1f1;
-    width: 250px; /* Adjust as needed */
+    display: block;
+    margin-left: 5px;
+    /* width: 500px; */
   }
