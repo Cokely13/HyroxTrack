@@ -107,7 +107,7 @@ const handleLinkClick = () => {
 
   return (
     <>
-    {!toggleNav ?  <button onClick={toggleNavFunc} className="floating-btn fas fa-plus-square" style={{fontSize: "48px"}}>
+    {!toggleNav ?  <button onClick={toggleNavFunc} className="fas fa-bars" style={{fontSize: "48px", borderRadius: "10px"}}>
 
       </button> : <div></div>}
 
