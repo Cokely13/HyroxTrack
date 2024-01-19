@@ -650,7 +650,7 @@ tr:hover {
   /* margin-top: 20%; */
   bottom: 0;
   width: 100%;
-  height: 50px;
+  height: 10%;
   background-color: lightgray; /* Change as needed */
   display: flex;
   justify-content: space-around;
@@ -680,10 +680,13 @@ tr:hover {
 .bottom {
   color: black; /* Change as needed */
   text-decoration: none;
-  padding: 10px 20px;
+  padding: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  text-align: center;
 }
 
 .main-content {
