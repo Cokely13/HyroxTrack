@@ -781,15 +781,17 @@ nav {
   position: fixed;
   left: 0;
   top: 0;
-  background: #f1f1f1;
+  background: lightgray;
   height: 100vh;
   width: 50%;
   transition: transform 0.4s ease-in-out;
   transform: translateX(-100%); /* Hide menu initially */
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  /* justify-content: center; */
   align-items: center;
+  border: 3px solid darkgray;
+  border-radius: 10px;
 }
 
 nav.active {
@@ -826,6 +828,8 @@ nav a:first-of-type{
 
 .dropdown-menu {
   display: none; /* Initially, dropdown content is not displayed */
+  border: 3px solid darkgray;
+    border-radius: 10px;
 }
 
 .dropdown-menu.show {
@@ -835,8 +839,13 @@ nav a:first-of-type{
 /* .menu-items {
   margin-top: 100px; /* Adjust as needed to place menu items below the close button */
 
+  /* .dropdown-item{
+    border: 3px solid darkgray;
+    border-radius: 10px;
+  } */
 
-.nav-item {
-  margin-top: 100px;
-  margin-bottom: 15px; /* Adds vertical space between menu items */
-}
+  .nav-item {
+    /* margin-top: 100px; */
+    margin-top: 15px;
+    margin-bottom: 15px; /* Adds vertical space between menu items */
+  }

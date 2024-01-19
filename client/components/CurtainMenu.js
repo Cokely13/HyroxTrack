@@ -79,12 +79,12 @@ const handleDocumentClick = (e) => {
       </button> : <div></div>}
 
       <nav className={toggleNav ? "active" : ""} ref={navRef}>
-        <button onClick={closeAllDropdowns} className="close-curtain">
+        {/* <button onClick={closeAllDropdowns} className="close-curtain">
           X
-        </button>
+        </button> */}
         <div className="nav-item">
-                    <button onClick={() => toggleDropdown('events')} className="nav-link">
-                        Events
+                    <button onClick={() => toggleDropdown('events')} className="btn btn-info">
+                        Events <i className="fas fa-chevron-down"></i>
                     </button>
                     <div className={`dropdown-menu ${showEventsDropdown ? 'show' : ''}`}>
             <Link className="dropdown-item fw-bolder" to="/events">All</Link>
@@ -96,8 +96,8 @@ const handleDocumentClick = (e) => {
           </div>
         </div>
         <div className="nav-item">
-                    <button onClick={() => toggleDropdown('workouts')} className="nav-link">
-                        Workouts
+                    <button onClick={() => toggleDropdown('workouts')} className="btn btn-info">
+                        Workouts <i className="fas fa-chevron-down"></i>
                     </button>
                     <div className={`dropdown-menu ${showWorkoutsDropdown ? 'show' : ''}`}>
             <Link className="dropdown-item fw-bolder" to="/workouts">All</Link>
@@ -109,8 +109,8 @@ const handleDocumentClick = (e) => {
           </div>
         </div>
         <div className="nav-item">
-                    <button onClick={() => toggleDropdown('users')} className="nav-link">
-                        Users
+                    <button onClick={() => toggleDropdown('users')} className="btn btn-info" >
+                        Users <i className="fas fa-chevron-down"></i>
                     </button>
                     <div className={`dropdown-menu ${showUsersDropdown ? 'show' : ''}`}>
             <Link className="dropdown-item fw-bolder" to="/users">All</Link>
