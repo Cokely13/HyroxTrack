@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef,} from 'react';
 import { useSelector, useDispatch, } from 'react-redux';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useHistory } from 'react-router-dom';
 import { fetchEvents } from '../store/allEventsStore';
 import { fetchWorkouts } from '../store/allWorkoutsStore';
 import { fetchUsers } from '../store/allUsersStore'
@@ -13,6 +13,7 @@ export default function CurtainMenu() {
   const users = useSelector((state) => state.allUsers);
   const { id } = useSelector((state) => state.auth);
   const { userId } = useParams()
+  let history = useHistory();
   const [toggleNav, setToggleNav] = useState(false);
   const navRef = useRef();
   const eventsDropdownRef = useRef(null);
@@ -105,9 +106,24 @@ const handleLinkClick = () => {
 
 };
 
+const goToMedals = () => {
+  history.push('/medals');
+  closeAllDropdowns();
+};
+
+const goToTargetTimes = () => {
+  history.push('/target');
+  closeAllDropdowns();
+};
+
+const goToMyResults = () => {
+  history.push('/myresults');
+  closeAllDropdowns();
+};
+
   return (
     <>
-    {!toggleNav ?  <button onClick={toggleNavFunc} className="fas fa-bars" style={{fontSize: "48px", borderRadius: "10px"}}>
+    {!toggleNav ?  <button onClick={toggleNavFunc} className="fas fa-bars" style={{fontSize: "48px", borderRadius: "10px", marginTop: "20px", marginLeft: "20px"}}>
 
       </button> : <div></div>}
 
@@ -154,6 +170,17 @@ const handleLinkClick = () => {
             ))}
           </div>
         </div>
+        <div className="nav-item">
+        <button className="btn btn-info" onClick={() => goToMedals()} >Medals</button>
+        </div>
+        <div className="nav-item">
+        <button className="btn btn-info" onClick={() => goToMyResults()} >MyResults</button>
+        </div>
+        <div className="nav-item">
+        <button className="btn btn-info" onClick={() => goToTargetTimes()} >TargetTimes</button>
+        </div>
+        {/* <div className="nav-item"><Link to={`/myresults`}ref={navRef}>MyResults</Link></div>
+        <div className="nav-item"><Link to={`/target`}>TargetTimes</Link></div> */}
       </nav>
     </>
   );

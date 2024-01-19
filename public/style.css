@@ -763,8 +763,8 @@ tr:hover {
 
 .floating-btn {
   position: fixed; /* Changed to 'fixed' to position relative to the viewport */
-  top: 0px; /* Distance from the top */
-  left: 0px; /* Distance from the left, adjust as needed */
+  top: 10px; /* Distance from the top */
+  left: 10px; /* Distance from the left, adjust as needed */
   width: 80px;
   height: 80px;
   /* border-radius: 50%; */
@@ -786,7 +786,7 @@ nav {
   top: 0;
   background: lightgray;
   height: 100vh;
-  width: 50%;
+  width: 25%;
   transition: transform 0.4s ease-in-out;
   transform: translateX(-100%); /* Hide menu initially */
   display: flex;
@@ -851,7 +851,7 @@ nav a:first-of-type{
     white-space: nowrap;
     max-height: 80vh; /* 50% of the viewport height */
     overflow-y: auto;
-    padding: 10px;
+    /* padding: 10px; */
     box-sizing: border-box; /* Ensures padding is included in width */
     background: #fff; /* Ensures dropdown background is solid */
     z-index: 1000; /* Adjust as needed to be higher than other elements */
@@ -866,14 +866,15 @@ nav a:first-of-type{
   margin-top: 100px; /* Adjust as needed to place menu items below the close button */
 
   .dropdown-item {
-    display: block; /* Ensures item fills the width of dropdown-menu */
+    display: block;
+    padding: 5px 10px;
     white-space: nowrap
   }
 
   .nav-item {
     /* margin-top: 100px; */
-    margin-top: 15px;
-    margin-bottom: 15px; /* Adds vertical space between menu items */
+    margin-top: 10px;
+    margin-bottom: 10px; /* Adds vertical space between menu items */
   }
 
   .dropdown-item:hover {
