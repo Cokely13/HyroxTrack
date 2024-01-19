@@ -1,6 +1,6 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState, useRef,} from 'react';
+import { useSelector, useDispatch, } from 'react-redux';
+import { Link, useParams } from 'react-router-dom';
 import { fetchEvents } from '../store/allEventsStore';
 import { fetchWorkouts } from '../store/allWorkoutsStore';
 import { fetchUsers } from '../store/allUsersStore'
@@ -12,14 +12,20 @@ export default function CurtainMenu() {
   const workouts = useSelector((state) => state.allWorkouts);
   const users = useSelector((state) => state.allUsers);
   const { id } = useSelector((state) => state.auth);
+  const { userId } = useParams()
   const [toggleNav, setToggleNav] = useState(false);
   const navRef = useRef();
 
   useEffect(() => {
     dispatch(fetchEvents());
     dispatch(fetchWorkouts());
-    dispatch(fetchUsers());
   }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(fetchUsers());
+  }, [dispatch], [userId]);
+
+
 
   useEffect(() => {
     document.addEventListener('mousedown', handleDocumentClick);
@@ -72,6 +78,11 @@ const handleDocumentClick = (e) => {
   }
 };
 
+const handleLinkClick = () => {
+  closeAllDropdowns();
+
+};
+
   return (
     <>
     {!toggleNav ?  <button onClick={toggleNavFunc} className="floating-btn fas fa-plus-square" style={{fontSize: "48px"}}>
@@ -87,9 +98,9 @@ const handleDocumentClick = (e) => {
                         Events <i className="fas fa-chevron-down"></i>
                     </button>
                     <div className={`dropdown-menu ${showEventsDropdown ? 'show' : ''}`}>
-            <Link className="dropdown-item fw-bolder" to="/events">All</Link>
+            <Link className="dropdown-item fw-bolder" to="/events" onClick={() => handleLinkClick()}>All</Link>
             {events.map((event) => (
-              <Link className="dropdown-item fw-bolder" to={`/events/${event.id}`} key={event.id}>
+              <Link className="dropdown-item fw-bolder" to={`/events/${event.id}`} key={event.id} onClick={() => handleLinkClick()}>
                 {event.name}
               </Link>
             ))}
@@ -100,9 +111,9 @@ const handleDocumentClick = (e) => {
                         Workouts <i className="fas fa-chevron-down"></i>
                     </button>
                     <div className={`dropdown-menu ${showWorkoutsDropdown ? 'show' : ''}`}>
-            <Link className="dropdown-item fw-bolder" to="/workouts">All</Link>
+            <Link className="dropdown-item fw-bolder" to="/workouts" onClick={() => handleLinkClick()}>All</Link>
             {uniqueWorkouts.map((workout) => (
-              <Link className="dropdown-item fw-bolder" to={`/workouts/${workout.eventId}`} key={workout.id}>
+              <Link className="dropdown-item fw-bolder" to={`/workouts/${workout.eventId}`} key={workout.id} onClick={() => handleLinkClick()}>
                 {workout.name}
               </Link>
             ))}
@@ -113,9 +124,9 @@ const handleDocumentClick = (e) => {
                         Users <i className="fas fa-chevron-down"></i>
                     </button>
                     <div className={`dropdown-menu ${showUsersDropdown ? 'show' : ''}`}>
-            <Link className="dropdown-item fw-bolder" to="/users">All</Link>
+            <Link className="dropdown-item fw-bolder" to="/users" onClick={() => handleLinkClick()}>All</Link>
             {users.map((zone) => (
-              <Link className="dropdown-item fw-bolder" to={`/users/${zone.id}`} key={zone.id}>
+              <Link className="dropdown-item fw-bolder" to={`/users/${zone.id}`} key={zone.id} onClick={() => handleLinkClick(`/users/${zone.id}`)}>
                 {zone.userName}
               </Link>
             ))}

@@ -18,7 +18,7 @@ function UserPage() {
   useEffect(() => {
     dispatch(fetchSingleUser(userId))
     // Safe to add dispatch to the dependencies array
-  }, [])
+  }, [dispatch, userId])
 
   const handleChange =(event) => {
     event.preventDefault()

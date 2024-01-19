@@ -830,6 +830,7 @@ nav a:first-of-type{
   display: none; /* Initially, dropdown content is not displayed */
   border: 3px solid darkgray;
     border-radius: 10px;
+    width: 300px;
 }
 
 .dropdown-menu.show {
@@ -839,13 +840,21 @@ nav a:first-of-type{
 /* .menu-items {
   margin-top: 100px; /* Adjust as needed to place menu items below the close button */
 
-  /* .dropdown-item{
-    border: 3px solid darkgray;
-    border-radius: 10px;
-  } */
+  .dropdown-item {
+    /* existing styles */
+    display: block;
+    width: 100%; /* Makes sure the link uses the full width of the dropdown */
+    padding: 10px; /* Adjust as needed */
+    box-sizing: border-box; /* Ensures padding doesn't add to the width */
+  }
 
   .nav-item {
     /* margin-top: 100px; */
     margin-top: 15px;
     margin-bottom: 15px; /* Adds vertical space between menu items */
+  }
+
+  .dropdown-item:hover {
+    background-color: #f1f1f1;
+    width: 250px; /* Adjust as needed */
   }
