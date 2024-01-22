@@ -121,6 +121,27 @@ const goToMyResults = () => {
   closeAllDropdowns();
 };
 
+const goToHome = () => {
+  history.push('/home');
+  closeAllDropdowns();
+};
+
+const goToProfile = () => {
+  history.push('/profile');
+  closeAllDropdowns();
+};
+
+const goToResults = () => {
+  history.push('/results');
+  closeAllDropdowns();
+};
+
+const goToChallenges = () => {
+  history.push('/mychallenges');
+  closeAllDropdowns();
+};
+
+
   return (
     <>
     {!toggleNav ?  <button onClick={toggleNavFunc} className="fas fa-bars" style={{fontSize: "48px", borderRadius: "10px", marginTop: "20px", marginLeft: "20px"}}>
@@ -131,6 +152,18 @@ const goToMyResults = () => {
         {/* <button onClick={closeAllDropdowns} className="close-curtain">
           X
         </button> */}
+         <div className="nav-item">
+        <button className="btn btn-info" onClick={() => goToHome()} >Home</button>
+        </div>
+        <div className="nav-item">
+        <button className="btn btn-info" onClick={() => goToProfile()} >Profile</button>
+        </div>
+        <div className="nav-item">
+        <button className="btn btn-info" onClick={() => goToMyResults()} >My Results</button>
+        </div>
+        <div className="nav-item">
+        <button className="btn btn-info" onClick={() => goToChallenges()} >My Challenges</button>
+        </div>
         <div className="nav-item">
                     <button onClick={() => toggleDropdown('events')} className="btn btn-info">
                         Events <i className="fas fa-chevron-down"></i>
@@ -174,7 +207,7 @@ const goToMyResults = () => {
         <button className="btn btn-info" onClick={() => goToMedals()} >Medals</button>
         </div>
         <div className="nav-item">
-        <button className="btn btn-info" onClick={() => goToMyResults()} >MyResults</button>
+        <button className="btn btn-info" onClick={() => goToResults()} >Results</button>
         </div>
         <div className="nav-item">
         <button className="btn btn-info" onClick={() => goToTargetTimes()} >TargetTimes</button>
