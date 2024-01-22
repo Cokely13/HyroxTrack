@@ -18,7 +18,18 @@ module.exports = {
             '@babel/preset-react'
           ]
         }
-      }
+      },
+      {
+        test: /\.(png|jpe?g|gif|webp)$/i, // Add webp to the regex if you're using .webp images
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[path][name].[ext]',
+            },
+          },
+        ],
+      },
     ]
   }
 }
