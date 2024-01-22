@@ -1,49 +1,61 @@
 // import React from 'react'
+// import { connect } from 'react-redux'
 
 // import Navbar from './components/Navbar'
 // import Routes from './Routes'
 // import BottomBar from './components/BottomBar';
 // import CurtainMenu from './components/CurtainMenu';
 
-// const App = () => {
+// const App = ({ isLoggedIn }) => {
 //   return (
 //     <div>
 //       {/* <Navbar /> */}
-//       <CurtainMenu/>
+//       {isLoggedIn && <CurtainMenu/>}
 //       <div className="main-content">
-//       <Routes/>
+//         <Routes/>
 //       </div>
-//       <BottomBar/>
+//       {isLoggedIn && <BottomBar/>}
 //     </div>
 //   )
 // }
 
-// export default App
+// /**
+//  * CONTAINER
+//  */
+// const mapState = state => {
+//   return {
+//     isLoggedIn: !!state.auth.id
+//   }
+// }
 
-import React from 'react'
+// export default connect(mapState)(App)
+
+import React, { useState } from 'react'
 import { connect } from 'react-redux'
 
 import Navbar from './components/Navbar'
 import Routes from './Routes'
-import BottomBar from './components/BottomBar';
-import CurtainMenu from './components/CurtainMenu';
+import BottomBar from './components/BottomBar'
+import CurtainMenu from './components/CurtainMenu'
 
 const App = ({ isLoggedIn }) => {
+  const [isCurtainOpen, setIsCurtainOpen] = useState(false)
+
+  const toggleCurtain = () => {
+    setIsCurtainOpen(!isCurtainOpen)
+  }
+
   return (
     <div>
-      {/* <Navbar /> */}
-      {isLoggedIn && <CurtainMenu/>}
+      {isLoggedIn && <CurtainMenu isCurtainOpen={isCurtainOpen} toggleCurtain={toggleCurtain} />}
       <div className="main-content">
-        <Routes/>
+        <Routes />
       </div>
-      {isLoggedIn && <BottomBar/>}
+      {isLoggedIn && !isCurtainOpen && <BottomBar />}
     </div>
   )
 }
 
-/**
- * CONTAINER
- */
 const mapState = state => {
   return {
     isLoggedIn: !!state.auth.id
@@ -51,3 +63,4 @@ const mapState = state => {
 }
 
 export default connect(mapState)(App)
+

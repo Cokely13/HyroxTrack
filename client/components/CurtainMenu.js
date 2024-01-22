@@ -6,7 +6,7 @@ import { fetchWorkouts } from '../store/allWorkoutsStore';
 import { fetchUsers } from '../store/allUsersStore'
 
 
-export default function CurtainMenu() {
+export default function CurtainMenu({ isCurtainOpen, toggleCurtain }) {
   const dispatch = useDispatch();
   const events = useSelector((state) => state.allEvents);
   const workouts = useSelector((state) => state.allWorkouts);
@@ -40,6 +40,7 @@ export default function CurtainMenu() {
   }, [toggleNav]);
 
   const toggleNavFunc = () => {
+    toggleCurtain()
     setToggleNav(!toggleNav);
     setShowEventsDropdown(false);
   setShowWorkoutsDropdown(false);
@@ -74,6 +75,7 @@ const closeAllDropdowns = () => {
   setShowWorkoutsDropdown(false);
   setShowUsersDropdown(false);
   setToggleNav(false); // Also close the entire nav when close button is clicked
+  toggleCurtain()
 }
 
 // const handleDocumentClick = (e) => {
@@ -98,12 +100,13 @@ const handleDocumentClick = (e) => {
   } else if (toggleNav && navRef.current && !navRef.current.contains(e.target)) {
     // If the click is outside the curtain menu
     closeAllDropdowns(); // Close the curtain and all dropdowns
+    toggleCurtain()
   }
 };
 
 const handleLinkClick = () => {
   closeAllDropdowns();
-
+  toggleCurtain()
 };
 
 const goToMedals = () => {
