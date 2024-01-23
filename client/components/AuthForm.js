@@ -167,7 +167,7 @@ return (
             </div>
           )}
 
-          <button className="btn btn-primary" type="submit">
+          <button className="btn btn-primary sub" type="submit">
             {displayName}
           </button>
         </form>
