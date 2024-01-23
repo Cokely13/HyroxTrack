@@ -386,6 +386,7 @@ tr:hover {
   border-style: solid;
   border-width: 5px;
   border-radius: 5px;
+  width: 100%;
 }
 
 @media (min-width: 600px) {
@@ -818,7 +819,7 @@ nav {
   top: 0;
   background: lightgray;
   height: 100vh;
-  width: 25%;
+  width: 40%;
   transition: transform 0.4s ease-in-out;
   transform: translateX(-100%); /* Hide menu initially */
   display: flex;
@@ -862,16 +863,7 @@ nav a:first-of-type{
   }
 }
 
-/* .dropdown-menu {
-  display: none;
-  border: 3px solid darkgray;
-    border-radius: 10px;
-    width: 300px;
-    text-align: start;
-    min-width: 150px; Set a minimum width
-    white-space: nowrap; Prevent text from wrapping
-    padding: 0 10px;
-  }  */
+
 
   .dropdown-menu {
     display: none;
@@ -913,4 +905,59 @@ nav a:first-of-type{
     display: block;
     margin-left: 5px;
     /* width: 500px; */
+  }
+
+  .auth-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .header {
+    margin-bottom: 15px;
+    margin-top: 25%;
+    margin-left: auto;
+    margin-right: auto;
+    width: 35%;
+    background-color: white;
+  }
+
+  .frontPage {
+    background-color: white;
+    width: 65%;
+    border: 3px solid darkgray;
+    border-radius: 10px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .auth-form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .input-group {
+    margin-bottom: 10px;
+  }
+
+  .btn-primary {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .link-container {
+    text-align: center;
+    width: 100%;
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 600px) {
+    .frontPage {
+      width: 90%;
+    }
   }

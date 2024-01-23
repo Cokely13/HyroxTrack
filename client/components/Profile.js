@@ -56,6 +56,7 @@ const recentWorkout = () => {
 const imageUrl = user.image ? `http://localhost:8080/${user.image}` : null;
 
 const handleFileChange = (event) => {
+  console.log("hey", event)
   const file = event.target.files[0];
   if (file) {
     setSelectedFile(file);
@@ -129,14 +130,14 @@ const handleUpload = async () => {
     <div><Link to={`/target`}>TargetTimes</Link></div>
     </div>
     {newPhoto ? <div style={{ margin: '20px 0' }}>
-        <input type="file" onChange={handleFileChange} />
-        <button class="btn btn-success"onClick={handleUpload}>Upload Photo</button>
+        <input  type="file" onChange={handleFileChange} />
+        <button className="btn btn-success"onClick={handleUpload}>Upload Photo</button>
         {previewUrl && (
           <div className="change-photo-button-container">
             <img src={previewUrl} alt="Preview" style={{ maxWidth: '20%', height: 'auto' }} />
           </div>
         )}
-      </div> : <div className="change-photo-button-container"><button class="btn btn-secondary" onClick={() => setNewPhoto(true)}>Change Photo</button></div>}
+      </div> : <div className="change-photo-button-container"><button className="btn btn-secondary" onClick={() => setNewPhoto(true)}>Change Photo</button></div>}
     </div>
   )
 }
