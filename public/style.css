@@ -730,6 +730,8 @@ tr:hover {
 @media screen and (max-width: 600px) {
   .bottom-bar {
     height: 50px; /* You might want a smaller bar on mobile */
+    padding: 10px 10px; /* Reduce padding on smaller screens */
+    justify-content: space-between;
   }
 
   .main-content {

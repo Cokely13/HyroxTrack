@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 import { fetchSingleUser } from '../store/singleUserStore'
 import { fetchChallenges } from '../store/allChallengesStore'
 import { updateSingleUser } from '../store/singleUserStore'
+import ChangePassword from './ChangePassword';
 
 
 function Profile() {
@@ -16,7 +17,7 @@ function Profile() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
   const [newPhoto, setNewPhoto] = useState(null);
-
+  const [showChangePassword, setShowChangePassword] = useState(false)
 
   useEffect(() => {
     dispatch(fetchSingleUser(id))
@@ -116,6 +117,7 @@ const handleUpload = async () => {
             }}> </div>
     </div>
   )}
+ {showChangePassword ? <ChangePassword /> :
     <div style={{fontSize:"25px"}} >
     <div><b>Total Workouts:</b> {user.userworkouts ? user.userworkouts.length : 0}</div>
     <div><b>Total Results:</b> {user.results ? user.results.length : 0}</div>
@@ -128,8 +130,9 @@ const handleUpload = async () => {
     <div><Link to={`/medals`}>Medals</Link></div>
     <div><Link to={`/myresults`}>MyResults</Link></div>
     <div><Link to={`/target`}>TargetTimes</Link></div>
-    </div>
-    {newPhoto ? <div style={{ margin: '20px 0' }}>
+    </div>}
+     <button className="btn btn-primary" onClick={() => setShowChangePassword(!showChangePassword)}>Change Password</button>
+     {newPhoto ? <div style={{ margin: '20px 0' }}>
         <input  type="file" onChange={handleFileChange} />
         <button className="btn btn-success"onClick={handleUpload}>Upload Photo</button>
         {previewUrl && (
@@ -138,6 +141,7 @@ const handleUpload = async () => {
           </div>
         )}
       </div> : <div className="change-photo-button-container"><button className="btn btn-secondary" onClick={() => setNewPhoto(true)}>Change Photo</button></div>}
+
     </div>
   )
 }

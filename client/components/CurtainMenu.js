@@ -144,6 +144,11 @@ const goToChallenges = () => {
   closeAllDropdowns();
 };
 
+const goToCreateChallenge = () => {
+  history.push('/createchallenge');
+  closeAllDropdowns();
+};
+
 
   return (
     <>
@@ -166,6 +171,9 @@ const goToChallenges = () => {
         </div>
         <div className="nav-item">
         <button className="btn btn-info" onClick={() => goToChallenges()} >My Challenges</button>
+        </div>
+        <div className="nav-item">
+        <button className="btn btn-info" onClick={() => goToCreateChallenge()} >Create Challenge</button>
         </div>
         <div className="nav-item">
                     <button onClick={() => toggleDropdown('events')} className="btn btn-info">
