@@ -36,18 +36,33 @@ const AuthForm = (props) => {
     handleSubmit(evt, userName, password, formName);
   };
 
+  // const backgroundStyle = {
+  //   backgroundImage: `url(${pic})`,
+  //   backgroundSize: 'cover', // Cover the entire space of the element
+  //   backgroundPosition: 'center', // Center the image
+  //   backgroundRepeat: 'no-repeat', // Do not repeat the image
+  //   // Optionally, set other styles such as height, etc.
+  // };
+
   const backgroundStyle = {
+    position: 'fixed', // Fixed position to cover the whole screen
+    top: 0, // Start from the top
+    left: 0, // Start from the left
+    width: '100vw', // Cover the full viewport width
+    height: '100vh', // Cover the full viewport height
     backgroundImage: `url(${pic})`,
-    backgroundSize: 'cover', // Cover the entire space of the element
+    backgroundSize: 'cover', // Cover the entire viewport
     backgroundPosition: 'center', // Center the image
     backgroundRepeat: 'no-repeat', // Do not repeat the image
-    // Optionally, set other styles such as height, etc.
+    zIndex: -1, // Ensure it's behind other content
   };
 
   return (
-    <div className="auth-container" style={backgroundStyle} >
-      <h1 className="profile rounded text-center add" style={{ marginBottom: '15px', marginTop: '25%', marginLeft: 'auto', marginRight: 'auto', width: '35%' }}>HyroxTrack</h1>
-      <h1 className="profile rounded text-center add" style={{ marginBottom: '15px', marginTop: '15px', marginLeft: 'auto', marginRight: 'auto', width: '35%' }}>{displayName}</h1>
+    <div style={backgroundStyle} >
+    <div className="auth-container">
+      <h1 className="profile rounded text-center add" style={{ marginBottom: '15px', marginTop: '25%', marginLeft: 'auto', marginRight: 'auto', width: '35%', backgroundColor: "white" }}>HyroxTrack</h1>
+      <h1 className="profile rounded text-center add" style={{ marginBottom: '15px', marginTop: '15px', marginLeft: 'auto', marginRight: 'auto', width: '35%', backgroundColor: "white" }}>{displayName}</h1>
+      <div className='frontpage'>
       <form onSubmit={enhancedHandleSubmit} name={name}>
         {displayName === "Login" ? (
           <div className="form-group">
@@ -57,7 +72,7 @@ const AuthForm = (props) => {
             <input className="form-control" name="userName" type="text" />
           </div>
         ) : (
-          <div className="form-group">
+          <div className="form-group" style={{ backgroundColor: "white"}}>
             <label htmlFor="userName">
               <b>Create Username</b>
             </label>
@@ -101,11 +116,15 @@ const AuthForm = (props) => {
         {passwordError && <div className="error-message">{passwordError}</div>}
         {error && error.response && <div className="error-message">{error.response.data}</div>}
       </form>
+          <div  style={{display: "flex", justifyContent: "center"}}>
       {displayName === "Login" ? (
-        <Link to="/signup">Sign Up</Link>
+        <Link style={{marginLeft: "auto", marginRight: "auto"}} to="/signup">Sign Up</Link>
       ) : (
-        <Link to="/login">Login</Link>
+        <Link style={{marginLeft: "auto", marginRight: "auto"}}  to="/login">Login</Link>
       )}
+      </div>
+       </div>
+    </div>
     </div>
   );
 };

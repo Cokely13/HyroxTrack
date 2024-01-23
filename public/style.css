@@ -332,6 +332,7 @@ tr:hover {
   gap: 20px;
 }
 
+
 .profile {
   width: 100%; /* Full width on small screens */
   margin-bottom: 15px;
@@ -374,6 +375,34 @@ tr:hover {
   border-bottom: #000;
   border-width: 3px;
 
+}
+
+.frontpage {
+  background-color: white;
+  /* border: 1px solid #ddd; */
+  /* padding: 10px;
+  box-sizing: border-box; */
+  border-color: darkgray;
+  border-style: solid;
+  border-width: 5px;
+  border-radius: 5px;
+}
+
+@media (min-width: 600px) {
+  .frontpage{
+    /* width: 50%; 2 columns on medium screens */
+    max-width: 25%;
+    /* font-size: 2vw;
+    max-height: 25%; */
+    /* font-size: 12px */
+  }
+}
+
+@media (min-width: 992px) {
+  .frontpage{
+    max-width: 25%;
+  /* 4 columns on large screens */
+  }
 }
 
 @media (min-width: 600px) {
@@ -865,8 +894,7 @@ nav a:first-of-type{
   display: block; /* When dropdown is active, display the content */
 }
 
-/* .menu-items {
-  margin-top: 100px; /* Adjust as needed to place menu items below the close button */
+
 
   .dropdown-item {
     display: block;
