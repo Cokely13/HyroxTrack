@@ -921,6 +921,8 @@ nav a:first-of-type{
     margin-right: auto;
     width: 35%;
     background-color: white;
+    border: 3px solid darkgray;
+    border-radius: 10px;
   }
 
   .frontPage {
@@ -937,7 +939,7 @@ nav a:first-of-type{
   .auth-form {
     display: flex;
     flex-direction: column;
-    width: 100%;
+    width: 80%;
     margin-bottom: 20px;
   }
 

@@ -138,25 +138,25 @@ return (
     <div className="auth-container">
       <h1 className="header">HyroxTrack</h1>
       <div className="frontPage">
-        <h2>{displayName}</h2>
+        <h1><b>{displayName}</b></h1>
         <form onSubmit={enhancedHandleSubmit} name={name} className="auth-form">
           <div className="input-group">
             <label htmlFor="userName">
-              {displayName === "Login" ? "Username" : "Create Username"}
+              {displayName === "Login" ? "Username:" : "Create Username:"}
             </label>
             <input className="form-control" name="userName" type="text" />
           </div>
 
           <div className="input-group">
             <label htmlFor="password">
-              {displayName === "Login" ? "Password" : "Create Password"}
+              {displayName === "Login" ? "Password:": "Create Password:"}
             </label>
             <input className="form-control" name="password" type="password" />
           </div>
 
           {displayName === "Sign Up" && (
             <div className="input-group">
-              <label htmlFor="confirmPassword">Confirm Password</label>
+              <label htmlFor="confirmPassword">Confirm Password: </label>
               <input
                 className="form-control"
                 name="confirmPassword"
