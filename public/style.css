@@ -925,6 +925,8 @@ nav a:first-of-type{
     background-color: white;
     border: 3px solid darkgray;
     border-radius: 10px;
+    text-align: center;
+    font: bolder;
   }
 
   .frontPage {
