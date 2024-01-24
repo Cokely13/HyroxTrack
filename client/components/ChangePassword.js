@@ -1,9 +1,19 @@
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { changePassword } from '../store/passwordReducer'; // Adjust the path as necessary
 
-function ChangePassword() {
+function ChangePassword({userId}) {
+    const dispatch = useDispatch();
+    const { loading, message, error } = useSelector((state) => state.passwordChange);
     const [currentPassword, setCurrentPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [confirmNewPassword, setConfirmNewPassword] = useState('');
+
+
+// function ChangePassword({ handleSubmitPasswordChange }) {
+//     const [currentPassword, setCurrentPassword] = useState('');
+//     const [newPassword, setNewPassword] = useState('');
+//     const [confirmNewPassword, setConfirmNewPassword] = useState('');
 
     const handleCurrentPasswordChange = (event) => {
         setCurrentPassword(event.target.value);
@@ -18,10 +28,18 @@ function ChangePassword() {
     };
 
     const handleSubmit = (event) => {
-        event.preventDefault();
-        // Validate passwords and implement the change logic here
-        console.log('Change password logic here');
+      event.preventDefault();
+      if (newPassword !== confirmNewPassword) {
+        alert("New passwords don't match.");
+        return;
+      }
+
+      console.log("user", userId)
+
+      // Call the thunk action
+      dispatch(changePassword(userId, currentPassword, newPassword)); // Make sure userId is available in this scope
     };
+
 
     return (
         <div className="change-password-container">

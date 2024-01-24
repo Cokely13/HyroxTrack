@@ -21,6 +21,7 @@ import targetsReducer from './allTargetsStore'
 import singleTargetReducer from './singleTargetStore'
 import singleChallengeReducer from './singleChallengeStore'
 import challengesReducer from './allChallengesStore'
+import passwordReducer from './passwordReducer'
 
 const reducer = combineReducers({ auth,
   allEvents: eventsReducer,
@@ -40,7 +41,8 @@ const reducer = combineReducers({ auth,
   singleTarget: singleTargetReducer,
   allTargets: targetsReducer,
   allChallenges: challengesReducer,
-  singleChallenge: singleChallengeReducer
+  singleChallenge: singleChallengeReducer,
+  passwordChange: passwordReducer,
 })
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))

@@ -46,6 +46,33 @@ router.put('/:id', upload.single('image'), async (req, res, next) => {
   }
 });
 
+router.put('/:id/change-password', async (req, res, next) => {
+  try {
+    const user = await User.findByPk(req.params.id);
+    if (!user) {
+      res.status(404).send('User not found');
+      return;
+    }
+
+    const { currentPassword, newPassword } = req.body;
+
+    // Check if the current password is correct
+    if (!(await user.correctPassword(currentPassword))) {
+      res.status(401).send('Incorrect current password');
+      return;
+    }
+
+    // If current password is correct, update the password
+    user.password = newPassword;
+    await user.save();
+
+    // Optionally, you might want to sanitize the response to not send back sensitive data
+    res.json({ message: 'Password updated successfully' });
+  } catch (error) {
+    next(error);
+  }
+});
+
 router.delete('/:id', async (req, res, next) => {
   try {
     const user = await User.findByPk(req.params.id);

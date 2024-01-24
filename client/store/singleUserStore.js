@@ -3,6 +3,7 @@ import axios from "axios";
 // Action Types
 const SET_SINGLE_USER = "SET_SINGLE_USER";
 const UPDATE_SINGLE_USER = "UPDATE_SINGLE_USER";
+const CHANGE_PASSWORD = 'CHANGE_PASSWORD';
 
 
 // Action creators
@@ -12,6 +13,13 @@ export const _setSingleUser= (userdata) => {
     userdata,
   };
 };
+
+const _changePassword = (passwordData) =>{
+  return{
+   type: CHANGE_PASSWORD,
+   passwordData,
+  }
+  };
 
 const _updateSingleUser = (userdata) => {
   return {
@@ -43,6 +51,28 @@ export const updateSingleUser = (user) => {
   };
 };
 
+export const changePassword = (userId, currentPassword, newPassword) => {
+  return async (dispatch) => {
+    try {
+      // Add your API endpoint for changing password
+      const response = await fetch(`/api/users/${userId}/change-password`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ currentPassword, newPassword }),
+      });
+
+      if (response.ok) {
+        const passwordData = await response.json();
+        dispatch(_changePassword(passwordData));
+      } else {
+        // Handle errors, e.g. display a message to the user
+      }
+    } catch (error) {
+      console.error('Error changing password:', error);
+    }
+  };
+};
+
 // reducer
 const initialState = [];
 const singleUserReducer = (state = initialState, action) => {
@@ -51,6 +81,8 @@ const singleUserReducer = (state = initialState, action) => {
       return action.userdata;
     case UPDATE_SINGLE_USER:
       return action.userdata;
+        case CHANGE_PASSWORD:
+          return action.userdata;
     default:
       return state;
   }
