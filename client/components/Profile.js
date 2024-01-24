@@ -136,7 +136,7 @@ const handlePassword = () => {
     <div><Link to={`/target`}>TargetTimes</Link></div>
     </div>
      <button className="btn btn-primary" onClick={() => handlePassword()}>Change Password</button>
-     {newPhoto ? <div style={{ margin: '20px 0' }}>
+     {newPhoto ? <div style={{ margin: '20px 0' }} >
         <input  type="file" onChange={handleFileChange} />
         <button className="btn btn-success"onClick={handleUpload}>Upload Photo</button>
         {previewUrl && (
