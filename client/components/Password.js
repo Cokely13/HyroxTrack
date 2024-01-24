@@ -14,6 +14,7 @@ export default function Password() {
   const user = useSelector((state) => state.singleUser )
   const [name, setName] = useState(user.username);
   const [editProfile, setEditProfile] = useState()
+  const [confirmPassword, setConfirmPassword] = useState('');
   useEffect(() => {
     dispatch(fetchSingleUser(id))
     // Safe to add dispatch to the dependencies array
@@ -45,18 +46,26 @@ const handleChange3 = (event) => {
 }
 
 
-
+const handleChangeConfirmPassword = (event) => {
+  event.preventDefault();
+  setConfirmPassword(event.target.value);
+};
 
 
 const handleClick = (e) => {
   e.preventDefault();
+  if (password !== confirmPassword) {
+    alert("Passwords do not match.");
+    return; // Stop the function if the passwords do not match
+  }
+
   const newUser = {
     id: user.id,
     username: name,
     password: password,
   };
   dispatch(updateSingleUser(newUser));
-  console.log("Done")
+  console.log("Done");
   history.push('/profile');
 };
 
@@ -66,19 +75,6 @@ const handleClick = (e) => {
        <div >
         {/* <form className="col" onSubmit={handleSubmit(handleClick)}> */}
   <div>
-    {/* <div className="col">
-      <label>
-        <h2 htmlFor="username" style={{ marginRight: "10px" }}>
-          User Name:{" "}
-        </h2>
-      </label>
-      <input
-        name="username"
-        onChange={handleChange}
-        type="text"
-        placeholder={user.username}
-      />
-    </div> */}
     <div className="col">
       <label>
         <h2 htmlFor="password" style={{ marginRight: "10px" }}>
@@ -88,13 +84,25 @@ const handleClick = (e) => {
       <input
         name="password"
         onChange={handleChange3}
-        type="text"
+        type="password"
         placeholder="Change Password"
       />
     </div>
   </div>
-{/* </form> */}
-    <h2 className='text-center'><button className='btn btn-primary' onClick={handleClick}>Update Profile</button></h2>
+  <div className="col">
+  <label>
+    <h2 htmlFor="confirmPassword" style={{ marginRight: "10px" }}>
+      Confirm Password:{" "}
+    </h2>{" "}
+  </label>
+  <input
+    name="confirmPassword"
+    onChange={handleChangeConfirmPassword}
+    type="password"
+    placeholder="Confirm Password"
+  />
+</div>
+    <h2 className='text-center'><button className='btn btn-primary' onClick={handleClick}>Update Password</button></h2>
   </div>
     </div>
   )
