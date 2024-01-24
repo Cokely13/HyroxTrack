@@ -1,7 +1,7 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useEffect, useState } from 'react'
-import { useHistory } from 'react-router-dom'
+import { useHistory, Link } from 'react-router-dom'
 import { fetchSingleUser, updateSingleUser } from '../store/singleUserStore'
 
 
@@ -71,28 +71,29 @@ const handleClick = (e) => {
 
 
   return (
-    <div style={{ marginLeft: "auto", marginRight: 'auto', textAlign: "center"}}>
+    <div className="text-center">
+    <h1 className="profile rounded text-center add" style={{ marginBottom: "15px", marginTop: "25px",  marginLeft: "auto", marginRight: "auto", width: "35%" }}><b>Password</b></h1>
        <div >
         {/* <form className="col" onSubmit={handleSubmit(handleClick)}> */}
   <div>
     <div className="col">
       <label>
-        <h2 htmlFor="password" style={{ marginRight: "10px" }}>
-          Password:{" "}
+        <h2 htmlFor="password" >
+         <b>New Password:{" "}</b>
         </h2>{" "}
       </label>
       <input
         name="password"
         onChange={handleChange3}
         type="password"
-        placeholder="Change Password"
+        placeholder="New Password"
       />
     </div>
   </div>
-  <div className="col">
+  <div style={{marginTop: "10px", marginBottom: "10px"}} >
   <label>
-    <h2 htmlFor="confirmPassword" style={{ marginRight: "10px" }}>
-      Confirm Password:{" "}
+    <h2 htmlFor="confirmPassword" >
+      <b>Confirm Password:{" "}</b>
     </h2>{" "}
   </label>
   <input
@@ -101,9 +102,10 @@ const handleClick = (e) => {
     type="password"
     placeholder="Confirm Password"
   />
-</div>
-    <h2 className='text-center'><button className='btn btn-primary' onClick={handleClick}>Update Password</button></h2>
+</div >
+    <button className='btn btn-primary' style={{marginTop: "10px", marginBottom: "10px"}} onClick={handleClick}>Update Password</button>
   </div>
+  <div><Link to={`/profile`}>Back to Profile</Link></div>
     </div>
   )
 }
