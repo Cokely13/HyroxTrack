@@ -58,34 +58,60 @@
 //   }
 // });
 
+// const router = require('express').Router();
+// const { models: { User, Result, UserWorkout, Average, Target, Challenge }} = require('../db');
+// const { S3Client } = require('@aws-sdk/client-s3');
+// const multer = require('multer');
+// const multerS3 = require('multer-s3');
+// require('dotenv').config();
+
+// // AWS S3 configuration
+// AWS.config.update({
+//     accessKeyId: process.env.AWS_ACCESS_KEY_ID|| config.AWS_ACCESS_KEY_ID,
+//     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY||config.AWS_SECRET_ACCESS_KEY,
+//     region: process.env.AWS_REGION
+// });
+
+
+// const s3 = new S3Client({ region: process.env.AWS_REGION });
+
+// const upload = multer({
+//     storage: multerS3({
+//         s3: s3,
+//         bucket: process.env.S3_BUCKET_NAME,
+//         acl: 'public-read',
+//         key: function (req, file, cb) {
+//             cb(null, Date.now().toString() + '-' + file.originalname);
+//         }
+//     })
+// });
+
 const router = require('express').Router();
 const { models: { User, Result, UserWorkout, Average, Target, Challenge }} = require('../db');
-const AWS = require('aws-sdk');
+const { S3Client } = require('@aws-sdk/client-s3'); // AWS SDK v3
 const multer = require('multer');
 const multerS3 = require('multer-s3');
 require('dotenv').config();
 
-// AWS S3 configuration
-AWS.config.update({
+const s3Client = new S3Client({ // Instantiate S3Client
+  region: process.env.AWS_REGION,
+  credentials: {
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-    region: process.env.AWS_REGION
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
+  }
 });
 
-// const S3_BUCKET = process.env.S3_BUCKET
-
-const s3 = new AWS.S3();
 
 const upload = multer({
-    storage: multerS3({
-        s3: s3,
-        bucket: process.env.S3_BUCKET_NAME,
-        acl: 'public-read',
-        key: function (req, file, cb) {
-            cb(null, Date.now().toString() + '-' + file.originalname);
-        }
-    })
+  storage: multerS3({
+      s3: s3Client,
+      bucket: process.env.S3_BUCKET_NAME,
+      key: function (req, file, cb) {
+          cb(null, Date.now().toString() + '-' + file.originalname);
+      }
+  })
 });
+
 
 router.get('/', async (req, res, next) => {
   try {

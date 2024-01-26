@@ -55,10 +55,11 @@ const recentWorkout = () => {
   return null;
 };
 
-const imageUrl = user.image ? `http://localhost:8080/${user.image}` : null;
+const imageUrl = user.image
+
+console.log("image", imageUrl)
 
 const handleFileChange = (event) => {
-  console.log("hey", event)
   const file = event.target.files[0];
   if (file) {
     setSelectedFile(file);
@@ -114,7 +115,7 @@ const handlePassword = () => {
               height: '200px',
               borderRadius: '50%',
               margin: 'auto',
-              backgroundImage: `url(${user.image})`,
+              backgroundImage: `url('${imageUrl}')`,
               backgroundSize: 'cover',
               backgroundPosition: 'center',
               backgroundRepeat: 'no-repeat',
