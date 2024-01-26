@@ -3,22 +3,26 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useEffect, useState } from 'react'
 import { useHistory, Link } from 'react-router-dom'
 import { fetchSingleUser, updateSingleUser } from '../store/singleUserStore'
+import { fetchUsers } from '../store/allUsersStore'
 
 
 export default function Password() {
   // const {register, handleSubmit } = useForm()
-  const {id} = useSelector((state) => state.auth )
   const dispatch = useDispatch()
   let history = useHistory();
-  const [password, setPassword] = useState();
-  const user = useSelector((state) => state.singleUser )
-  const [name, setName] = useState(user.username);
-  const [editProfile, setEditProfile] = useState()
+  const { id, admin } = useSelector((state) => state.auth); // assuming `admin` is part of your auth state
+  const user = useSelector((state) => state.singleUser);
+  const allUsers = useSelector((state) => state.allUsers);
+  const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [selectedUserId, setSelectedUserId] = useState(id);
+
   useEffect(() => {
-    dispatch(fetchSingleUser(id))
-    // Safe to add dispatch to the dependencies array
-  }, [])
+    dispatch(fetchSingleUser(id));
+    if (admin) {
+      dispatch(fetchUsers()); // Fetch all users if the user is an admin
+    }
+  }, [dispatch, id, admin]);
 
 
 
@@ -39,11 +43,9 @@ const handleChange = (event) => {
 
 
 
-const handleChange3 = (event) => {
-  event.preventDefault()
-  setPassword(event.target.value)
-  // console.log("HA", like)
-}
+const handleChangePassword = (event) => {
+  setPassword(event.target.value);
+};
 
 
 const handleChangeConfirmPassword = (event) => {
@@ -51,28 +53,46 @@ const handleChangeConfirmPassword = (event) => {
   setConfirmPassword(event.target.value);
 };
 
+const handleUserChange = (event) => {
+  setSelectedUserId(event.target.value); // update the selected user ID
+};
+
+
 
 const handleClick = (e) => {
   e.preventDefault();
   if (password !== confirmPassword) {
     alert("Passwords do not match.");
-    return; // Stop the function if the passwords do not match
+    return;
   }
 
-  const newUser = {
-    id: user.id,
-    username: name,
-    password: password,
+  const updatedInfo = {
+    id: selectedUserId, // use the selected user ID
+    password,
   };
-  dispatch(updateSingleUser(newUser));
-  console.log("Done");
+
+  dispatch(updateSingleUser(updatedInfo));
+  console.log("Password Updated");
   history.push('/profile');
 };
 
 
   return (
     <div className="text-center">
-    <h1 className="profile rounded text-center add" style={{ marginBottom: "15px", marginTop: "25px",  marginLeft: "auto", marginRight: "auto", width: "35%" }}><b>Password</b></h1>
+    <h1 className="profile rounded text-center add" style={{ marginBottom: "15px", marginTop: "25px",  marginLeft: "auto", marginRight: "auto", width: "35%" }}
+    ><b>Password</b></h1>
+     {admin && (
+        <div>
+          <label htmlFor="userSelect"><b>Select User:</b></label>
+          <select name="userSelect" onChange={handleUserChange} value={selectedUserId}>
+            {allUsers.map((user) => (
+              <option key={user.id} value={user.id}>
+                {user.userName}
+              </option>
+            ))}
+          </select>
+        </div>
+      )}
        <div >
         {/* <form className="col" onSubmit={handleSubmit(handleClick)}> */}
   <div>
@@ -84,7 +104,7 @@ const handleClick = (e) => {
       </label>
       <input
         name="password"
-        onChange={handleChange3}
+        onChange={handleChangePassword}
         type="password"
         placeholder="New Password"
       />
