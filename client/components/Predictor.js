@@ -225,7 +225,7 @@ function Predictor() {
   <label htmlFor="event" >Event:</label>
   <select id="event" value={eventName} onChange={handleEventChange}>
     <option value=""> -- Select Event --</option>
-    {events.map((event, index) => (
+    {events.filter(event => event.name !== 'Random').map((event, index) => (
       <option key={index} value={event.name}>{event.name}</option>
     ))}
   </select>
