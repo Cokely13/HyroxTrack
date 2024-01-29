@@ -38,10 +38,10 @@ const AuthForm = (props) => {
     }
 
 
-    if (displayName === 'Login' && password !== confirmPassword) {
-      setPasswordError('Incorrect Password');
-      return;
-    }
+    // if (displayName === 'Login' && password !== confirmPassword) {
+    //   setPasswordError('Incorrect Password');
+    //   return;
+    // }
     // If passwords match or it's the login form, proceed with the form submission
     setPasswordError(''); // Clear any previous error messages
     handleSubmit(evt, userName, password, formName);
@@ -61,6 +61,12 @@ const AuthForm = (props) => {
     zIndex: -1, // Ensure it's behind other content
   };
 
+  const clearErrors = () => {
+    setPasswordError('');
+    // Also clear the global error state if needed
+    // dispatch(clearGlobalErrorAction()); // Uncomment if you have a global error clearing action
+  };
+
 
 
 return (
@@ -69,6 +75,7 @@ return (
       <h1 className="header">HyroxTrack</h1>
       <div className="frontPage">
         <h1><b>{displayName}</b></h1>
+        {error && error.response && <div className="errorMessage"> {error.response.data} </div>}
         {passwordError && <div className="errorMessage">{passwordError}</div>}
         {/* {passwordError && <div className="errorMessage">{passwordError}</div>} */}
         {/* <form onSubmit={enhancedHandleSubmit} name={name} className="auth-form"></form> */}
@@ -107,9 +114,9 @@ return (
 
         <div className="link-container">
           {displayName === "Login" ? (
-            <Link to="/signup">Sign Up</Link>
+            <Link to="/signup" onClick={clearErrors}>Sign Up</Link>
           ) : (
-            <Link to="/login">Login</Link>
+            <Link to="/login" onClick={clearErrors}>Login</Link>
           )}
         </div>
       </div>
