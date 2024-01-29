@@ -955,6 +955,13 @@ nav a:first-of-type{
 
   .input-group {
     margin-bottom: 10px;
+    margin-left: 50px;
+    text-align: center;
+    width: 80%;
+  }
+
+  .form-control{
+    margin-left: 50px;
   }
 
   .sub{
@@ -972,4 +979,14 @@ nav a:first-of-type{
     .frontPage {
       width: 90%;
     }
+  }
+
+  .errorMessage {
+    color: #fff; /* White text color */
+    background-color: rgba(255, 0, 0, 0.7); /* Semi-transparent red background */
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    text-align: center;
+    font-weight: bold;
   }
