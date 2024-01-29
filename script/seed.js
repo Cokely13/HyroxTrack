@@ -12,14 +12,14 @@ async function seed() {
 
   // Creating Users
   const users = await Promise.all([
-    User.create({ userName: 'Ryan', password: '123', admin: true, image: 'uploads/default.jpg' }),
-    User.create({ userName: 'Jamal', password: '123', image: 'uploads/default.jpg' }),
-    User.create({ userName: 'Scott', password: '123', image: 'uploads/default.jpg' }),
-    User.create({ userName: 'Darren', password: '123', image: 'uploads/default.jpg' }),
-    User.create({ userName: 'Deepak', password: '123', image: 'uploads/default.jpg' }),
-    User.create({ userName: 'Jeff', password: '123', image: 'uploads/default.jpg' }),
-    User.create({ userName: 'H', password: '123', image: 'uploads/default.jpg' }),
-    User.create({ userName: 'Simmons', password: '123', image: 'uploads/default.jpg' }),
+    User.create({ userName: 'Ryan', password: '123', admin: true, email: 'ryan.cokely@gmail.com', image: 'uploads/default.jpg' }),
+    User.create({ userName: 'Jamal', password: '123', image: 'uploads/default.jpg', email: 'Costonj514@gmail.com'  }),
+    User.create({ userName: 'Scott', password: '123', image: 'uploads/default.jpg', email: 'scottlcokely@gmail.com' }),
+    User.create({ userName: 'Darren', password: '123', image: 'uploads/default.jpg', email: 'darrenallenmurray@gmail.com' }),
+    User.create({ userName: 'Deepak', password: '123', image: 'uploads/default.jpg', email: 'deepakgulati81@gmail.com' }),
+    User.create({ userName: 'Jeff', password: '123', image: 'uploads/default.jpg', email: 'mistergodbout@gmail.com' }),
+    User.create({ userName: 'H', password: '123', image: 'uploads/default.jpg', email: 'jdashefsky@gmail.com' }),
+    User.create({ userName: 'Simmons', password: '123', image: 'uploads/default.jpg', email: 'swsimmons6@gmail.com' }),
   ])
 
   const programs = await Promise.all([

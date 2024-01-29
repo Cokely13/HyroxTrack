@@ -57,8 +57,6 @@ const recentWorkout = () => {
 
 const imageUrl = user.image
 
-console.log("image", imageUrl)
-
 const handleFileChange = (event) => {
   const file = event.target.files[0];
   if (file) {
@@ -124,6 +122,7 @@ const handlePassword = () => {
     </div>
   )}
     <div style={{fontSize:"25px"}} >
+    <div><b> {user.email ? user.email : 0} </b></div>
     <div><b>Total Workouts:</b> {user.userworkouts ? user.userworkouts.length : 0}</div>
     <div><b>Total Results:</b> {user.results ? user.results.length : 0}</div>
     <div><b>Total Challenges:</b> {user.challenges ? user.challenges.length : 0}</div>

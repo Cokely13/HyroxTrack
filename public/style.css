@@ -959,13 +959,13 @@ nav a:first-of-type{
   .auth-form {
     display: flex;
     flex-direction: column;
-    width: 80%;
+    width: 90%;
     margin-bottom: 20px;
   }
 
   .input-group {
     margin-bottom: 10px;
-    margin-left: 50px;
+    margin-left: 5%;
     text-align: center;
     width: 80%;
   }

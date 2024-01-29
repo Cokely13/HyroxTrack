@@ -161,22 +161,22 @@ const goToCreateChallenge = () => {
           X
         </button> */}
          <div className="nav-item">
-        <button className="btn btn-info" onClick={() => goToHome()} >Home</button>
+        <button className="btn btn-dark" onClick={() => goToHome()} >Home</button>
         </div>
         <div className="nav-item">
-        <button className="btn btn-info" onClick={() => goToProfile()} >Profile</button>
+        <button className="btn btn-dark" onClick={() => goToProfile()} >Profile</button>
         </div>
         <div className="nav-item">
-        <button className="btn btn-info" onClick={() => goToMyResults()} >My Results</button>
+        <button className="btn btn-dark" onClick={() => goToMyResults()} >My Results</button>
         </div>
         <div className="nav-item">
-        <button className="btn btn-info" onClick={() => goToChallenges()} >My Challenges</button>
+        <button className="btn btn-dark" onClick={() => goToChallenges()} >My Challenges</button>
         </div>
         <div className="nav-item">
-        <button className="btn btn-info" onClick={() => goToCreateChallenge()} >Create Challenge</button>
+        <button className="btn btn-dark" onClick={() => goToCreateChallenge()} >Create Challenge</button>
         </div>
         <div className="nav-item">
-                    <button onClick={() => toggleDropdown('events')} className="btn btn-info">
+                    <button onClick={() => toggleDropdown('events')} className="btn btn-dark">
                         Events <i className="fas fa-chevron-down"></i>
                     </button>
                     <div className={`dropdown-menu ${showEventsDropdown ? 'show' : ''}`}ref={eventsDropdownRef}>
@@ -189,7 +189,7 @@ const goToCreateChallenge = () => {
           </div>
         </div>
         <div className="nav-item">
-                    <button onClick={() => toggleDropdown('workouts')} className="btn btn-info">
+                    <button onClick={() => toggleDropdown('workouts')} className="btn btn-dark">
                         Workouts <i className="fas fa-chevron-down"></i>
                     </button>
                     <div className={`dropdown-menu ${showWorkoutsDropdown ? 'show' : ''}`} ref={workoutsDropdownRef}>
@@ -202,7 +202,7 @@ const goToCreateChallenge = () => {
           </div>
         </div>
         <div className="nav-item">
-                    <button onClick={() => toggleDropdown('users')} className="btn btn-info" >
+                    <button onClick={() => toggleDropdown('users')} className="btn btn-dark" >
                         Users <i className="fas fa-chevron-down"></i>
                     </button>
                     <div className={`dropdown-menu ${showUsersDropdown ? 'show' : ''}`}ref={usersDropdownRef}>
@@ -215,13 +215,13 @@ const goToCreateChallenge = () => {
           </div>
         </div>
         <div className="nav-item">
-        <button className="btn btn-info" onClick={() => goToMedals()} >Medals</button>
+        <button className="btn btn-dark" onClick={() => goToMedals()} >Medals</button>
         </div>
         <div className="nav-item">
-        <button className="btn btn-info" onClick={() => goToResults()} >Results</button>
+        <button className="btn btn-dark" onClick={() => goToResults()} >Results</button>
         </div>
         <div className="nav-item">
-        <button className="btn btn-info" onClick={() => goToTargetTimes()} >TargetTimes</button>
+        <button className="btn btn-dark" onClick={() => goToTargetTimes()} >TargetTimes</button>
         </div>
         {/* <div className="nav-item"><Link to={`/myresults`}ref={navRef}>MyResults</Link></div>
         <div className="nav-item"><Link to={`/target`}>TargetTimes</Link></div> */}

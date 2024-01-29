@@ -25,7 +25,16 @@ const User = db.define('user', {
   },
   targetDate: {
     type: Sequelize.TEXT,
-  }
+  },
+  email: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    unique: true,
+    validate: {
+      notEmpty: true,
+      isEmail: true,
+    },
+  },
 })
 
 module.exports = User

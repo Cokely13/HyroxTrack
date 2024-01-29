@@ -11,6 +11,8 @@ const AuthForm = (props) => {
   const { name, displayName, handleSubmit, error } = props;
   const allUsers = useSelector((state) => state.allUsers);
   const dispatch = useDispatch()
+  const [email, setEmail] = useState('');
+const [emailError, setEmailError] = useState('');
 
   // State for confirm password and error message
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -20,10 +22,56 @@ const AuthForm = (props) => {
     setConfirmPassword(event.target.value);
   };
 
+  const handleEmailChange = (event) => {
+    setEmail(event.target.value);
+    setEmailError(''); // Reset email error when user starts typing
+  };
+
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
 
   useEffect(() => {
     dispatch(fetchUsers())
   }, [])
+
+  // const enhancedHandleSubmit = (evt) => {
+  //   evt.preventDefault();
+  //   const formName = evt.target.name;
+  //   const userName = evt.target.userName.value;
+  //   const password = evt.target.password.value;
+  //   const email = evt.target.email.value
+
+
+  //   // Check if passwords match for Sign Up form
+  //   if (displayName === 'Sign Up' && password !== confirmPassword) {
+  //     setPasswordError('Passwords do not match');
+  //     return; // Don't dispatch if passwords don't match
+  //   }
+
+  //   if (displayName === 'Sign Up') {
+  //     if (!validateEmail(email)) {
+  //       setEmailError('Invalid email address');
+  //       return;
+  //     }
+
+  //     const isEmailUsed = allUsers.some(user => user.email === email);
+  //     if (isEmailUsed) {
+  //       setEmailError('Email Already Used');
+  //       return;
+  //     }
+  //   }
+
+  //   // if (displayName === 'Login' && password !== confirmPassword) {
+  //   //   setPasswordError('Incorrect Password');
+  //   //   return;
+  //   // }
+  //   // If passwords match or it's the login form, proceed with the form submission
+  //   setPasswordError(''); // Clear any previous error messages
+  //   handleSubmit(evt, userName, password, email, formName, );
+  // };
 
   const enhancedHandleSubmit = (evt) => {
     evt.preventDefault();
@@ -31,20 +79,32 @@ const AuthForm = (props) => {
     const userName = evt.target.userName.value;
     const password = evt.target.password.value;
 
-    // Check if passwords match for Sign Up form
-    if (displayName === 'Sign Up' && password !== confirmPassword) {
-      setPasswordError('Passwords do not match');
-      return; // Don't dispatch if passwords don't match
+    setPasswordError(''); // Reset password error
+
+    if (displayName === 'Sign Up') {
+      const email = evt.target.email.value; // Get email only for signup
+      if (!validateEmail(email)) {
+        setEmailError('Invalid email address');
+        return;
+      } else {
+        const email = "";
+      }
+
+      const isEmailUsed = allUsers.some(user => user.email === email);
+      if (isEmailUsed) {
+        setEmailError('Email Already Used');
+        return;
+      }
+
+      if (password !== confirmPassword) {
+        setPasswordError('Passwords do not match');
+        return;
+      }
+
+      handleSubmit(evt, userName, password, email, formName);
+    } else if (displayName === 'Login') {
+      handleSubmit(evt, userName, password, email, formName);
     }
-
-
-    // if (displayName === 'Login' && password !== confirmPassword) {
-    //   setPasswordError('Incorrect Password');
-    //   return;
-    // }
-    // If passwords match or it's the login form, proceed with the form submission
-    setPasswordError(''); // Clear any previous error messages
-    handleSubmit(evt, userName, password, formName);
   };
 
 
@@ -87,6 +147,9 @@ return (
             <input className="form-control" name="userName" type="text" />
           </div>
 
+
+
+
           <div className="input-group">
             <label htmlFor="password" style={{marginRight:"10px"}} >
               {displayName === "Login" ? "Password:": "Create Password:"}
@@ -106,6 +169,17 @@ return (
               />
             </div>
           )}
+             {displayName !== "Login" ?  <div className="input-group">
+      <label htmlFor="email" style={{ marginRight: "10px" }}>Email:</label>
+      <input
+        className="form-control"
+        name="email"
+        type="email"
+        value={email}
+        onChange={handleEmailChange}
+      />
+      {emailError && <div className="errorMessage">{emailError}</div>}
+    </div> : <div></div>}
 
           <button className="btn btn-primary sub" type="submit">
             {displayName}
@@ -143,12 +217,25 @@ const mapSignup = (state) => {
 
 const mapDispatch = (dispatch) => {
   return {
-    handleSubmit(evt, userName, password, formName) {
+    handleSubmit(evt, userName, password,email, formName,) {
       evt.preventDefault();
-      dispatch(authenticate(userName, password, formName));
+      dispatch(authenticate(userName, password, email, formName));
     },
   };
 };
+
+// const mapDispatch = (dispatch) => {
+//   return {
+//     handleSubmit(evt, userName, password, email, formName) {
+//       evt.preventDefault();
+//       if (formName === 'signup') {
+//         dispatch(authenticate(userName, password, email, formName));
+//       } else if (formName === 'login') {
+//         dispatch(authenticate(userName, password, formName));
+//       }
+//     },
+//   };
+// };
 
 export const Login = connect(mapLogin, mapDispatch)(AuthForm);
 export const Signup = connect(mapSignup, mapDispatch)(AuthForm);
