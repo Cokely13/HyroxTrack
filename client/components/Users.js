@@ -49,12 +49,12 @@ function Users() {
       <h1 className="profile rounded text-center add">
         <b>Users</b>
       </h1>
-      {showModal ? <div>
+      {showModal ? <div className="users-container">
       <div>
         <h2>Are you sure you want to delete {selectedUser.userName}?</h2>
         <div>
-          <button onClick={handleConfirm}>Yes, Delete</button>
-          <button onClick={handleCancel}>Cancel</button>
+          <button className="btn btn-warning btn-edit" onClick={handleConfirm}>Yes, Delete</button>
+          <button className="btn btn-secondary btn-edit" onClick={handleCancel}>Cancel</button>
         </div>
       </div>
     </div> :
