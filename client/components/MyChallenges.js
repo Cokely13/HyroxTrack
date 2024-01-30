@@ -31,6 +31,7 @@ function MyChallenges() {
   const [, forceUpdate] = useState();
   const [sortColumn, setSortColumn] = useState('date');
   const [sortOrder, setSortOrder] = useState('ascending');
+  const [expandedChallenge, setExpandedChallenge] = useState(null);
 
   useEffect(() => {
     dispatch(fetchSingleUser(id))
@@ -91,7 +92,13 @@ const sortChallenges = (data) => {
   });
 };
 
-console.log("desp", challenges)
+const toggleDescription = (challengeId) => {
+  if (expandedChallenge === challengeId) {
+    setExpandedChallenge(null); // Collapse the description
+  } else {
+    setExpandedChallenge(challengeId); // Expand the description
+  }
+};
 
 
   const handleDelete =(event, result) => {
@@ -233,7 +240,7 @@ console.log("desp", challenges)
   </thead>
   <tbody  style= {{fontSize:"20px"}} >
   {selectedEventFilter !== "All" ? sortedChallenges.filter(challenge=>challenge.eventId == selectedEventFilter).map((challenge) => {
-
+  const isExpanded = expandedChallenge === challenge.id;
               return (
 
                 <tr key={challenge.id} className="text-center" >
@@ -245,9 +252,15 @@ console.log("desp", challenges)
                   <td scope="row" style={{paddingLeft: "15px",paddingRight: "15px", paddingBottom: "15px", paddingTop: "25px"}}>{challenge.startDate.slice(0, 10)}</td>
                   <td scope="row" style={{paddingLeft: "15px",paddingRight: "15px", paddingBottom: "15px", paddingTop: "25px"}}>{challenge.endDate.slice(0, 10)}</td>
                  <td style={{paddingLeft: "15px",paddingRight: "15px", paddingBottom: "15px", paddingTop: "25px"}}><Link to={`/events/${challenge.eventId}`}>{events.find(event => event.id === challenge.eventId)?.name} </Link></td>
-                  <td scope="row" style={{paddingLeft: "15px",paddingRight: "15px", paddingBottom: "15px", paddingTop: "25px"}}> {challenge.description} </td>
+                  {/* <td scope="row" style={{paddingLeft: "15px",paddingRight: "15px", paddingBottom: "15px", paddingTop: "25px"}}> {challenge.description} </td> */}
+                  <td scope="row" style={{paddingLeft: "15px",paddingRight: "15px", paddingBottom: "15px", paddingTop: "25px"}}> {isExpanded ? challenge.description : challenge.description.slice(0, 40) /* Adjust slice length as needed */}
+                  {challenge.description.length > 40 && ( // Check if the description is longer than 100 characters
+                    <button className="btn btn-success btn-more" onClick={() => toggleDescription(challenge.id)}>
+                      {isExpanded ? "See Less" : "See More"}
+                    </button>
+                  )} </td>
                   <td scope="row" style={{paddingLeft: "15px",paddingRight: "15px", paddingBottom: "15px", paddingTop: "15px"}}>{!challenge.active ?  "" : <ChallengeTimer targetDate={challenge.endDate}  />}</td>
-                  <td scope="row" style={{paddingLeft: "15px",paddingRight: "15px", paddingBottom: "15px", paddingTop: "25px"}}>{challenge.active && (challenge.results.find(result => result.userId === id)?.duration || 'Not Done') == 'Not Done'?<button style={{paddingLeft: "15px",paddingRight: "15px", paddingBottom: "15px", paddingTop: "15px"}}  className="btn btn-primary" onClick={() => handleAdd(challenge)}>Add Result</button> : ""}</td>
+                  <td scope="row" style={{paddingLeft: "15px",paddingRight: "15px", paddingBottom: "15px", paddingTop: "25px"}}>{challenge.active && (challenge.results.find(result => result.userId === id)?.duration || 'Not Done') == 'Not Done'?<button style={{paddingLeft: "15px",paddingRight: "15px", paddingBottom: "15px", paddingTop: "15px"}}  className="btn btn-primary btn-edit" onClick={() => handleAdd(challenge)}>Add Result</button> : ""}</td>
                   <td scope="row">{challenge.results.find(result => result.userId === id)?.duration || ''}</td>
                   {challenge.results ?
   (challenge.results.find(result => result.userId === id)?.rank || '') == 1 ?
@@ -286,6 +299,7 @@ console.log("desp", challenges)
             }):
 
             sortedChallenges.map((challenge) => {
+              const isExpanded = expandedChallenge === challenge.id;
               return (
 
                 <tr key={challenge.id} className="text-center" >
@@ -297,9 +311,17 @@ console.log("desp", challenges)
                   <td scope="row" style={{paddingLeft: "15px",paddingRight: "15px", paddingBottom: "15px", paddingTop: "25px"}}>{challenge.startDate.slice(0, 10)}</td>
                   <td scope="row" style={{paddingLeft: "15px",paddingRight: "15px", paddingBottom: "15px", paddingTop: "25px"}}>{challenge.endDate.slice(0, 10)}</td>
                    <td style={{paddingLeft: "15px",paddingRight: "15px", paddingBottom: "15px", paddingTop: "25px"}}><Link to={`/events/${challenge.eventId}`}>{events.find(event => event.id === challenge.eventId)?.name} </Link></td>
-                    <td scope="row" style={{paddingLeft: "15px",paddingRight: "15px", paddingBottom: "15px", paddingTop: "25px"}}> {challenge.description} </td>
+                   <td scope="row" style={{paddingLeft: "15px",paddingRight: "15px", paddingBottom: "15px", paddingTop: "25px"}}>  {isExpanded ? challenge.description : challenge.description.slice(0, 40) /* Adjust slice length as needed */}
+                  {challenge.description.length > 40 && ( // Check if the description is longer than 100 characters
+                  <div>
+                    <button className="btn btn-success btn-more" onClick={() => toggleDescription(challenge.id)}>
+                      {isExpanded ? "See Less" : "See More"}
+                    </button>
+                    </div>
+                  )}</td>
+                    {/* <td scope="row" style={{paddingLeft: "15px",paddingRight: "15px", paddingBottom: "15px", paddingTop: "25px"}}> {challenge.description} </td> */}
                   <td scope="row" style={{paddingLeft: "15px",paddingRight: "15px", paddingBottom: "15px", paddingTop: "15px"}}>{!challenge.active ?  "" : <ChallengeTimer targetDate={challenge.endDate}  />}</td>
-                  {challenge.results ? <td scope="row" style={{paddingLeft: "15px",paddingRight: "15px", paddingBottom: "15px", paddingTop: "25px"}}>{challenge.active && (challenge.results.find(result => result.userId === id)?.duration || 'Not Done') == 'Not Done'?<button  style={{paddingLeft: "15px",paddingRight: "15px", paddingBottom: "15px", paddingTop: "15px"}} className="btn btn-primary" onClick={() => handleAdd(challenge)}>Add Result</button> : ""}</td> : <td scope="row" style={{paddingLeft: "15px",paddingRight: "15px", paddingBottom: "15px", paddingTop: "25px"}}></td>}
+                  {challenge.results ? <td scope="row" style={{paddingLeft: "15px",paddingRight: "15px", paddingBottom: "15px", paddingTop: "25px"}}>{challenge.active && (challenge.results.find(result => result.userId === id)?.duration || 'Not Done') == 'Not Done'?<button  style={{paddingLeft: "15px",paddingRight: "15px", paddingBottom: "15px", paddingTop: "15px"}} className="btn btn-primary btn-edit" onClick={() => handleAdd(challenge)}>Add Result</button> : ""}</td> : <td scope="row" style={{paddingLeft: "15px",paddingRight: "15px", paddingBottom: "15px", paddingTop: "25px"}}></td>}
                   {challenge.results ? <td scope="row">{challenge.results.find(result => result.userId === id)?.duration || ''}</td>: <td scope="row" style={{paddingLeft: "15px",paddingRight: "15px", paddingBottom: "15px", paddingTop: "25px"}}></td>}
                   {challenge.results ?
   (challenge.results.find(result => result.userId === id)?.rank || '') == 1 ?

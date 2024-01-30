@@ -675,6 +675,13 @@ tr:hover {
   margin-right: 5px;
 }
 
+.btn-more {
+  margin-right: 5px;
+  font-size: 12px;
+    padding: 5px 10px;
+    margin-bottom: 10px;
+}
+
 /* Responsive styles for mobile devices */
 @media screen and (max-width: 600px) {
   .btn-edit,
