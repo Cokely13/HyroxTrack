@@ -25,6 +25,8 @@ export default function CreateChallenge() {
   const users = useSelector((state) => state.allUsers);
   const [errorMessage, setErrorMessage] = useState('');
   const [selectedUsers, setSelectedUsers] = useState([id.toString()]);
+  const [allInvited, setAllInvited] = useState(false);
+
 
   useEffect(() => {
     dispatch(fetchEvents());
@@ -64,6 +66,24 @@ export default function CreateChallenge() {
     setStart(event.target.value);
   };
 
+  // const handleInviteAll = (event) => {
+  //   event.preventDefault()
+  //   const allUserIds = users.map(user => user.id.toString());
+  //   setSelectedUsers(allUserIds);
+  // };
+
+  const handleInviteAll = (event) => {
+    event.preventDefault();
+    const allUserIds = users.map(user => user.id.toString());
+    setSelectedUsers(allUserIds);
+    setAllInvited(true); // Set all invited to true
+  };
+
+  const handleUninviteAll = (event) => {
+    event.preventDefault();
+    setSelectedUsers([id.toString()]);
+    setAllInvited(false); // Set all invited to false
+  };
 
   const handleChange5 = (event) => {
     const newEndDate = event.target.value;
@@ -112,12 +132,19 @@ export default function CreateChallenge() {
   return (
     <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '20px', width: '100%', marginLeft: 'auto', marginRight: 'auto' }}>
       <h1 className="profile rounded text-center add" style={{ marginBottom: "15px", marginTop: "15px",  marginLeft: "auto", marginRight: "auto", width: "35%" }}><b>Create Challenge</b></h1>
+
       <form>
 
         <div>
           <div>
           <div>
-
+<div className="text-center" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '20px', width: '100%' }}>
+{!allInvited ? (
+          <button className="btn btn-primary btn-edit" onClick={handleInviteAll}>Invite All Users</button>
+        ) : (
+          <button className="btn btn-warning btn-edit" onClick={handleUninviteAll}>UnInvite All Users</button>
+        )}
+</div>
   <div className="user-invites-container" style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '80px', width: '35%', marginLeft: 'auto', marginRight: 'auto' }}>
                {users.map((user) => (
             <div className="user-challenge" key={user.id} >
