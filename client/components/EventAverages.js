@@ -192,6 +192,7 @@ const EventAverages = () => {
             <div className="col-sm-4 mx-auto mb-4 d-flex" key={zone.id}>
               <div className={getDivStyle( (averages ? averages.find(average => average.eventId === zone.id)?.duration|| null: null), (targets ? targets.find(target => target.eventId === zone.id)?.duration|| zone.targetTime.slice(0,5): null) )}>
               <h1><b><Link to={`/events/${zone.id}`} style={{ color: 'black' }}>{zone.name}</Link></b></h1>
+              <h1><b>{zone.description}</b></h1>
              <div><b>Target Time: </b> {targets ? (<div> {targets.find(target => target.eventId === zone.id)?.duration|| zone.targetTime.slice(0,5)} </div>) : <div> hey</div>} </div>
                 <div> { getWorkouts( (averages ? averages.find(average => average.eventId === zone.id)?.duration|| null: null), (targets ? targets.find(target => target.eventId === zone.id)?.duration|| null: null) ) == 1 ? <div className='flash'><Link to={`/workouts/${zone.id}`}>DO THESE WORKOUTS!</Link></div> : <div></div> } </div>
                 <div><b>Workouts Completed: </b> {events? getNumWorkouts(zone.id) : <div></div>} </div>

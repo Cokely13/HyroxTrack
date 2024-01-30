@@ -44,6 +44,7 @@ export default function CreateChallenge() {
     } else {
     setEventId(event.target.value);
     setNewEvent(false)
+    setDescription(selectedEvent.description)
     setErrorMessage('');}
   };
 

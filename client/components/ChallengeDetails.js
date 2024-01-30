@@ -6,6 +6,7 @@ import { fetchUsers } from '../store/allUsersStore';
 import ChallengeTimer from './ChallengeTimer';
 import { updateSingleChallenge } from '../store/singleChallengeStore';
 import { deleteChallenge } from '../store/allChallengesStore';
+import { fetchEvents } from '../store/allEventsStore'
 
 function ChallengeDetails() {
   const dispatch = useDispatch();
@@ -22,6 +23,8 @@ function ChallengeDetails() {
   const [errorMessage, setErrorMessage] = useState('');
   const [showNoResultsModal, setShowNoResultsModal] = useState(false);
   const [showDeleteConfirmModal, setShowDeleteConfirmModal] = useState(false);
+  const events = useSelector((state) => state.allEvents )
+  const [allInvited, setAllInvited] = useState(false);
 
   const { challengeId } = useParams();
 
@@ -34,6 +37,7 @@ function ChallengeDetails() {
 
   useEffect(() => {
     dispatch(fetchUsers());
+    dispatch(fetchEvents())
   }, [dispatch]);
 
   const getInvitedUserNames = (invites) => {
@@ -50,6 +54,18 @@ function ChallengeDetails() {
     });
   };
 
+  const handleInviteAll = (event) => {
+    event.preventDefault();
+    const allUserIds = users.map(user => user.id.toString());
+    setSelectedUsers(allUserIds);
+    setAllInvited(true); // Set all invited to true
+  };
+
+  const handleUninviteAll = (event) => {
+    event.preventDefault();
+    setSelectedUsers([id.toString()]);
+    setAllInvited(false); // Set all invited to false
+  };
   useEffect(() => {
     // Fetch challenge details and populate form fields if in edit mode
     if (isEditMode) {
@@ -223,6 +239,13 @@ function ChallengeDetails() {
       <b>Edit Challenge</b>
     </h1>
     <form>
+    <div className="text-center" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '20px', width: '100%' }}>
+    {!allInvited ? (
+          <button className="btn btn-primary btn-edit" onClick={handleInviteAll}>Invite All Users</button>
+        ) : (
+          <button className="btn btn-warning btn-edit" onClick={handleUninviteAll}>UnInvite All Users</button>
+        )}
+        </div>
       {/* User Invites Container */}
       <div className="user-invites-container" style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '80px', width: '35%', marginLeft: 'auto', marginRight: 'auto' }}>
         {users.map((user) => (
@@ -320,6 +343,8 @@ function ChallengeDetails() {
       {showNoResultsModal && <SimpleModal/>}
       {showDeleteConfirmModal && <DeleteConfirmModal/>}
       {challenge ? <div><p>{challenge.active}</p>
+      <div><b style ={{fontSize: "25px"}}>Name:{events.find(event => event.id === challenge.eventId)?.name}</b></div>
+      <div><b style ={{fontSize: "25px"}}>Description:{challenge.description} </b></div>
       <b style ={{fontSize: "25px"}}>Champ:</b>
       {challenge.champ ?<div><div style={{
                     width: '100px',
