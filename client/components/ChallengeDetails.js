@@ -18,7 +18,7 @@ function ChallengeDetails() {
   const [isEditMode, setIsEditMode] = useState(false);
   const [selectedUsers, setSelectedUsers] = useState([id.toString()]);
   const [start, setStart] = useState(currentDateTime);
-  const [description, setDescription] = useState(challenge.description);
+  const [description, setDescription] = useState("");
   const [endDate, setEndDate] = useState(currentDateTime);
   const [errorMessage, setErrorMessage] = useState('');
   const [showNoResultsModal, setShowNoResultsModal] = useState(false);
@@ -39,6 +39,16 @@ function ChallengeDetails() {
     dispatch(fetchUsers());
     dispatch(fetchEvents())
   }, [dispatch]);
+
+  // useEffect(() => {
+  //   if (challenge) {
+  //     // Initialize your state with challenge data
+  //     setDescription(challenge.description);
+  //     setStart(challenge.startDate);
+  //     setEndDate(challenge.endDate);
+  //     setSelectedUsers(challenge.invites);
+  //   }
+  // }, [challenge]);
 
   const getInvitedUserNames = (invites) => {
     return invites.map((userId, index) => {
@@ -232,6 +242,23 @@ function ChallengeDetails() {
     setIsEditMode(false);
   };
 
+  // const handleSaveClick = (e) => {
+  //   e.preventDefault();
+
+  //   const updatedChallenge = {
+  //     id: challenge.id,
+  //     eventId: challenge.eventId,
+  //     userId: id,
+  //     startDate: start, // These will either be the original values or the updated values
+  //     endDate: endDate,
+  //     invites: selectedUsers,
+  //     description: description
+  //   };
+
+  //   dispatch(updateSingleChallenge(updatedChallenge));
+  //   setIsEditMode(false);
+  // };
+
   if (isEditMode) {
     return (
     <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '20px', width: '100%', marginLeft: 'auto', marginRight: 'auto' }}>
@@ -363,7 +390,6 @@ function ChallengeDetails() {
                   <p><b style ={{fontSize: "25px"}}>Number of Results: {challenge.results ?challenge.results.length : ""}</b></p>
                    <p><b style ={{fontSize: "25px"}}>Start Date: {challenge.startDate ?challenge.startDate.slice(0, 10) : ""}</b></p></div> :
                   <div>No Details</div>}
-                  <div><b style ={{fontSize: "25px"}}>Description:{challenge.description} </b></div>
                   <div><b style ={{fontSize: "25px", marginTop: "15px"}}>Created By:  {getChampName(challenge.userId)}</b></div>
                   <ChallengeTimer targetDate={challenge.endDate} />
 
